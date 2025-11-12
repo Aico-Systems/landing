@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Primary Meta Tags -->
+    <title>Aico - Your Brand's Voice, Amplified by AI</title>
+    <meta name="title" content="Aico - Your Brand's Voice, Amplified by AI" />
+    <meta name="description" content="Aico is the AI-powered call agent that integrates with your knowledge base to provide instant, accurate, and human-like support. Transform your customer interactions today." />
+    <meta name="keywords" content="AI call agent, voice AI, customer support automation, conversational AI, contact center AI, intelligent voice assistant, business automation" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://landing.aicoflow.xyz/" />
+    <meta property="og:title" content="Aico - Your Brand's Voice, Amplified by AI" />
+    <meta property="og:description" content="The intelligent voice agent that learns your business, empowers your team, and delights your customers. Available 24/7 with enterprise-grade security." />
+    <meta property="og:image" content="/og-image.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://landing.aicoflow.xyz/" />
+    <meta property="twitter:title" content="Aico - Your Brand's Voice, Amplified by AI" />
+    <meta property="twitter:description" content="The intelligent voice agent that learns your business, empowers your team, and delights your customers." />
+    <meta property="twitter:image" content="/og-image.png" />
+    
+    <!-- DNS Prefetch & Preconnect for faster third-party connections -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Preload critical assets for faster FCP/LCP -->
+    <link rel="modulepreload" href="/src/main.ts" />
+    
+    <!-- Critical CSS inline to eliminate render-blocking -->
+    <style>
+      /* Critical above-the-fold styles - inlined for instant render */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        line-height: 1.6;
+        background-color: #050912;
+        color: #e2e8f0;
+        overflow-x: hidden;
+      }
+      
+      #app {
+        min-height: 100vh;
+        opacity: 0;
+        animation: fadeIn 0.3s ease-out forwards;
+      }
+      
+      @keyframes fadeIn {
+        to { opacity: 1; }
+      }
+      
+      /* Prevent layout shift with loading placeholder */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding-top: 80px;
+      }
+      
+      /* Loading skeleton to prevent CLS */
+      .nav-skeleton {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 72px;
+        background: rgba(6, 10, 20, 0.24);
+        backdrop-filter: blur(16px);
+        z-index: 1000;
+      }
+      
+      /* Hide until JS loads */
+      .no-js-hide {
+        visibility: hidden;
+      }
+    </style>
+    
+    <!-- Detect JS availability -->
+    <script>
+      document.documentElement.classList.add('js-enabled');
+    </script>
+    
+    <!-- Non-blocking async script loading -->
+    <script>
+      // Defer non-critical scripts
+      window.addEventListener('load', function() {
+        // Load fonts after page load
+        if ('fonts' in document) {
+          requestIdleCallback(function() {
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap';
+            document.head.appendChild(link);
+          });
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <!-- Navigation skeleton for instant feedback -->
+    <div class="nav-skeleton"></div>
+    
+    <div id="app"></div>
+    
+    <!-- Defer main script slightly to prioritize critical rendering -->
+    <script type="module">
+      // Load main app after a brief delay to let browser breathe
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          import('/src/main.ts');
+        });
+      });
+    </script>
+  </body>
+</html>
