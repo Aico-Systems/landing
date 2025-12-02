@@ -1,34 +1,34 @@
 <script lang="ts">
-  import { onDestroy, onMount } from 'svelte';
-  import { theme, toggleTheme } from '../stores/theme';
-  import Icon from './Icon.svelte';
+  import { onDestroy, onMount } from "svelte";
+  import { theme, toggleTheme } from "../../stores/theme";
+  import Icon from "./Icon.svelte";
 
   const sections = [
-    { id: 'how-it-works', label: 'Launch Plan' },
-    { id: 'features', label: 'Platform' },
-    { id: 'use-cases', label: 'Solutions' },
-    { id: 'testimonials', label: 'Customers' },
-    { id: 'contact', label: 'Contact' }
+    { id: "how-it-works", label: "Launch Plan" },
+    { id: "features", label: "Platform" },
+    { id: "use-cases", label: "Solutions" },
+    { id: "testimonials", label: "Customers" },
+    { id: "contact", label: "Contact" },
   ];
 
   let isScrolled = false;
-  let activeSection = 'hero';
+  let activeSection = "hero";
 
   function scrollToSection(sectionId: string) {
     const element = document.getElementById(sectionId);
-    if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (element) element.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   // Throttled scroll handler for better performance
   let scrollTimeout: number;
   let rafId: number;
-  
+
   function handleScroll() {
-    if (typeof window === 'undefined') return;
-    
+    if (typeof window === "undefined") return;
+
     // Cancel any pending RAF
     if (rafId) cancelAnimationFrame(rafId);
-    
+
     // Use RAF for smooth updates
     rafId = requestAnimationFrame(() => {
       isScrolled = window.scrollY > 8;
@@ -37,8 +37,16 @@
       clearTimeout(scrollTimeout);
       scrollTimeout = window.setTimeout(() => {
         const midpoint = window.scrollY + window.innerHeight / 2;
-        const order = ['hero', 'how-it-works', 'features', 'use-cases', 'testimonials', 'contact', 'cta'];
-        
+        const order = [
+          "hero",
+          "how-it-works",
+          "features",
+          "use-cases",
+          "testimonials",
+          "contact",
+          "cta",
+        ];
+
         for (const id of order) {
           const node = document.getElementById(id);
           if (!node) continue;
@@ -56,13 +64,13 @@
 
   onMount(() => {
     handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll, { passive: true });
   });
 
   onDestroy(() => {
-    window.removeEventListener('scroll', handleScroll);
-    window.removeEventListener('resize', handleScroll);
+    window.removeEventListener("scroll", handleScroll);
+    window.removeEventListener("resize", handleScroll);
     clearTimeout(scrollTimeout);
     if (rafId) cancelAnimationFrame(rafId);
   });
@@ -70,7 +78,12 @@
 
 <nav class:scrolled={isScrolled}>
   <div class="container nav-shell">
-    <button type="button" class="brand" on:click={() => scrollToSection('hero')} aria-label="Go to hero">
+    <button
+      type="button"
+      class="brand"
+      on:click={() => scrollToSection("hero")}
+      aria-label="Go to hero"
+    >
       <img src="/Logo.png" alt="Aico" class="logo-img" />
       <span class="logo-text">Aico</span>
       <span class="brand-pill">Voice AI</span>
@@ -91,17 +104,30 @@
     </div>
 
     <div class="nav-actions">
-      <button type="button" on:click={toggleTheme} class="theme-toggle" aria-label="Toggle theme">
-        {#if $theme === 'light'}
+      <button
+        type="button"
+        on:click={toggleTheme}
+        class="theme-toggle"
+        aria-label="Toggle theme"
+      >
+        {#if $theme === "light"}
           <Icon name="moon" size={18} />
         {:else}
           <Icon name="sun" size={18} />
         {/if}
       </button>
-      <button type="button" class="btn btn-secondary ghost" on:click={() => scrollToSection('use-cases')}>
+      <button
+        type="button"
+        class="btn btn-secondary ghost"
+        on:click={() => scrollToSection("use-cases")}
+      >
         See Aico in action
       </button>
-      <button type="button" class="btn btn-primary nav-cta" on:click={() => scrollToSection('cta')}>
+      <button
+        type="button"
+        class="btn btn-primary nav-cta"
+        on:click={() => scrollToSection("cta")}
+      >
         Book a pilot
       </button>
     </div>
@@ -115,7 +141,10 @@
     left: 0;
     right: 0;
     z-index: 1000;
-    transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
     background: rgba(6, 10, 20, 0.24);
     border-bottom: 1px solid transparent;
     backdrop-filter: blur(16px);
@@ -156,7 +185,9 @@
     cursor: pointer;
     padding: 8px 14px;
     border-radius: 18px;
-    transition: background 0.3s ease, transform 0.3s ease;
+    transition:
+      background 0.3s ease,
+      transform 0.3s ease;
     color: var(--text-primary);
   }
 
@@ -223,7 +254,9 @@
     background: linear-gradient(90deg, #667eea, #764ba2);
     opacity: 0;
     transform: scaleX(0.4);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease;
   }
 
   .nav-link.active {
@@ -252,7 +285,10 @@
     background: rgba(102, 126, 234, 0.12);
     color: #4c5fe3;
     cursor: pointer;
-    transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+    transition:
+      transform 0.3s ease,
+      border-color 0.3s ease,
+      background 0.3s ease;
   }
 
   .theme-toggle:hover {

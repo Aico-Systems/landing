@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import Icon from './Icon.svelte';
+  import { onMount } from "svelte";
+  import Icon from "../components/Icon.svelte";
 
   let WaveformCanvas: any = null;
   let showWaveform = false;
@@ -8,7 +8,7 @@
   function scrollToSection(sectionId: string) {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: "smooth" });
     }
   }
 
@@ -16,18 +16,21 @@
     // Defer loading waveform canvas to improve initial load
     const loadWaveform = async () => {
       try {
-        const module = await import('./WaveformCanvas.svelte');
+        const module = await import("../components/WaveformCanvas.svelte");
         WaveformCanvas = module.default;
         showWaveform = true;
       } catch (error) {
-        console.error('Failed to load WaveformCanvas:', error);
+        console.error("Failed to load WaveformCanvas:", error);
       }
     };
 
     // Load after a short delay to prioritize initial content
-    requestIdleCallback(() => {
-      loadWaveform();
-    }, { timeout: 800 });
+    requestIdleCallback(
+      () => {
+        loadWaveform();
+      },
+      { timeout: 800 },
+    );
   });
 </script>
 
@@ -40,12 +43,21 @@
           Launch call agents that sound like your best team member.
         </h1>
         <p class="subheadline">
-          Aico blends enterprise telephony, RAG, and live tooling so every conversation is on-brand, compliant, and outcome-driven from the first hello.
+          Aico blends enterprise telephony, RAG, and live tooling so every
+          conversation is on-brand, compliant, and outcome-driven from the first
+          hello.
         </p>
 
         <div class="hero-actions">
-          <button class="btn btn-primary" on:click={() => scrollToSection('cta')}>Book a Pilot</button>
-          <button class="btn btn-secondary" on:click={() => scrollToSection('how-it-works')}>Experience the Flow</button>
+          <button
+            class="btn btn-primary"
+            on:click={() => scrollToSection("cta")}>Book a Pilot</button
+          >
+          <button
+            class="btn btn-secondary"
+            on:click={() => scrollToSection("how-it-works")}
+            >Experience the Flow</button
+          >
         </div>
 
         <div class="hero-list">
@@ -85,7 +97,8 @@
         </div>
 
         <div class="hero-trust">
-          <span class="trust-label">Partnering with product & ops teams at</span>
+          <span class="trust-label">Partnering with product & ops teams at</span
+          >
           <div class="trust-logos">
             <span>SignalDesk</span>
             <span>Orbit Health</span>
@@ -101,7 +114,10 @@
           {#if showWaveform && WaveformCanvas}
             <svelte:component this={WaveformCanvas} />
           {:else}
-            <div class="waveform-placeholder" aria-label="Loading visualization"></div>
+            <div
+              class="waveform-placeholder"
+              aria-label="Loading visualization"
+            ></div>
           {/if}
         </div>
 
@@ -112,8 +128,13 @@
           </div>
           <div class="panel-body">
             <div class="panel-transcript">
-              <div class="actor customer">Customer: “My order never arrived—can we resend?”</div>
-              <div class="actor agent">Aico: “Already connected to Shopify. Replacement is on the way and confirmation is in your inbox.”</div>
+              <div class="actor customer">
+                Customer: “My order never arrived—can we resend?”
+              </div>
+              <div class="actor agent">
+                Aico: “Already connected to Shopify. Replacement is on the way
+                and confirmation is in your inbox.”
+              </div>
             </div>
             <div class="panel-metrics">
               <div>
@@ -332,7 +353,11 @@
     position: absolute;
     inset: 0;
     border-radius: 32px;
-    background: radial-gradient(circle at 42% 18%, rgba(118, 75, 162, 0.45), rgba(118, 75, 162, 0));
+    background: radial-gradient(
+      circle at 42% 18%,
+      rgba(118, 75, 162, 0.45),
+      rgba(118, 75, 162, 0)
+    );
     filter: blur(60px);
     opacity: 0.6;
   }
@@ -346,12 +371,17 @@
     width: 100%;
     height: 400px;
     border-radius: 16px;
-    background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+    background: linear-gradient(
+      135deg,
+      rgba(102, 126, 234, 0.05) 0%,
+      rgba(118, 75, 162, 0.05) 100%
+    );
     animation: pulse 2s ease-in-out infinite;
   }
 
   @keyframes pulse {
-    0%, 100% {
+    0%,
+    100% {
       opacity: 0.6;
     }
     50% {

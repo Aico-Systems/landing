@@ -1,42 +1,47 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  
+  import { onMount } from "svelte";
+
   // Defer ALL imports except critical components
   let Navigation: any;
   let Hero: any;
   let LazyComponent: any;
-  
+
   // Lazy load heavy components using dynamic imports
-  const lazyWebGLBackground = () => import('./lib/WebGLBackground.svelte');
-  const lazyHowItWorks = () => import('./lib/HowItWorks.svelte');
-  const lazyFeatures = () => import('./lib/Features.svelte');
-  const lazyUseCases = () => import('./lib/UseCases.svelte');
-  const lazyTestimonials = () => import('./lib/Testimonials.svelte');
-  const lazyContactSection = () => import('./lib/ContactSection.svelte');
-  const lazyCTASection = () => import('./lib/CTASection.svelte');
-  
+  const lazyWebGLBackground = () =>
+    import("./lib/components/WebGLBackground.svelte");
+  const lazyHowItWorks = () => import("./lib/sections/HowItWorks.svelte");
+  const lazyFeatures = () => import("./lib/sections/Features.svelte");
+  const lazyUseCases = () => import("./lib/sections/UseCases.svelte");
+  const lazyTestimonials = () => import("./lib/sections/Testimonials.svelte");
+  const lazyContactSection = () =>
+    import("./lib/sections/ContactSection.svelte");
+  const lazyCTASection = () => import("./lib/sections/CTASection.svelte");
+
   let showWebGL = false;
   let isReady = false;
-  
+
   onMount(async () => {
     // Load critical components immediately
     const [navModule, heroModule, lazyModule] = await Promise.all([
-      import('./lib/Navigation.svelte'),
-      import('./lib/Hero.svelte'),
-      import('./lib/LazyComponent.svelte')
+      import("./lib/components/Navigation.svelte"),
+      import("./lib/sections/Hero.svelte"),
+      import("./lib/components/LazyComponent.svelte"),
     ]);
-    
+
     Navigation = navModule.default;
     Hero = heroModule.default;
     LazyComponent = lazyModule.default;
     isReady = true;
-    
+
     // Defer heavy initialization to next idle period
-    requestIdleCallback(() => {
-      requestAnimationFrame(() => {
-        showWebGL = true;
-      });
-    }, { timeout: 2000 });
+    requestIdleCallback(
+      () => {
+        requestAnimationFrame(() => {
+          showWebGL = true;
+        });
+      },
+      { timeout: 2000 },
+    );
   });
 </script>
 
@@ -45,7 +50,7 @@
     <svelte:component this={LazyComponent} component={lazyWebGLBackground} />
   {/if}
   <div class="blur-layer"></div>
-  
+
   {#if Navigation}
     <svelte:component this={Navigation} />
   {/if}
@@ -54,14 +59,38 @@
     {#if Hero}
       <svelte:component this={Hero} />
     {/if}
-    
+
     {#if LazyComponent}
-      <svelte:component this={LazyComponent} component={lazyHowItWorks} rootMargin="200px" />
-      <svelte:component this={LazyComponent} component={lazyFeatures} rootMargin="200px" />
-      <svelte:component this={LazyComponent} component={lazyUseCases} rootMargin="200px" />
-      <svelte:component this={LazyComponent} component={lazyTestimonials} rootMargin="200px" />
-      <svelte:component this={LazyComponent} component={lazyContactSection} rootMargin="200px" />
-      <svelte:component this={LazyComponent} component={lazyCTASection} rootMargin="200px" />
+      <svelte:component
+        this={LazyComponent}
+        component={lazyHowItWorks}
+        rootMargin="200px"
+      />
+      <svelte:component
+        this={LazyComponent}
+        component={lazyFeatures}
+        rootMargin="200px"
+      />
+      <svelte:component
+        this={LazyComponent}
+        component={lazyUseCases}
+        rootMargin="200px"
+      />
+      <svelte:component
+        this={LazyComponent}
+        component={lazyTestimonials}
+        rootMargin="200px"
+      />
+      <svelte:component
+        this={LazyComponent}
+        component={lazyContactSection}
+        rootMargin="200px"
+      />
+      <svelte:component
+        this={LazyComponent}
+        component={lazyCTASection}
+        rootMargin="200px"
+      />
     {/if}
   </main>
 {:else}
@@ -79,12 +108,23 @@
   }
 
   :global(body) {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-family:
+      "Inter",
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      Oxygen,
+      Ubuntu,
+      Cantarell,
+      sans-serif;
     line-height: 1.6;
     color: var(--text-primary);
     background-color: var(--bg-primary);
     overflow-x: hidden;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
   }
 
   main {
@@ -110,7 +150,7 @@
     /* Ensure readability over globe */
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
   }
-  
+
   :global([data-theme="dark"] h1),
   :global([data-theme="dark"] h2),
   :global([data-theme="dark"] h3),
@@ -138,7 +178,9 @@
     font-weight: 600;
     font-size: 16px;
     cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
     border: none;
     text-align: center;
     /* GPU acceleration for smoother animations */
@@ -191,6 +233,8 @@
   }
 
   @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+      transform: rotate(360deg);
+    }
   }
 </style>
