@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import Footer from "./lib/components/Footer.svelte";
 
   // Defer ALL imports except critical components
   let Navigation: any;
@@ -92,6 +93,7 @@
         rootMargin="200px"
       />
     {/if}
+    <Footer />
   </main>
 {:else}
   <!-- Ultra-minimal loading state -->

@@ -1,61 +1,67 @@
 <script lang="ts">
-  import Icon from '../components/Icon.svelte';
-  
+  import Icon from "../components/Icon.svelte";
+
   const features = [
     {
-      icon: 'phone-forwarded',
-      title: 'Carrier-grade voice infrastructure',
-      description: 'Managed SIP, PSTN, and WebRTC orchestration with adaptive jitter buffers keep every conversation crisp.',
+      icon: "phone-forwarded",
+      title: "Carrier-grade voice infrastructure",
+      description:
+        "Managed SIP, PSTN, and WebRTC orchestration with adaptive jitter buffers keep every conversation crisp.",
       highlights: [
-        'Bring your own carrier or use our Telnyx & Twilio bridges',
-        'Sub-300ms roundtrip with dynamic silence detection'
-      ]
+        "Bring your own carrier or use our Telnyx & Twilio bridges",
+        "Sub-300ms roundtrip with dynamic silence detection",
+      ],
     },
     {
-      icon: 'brain',
-      title: 'Knowledge that stays on brand',
-      description: 'RAG pipelines tuned for support, sales, and compliance with automatic grounding references in every reply.',
+      icon: "brain",
+      title: "Knowledge that stays on brand",
+      description:
+        "RAG pipelines tuned for support, sales, and compliance with automatic grounding references in every reply.",
       highlights: [
-        'Automatic versioning of SOPs and product updates',
-        'Citations embedded in transcripts for audits'
-      ]
+        "Automatic versioning of SOPs and product updates",
+        "Citations embedded in transcripts for audits",
+      ],
     },
     {
-      icon: 'git-merge',
-      title: 'Workflow automation from the call',
-      description: 'Trigger downstream systems mid-conversation through secure tool calls—without brittle IVR trees.',
+      icon: "git-merge",
+      title: "Workflow automation from the call",
+      description:
+        "Trigger downstream systems mid-conversation through secure tool calls—without brittle IVR trees.",
       highlights: [
-        'Native Salesforce, Zendesk, HubSpot, & custom API actions',
-        'Intent-aware branching with guardrails and fallbacks'
-      ]
+        "Native Salesforce, Zendesk, HubSpot, & custom API actions",
+        "Intent-aware branching with guardrails and fallbacks",
+      ],
     },
     {
-      icon: 'mic-2',
-      title: 'Human-grade voice & emotion',
-      description: 'Streaming STT + expressive TTS that handles accents, interruptions, and sentiment pivots in real time.',
+      icon: "mic-2",
+      title: "Human-grade voice & emotion",
+      description:
+        "Streaming STT + expressive TTS that handles accents, interruptions, and sentiment pivots in real time.",
       highlights: [
-        'Dynamic prosody for empathy, urgency, or escalation',
-        'Automatic backchanneling for natural conversations'
-      ]
+        "Dynamic prosody for empathy, urgency, or escalation",
+        "Automatic backchanneling for natural conversations",
+      ],
     },
     {
-      icon: 'line-chart',
-      title: 'Mission control analytics',
-      description: 'Monitor call quality, automation coverage, cost, and agent performance from a single glass cockpit.',
+      icon: "line-chart",
+      title: "Mission control analytics",
+      description:
+        "Monitor call quality, automation coverage, cost, and agent performance from a single glass cockpit.",
       highlights: [
-        'Real-time QA classifications and alerting',
-        'Outcome attribution down to every automation'
-      ]
+        "Real-time QA classifications and alerting",
+        "Outcome attribution down to every automation",
+      ],
     },
     {
-      icon: 'shield-check',
-      title: 'Enterprise safeguards by default',
-      description: 'Multi-tenant isolation, SOC2-ready logging, and redaction keep regulated teams secure.',
+      icon: "shield-check",
+      title: "Enterprise safeguards by default",
+      description:
+        "Multi-tenant isolation, SOC2-ready logging, and redaction keep regulated teams secure.",
       highlights: [
-        'Data residency controls across regions',
-        'Granular RBAC & audit trails for every action'
-      ]
-    }
+        "Data residency controls across regions",
+        "Granular RBAC & audit trails for every action",
+      ],
+    },
   ];
 </script>
 
@@ -65,7 +71,9 @@
       <span class="eyebrow">Built for scaled voice automation</span>
       <h2>The platform your operators and engineers both love.</h2>
       <p>
-        Aico fuses the reliability of a contact center with the adaptability of modern AI. Every layer—from voice to knowledge to tooling—was designed for mission-critical teams.
+        Aico fuses the reliability of a contact center with the adaptability of
+        modern AI. Every layer—from voice to knowledge to tooling—was designed
+        for mission-critical teams.
       </p>
     </div>
 
@@ -148,7 +156,10 @@
     background: rgba(16, 24, 40, 0.55);
     backdrop-filter: blur(28px);
     color: #e2e8f0;
-    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    transition:
+      transform 0.3s ease,
+      border-color 0.3s ease,
+      box-shadow 0.3s ease;
     animation: fadeInUp 0.6s ease-out both;
   }
 

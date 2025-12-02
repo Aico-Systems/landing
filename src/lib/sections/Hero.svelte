@@ -1,6 +1,8 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import Icon from "../components/Icon.svelte";
+  import Button from "../components/Button.svelte";
+  import Badge from "../components/Badge.svelte";
 
   let WaveformCanvas: any = null;
   let showWaveform = false;
@@ -38,7 +40,7 @@
   <div class="container">
     <div class="hero-grid">
       <div class="hero-copy">
-        <span class="hero-kicker">Realtime AI voice orchestration</span>
+        <Badge variant="default">Realtime AI voice orchestration</Badge>
         <h1 class="headline">
           Launch call agents that sound like your best team member.
         </h1>
@@ -49,15 +51,15 @@
         </p>
 
         <div class="hero-actions">
-          <button
-            class="btn btn-primary"
-            on:click={() => scrollToSection("cta")}>Book a Pilot</button
+          <Button variant="primary" onClick={() => scrollToSection("cta")}>
+            Book a Pilot
+          </Button>
+          <Button
+            variant="secondary"
+            onClick={() => scrollToSection("how-it-works")}
           >
-          <button
-            class="btn btn-secondary"
-            on:click={() => scrollToSection("how-it-works")}
-            >Experience the Flow</button
-          >
+            Experience the Flow
+          </Button>
         </div>
 
         <div class="hero-list">
@@ -204,23 +206,6 @@
     animation: fadeInUp 0.8s ease-out;
   }
 
-  .hero-kicker {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 16px;
-    border-radius: 999px;
-    background: rgba(102, 126, 234, 0.12);
-    border: 1px solid rgba(102, 126, 234, 0.35);
-    color: #4c5fe3;
-    font-size: 13px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    width: fit-content;
-    backdrop-filter: blur(16px);
-  }
-
   .headline {
     font-size: clamp(44px, 6vw, 64px);
     line-height: 1.1;
@@ -239,10 +224,6 @@
     display: flex;
     gap: 16px;
     flex-wrap: wrap;
-  }
-
-  .btn-primary {
-    min-width: 180px;
   }
 
   .hero-list {
@@ -550,11 +531,6 @@
   @media (max-width: 540px) {
     .hero-actions {
       width: 100%;
-    }
-
-    .hero-actions .btn {
-      width: 100%;
-      justify-content: center;
     }
 
     .hero-metrics {
