@@ -39,7 +39,7 @@
     try {
       // Use relative path which will be proxied by Caddy to the backend
       const apiUrl =
-        window.location.hostname === "landing.aicoflow.xyz"
+        window.location.hostname === "aicoflow.xyz"
           ? "https://api.aicoflow.xyz"
           : "http://localhost:8000";
 
