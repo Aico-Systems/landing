@@ -30,38 +30,53 @@
   async function initiateCall() {
     if (!phoneNumber.trim() || isSubmitting) return;
 
+    const flowSlug = import.meta.env.VITE_DEMO_FLOW_SLUG;
+    if (!flowSlug) {
+      callStatus = "error";
+      statusMessage = "Demo nicht verfügbar.";
+      setTimeout(() => { callStatus = "idle"; statusMessage = ""; }, 5000);
+      return;
+    }
+
     isSubmitting = true;
     callStatus = "idle";
     statusMessage = "";
 
     try {
-      const hostname = window.location.hostname;
-      const apiUrl =
-        hostname === "aicoflow.com"
-          ? "https://api.aicoflow.com"
-          : hostname === "aicoflow.xyz"
-            ? "https://api.aicoflow.xyz"
-            : "http://localhost:8000";
+      const apiKey = import.meta.env.VITE_DEMO_API_KEY;
+      const apiUrl = import.meta.env.VITE_DEMO_API_URL;
+      const isDev = !apiUrl || apiUrl.includes("localhost");
+      const baseUrl = isDev ? "http://localhost:5005" : apiUrl;
+      const triggerPath = isDev
+        ? `/dev/api/flows/${flowSlug}/trigger`
+        : `/api/flows/${flowSlug}/trigger`;
 
-      const response = await fetch(`${apiUrl}/api/demo/call`, {
+      const headers: Record<string, string> = {
+        "Content-Type": "application/json",
+      };
+      if (!isDev && apiKey) {
+        headers["Authorization"] = `Bearer ${apiKey}`;
+      }
+
+      const response = await fetch(`${baseUrl}${triggerPath}`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phoneNumber: phoneNumber.trim() }),
+        headers,
+        body: JSON.stringify({ destination: phoneNumber.trim() }),
       });
 
       const data = await response.json();
 
-      if (response.ok && data.success) {
+      if (response.ok && (data.status === "started" || data.status === "completed")) {
         callStatus = "success";
-        statusMessage = data.message || "Call initiated! Check your phone.";
+        statusMessage = "Anruf gestartet! Prüfe dein Telefon.";
         phoneNumber = "";
       } else {
         callStatus = "error";
-        statusMessage = data.error || "Failed to initiate call";
+        statusMessage = data.message || data.error || "Anruf konnte nicht gestartet werden.";
       }
     } catch (error) {
       callStatus = "error";
-      statusMessage = "Network error. Please try again.";
+      statusMessage = "Netzwerkfehler. Bitte versuche es erneut.";
     } finally {
       isSubmitting = false;
       setTimeout(() => { callStatus = "idle"; statusMessage = ""; }, 5000);
