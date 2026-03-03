@@ -127,11 +127,11 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: #5567e7;
+    color: #145B7A;
     padding: 6px 14px;
     border-radius: 999px;
-    border: 1px solid rgba(102, 126, 234, 0.32);
-    background: rgba(102, 126, 234, 0.12);
+    border: 1px solid rgba(20, 91, 122, 0.32);
+    background: rgba(20, 91, 122, 0.12);
     width: fit-content;
   }
 
@@ -150,7 +150,7 @@
     margin-top: 24px;
     padding: 28px;
     border-radius: 20px;
-    border: 1px solid rgba(102, 126, 234, 0.2);
+    border: 1px solid rgba(20, 91, 122, 0.2);
     background: rgba(var(--bg-secondary-rgb), 0.12);
     backdrop-filter: blur(18px);
     display: flex;
@@ -162,7 +162,7 @@
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: rgba(85, 103, 231, 0.9);
+    color: rgba(20, 91, 122, 0.9);
   }
 
   .intro-card p {
@@ -217,8 +217,8 @@
     width: 14px;
     height: 14px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    box-shadow: 0 0 18px rgba(118, 75, 162, 0.6);
+    background: linear-gradient(135deg, #145B7A, #0B1226);
+    box-shadow: 0 0 18px rgba(20, 91, 122, 0.6);
     margin-top: 8px;
   }
 
@@ -227,13 +227,13 @@
     top: 22px;
     width: 2px;
     height: calc(100% + 12px);
-    background: linear-gradient(180deg, rgba(102, 126, 234, 0.28), rgba(118, 75, 162, 0));
+    background: linear-gradient(180deg, rgba(20, 91, 122, 0.28), rgba(20, 91, 122, 0));
   }
 
   .timeline-card {
     border-radius: 20px;
     padding: 28px 32px;
-    border: 1px solid rgba(102, 126, 234, 0.2);
+    border: 1px solid rgba(20, 91, 122, 0.2);
     background: rgba(15, 23, 42, 0.55);
     backdrop-filter: blur(24px);
     color: #e2e8f0;
@@ -244,7 +244,7 @@
   }
 
   :global([data-theme="light"]) .timeline-card {
-    background: rgba(248, 249, 255, 0.78);
+    background: rgba(241, 245, 249, 0.78);
     color: var(--text-primary);
   }
 
@@ -258,14 +258,14 @@
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: rgba(236, 245, 255, 0.8);
+    color: rgba(167, 243, 208, 0.8);
     padding: 6px 14px;
     border-radius: 999px;
-    border: 1px solid rgba(102, 126, 234, 0.4);
+    border: 1px solid rgba(20, 91, 122, 0.4);
   }
 
   :global([data-theme="light"]) .badge {
-    color: #3841b1;
+    color: #145B7A;
   }
 
   .icon-wrap {
@@ -275,12 +275,12 @@
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background: rgba(102, 126, 234, 0.18);
-    color: #cbd5ff;
+    background: rgba(20, 91, 122, 0.18);
+    color: #A7F3D0;
   }
 
   :global([data-theme="light"]) .icon-wrap {
-    color: #4c5fe3;
+    color: #145B7A;
   }
 
   .timeline-card h3 {

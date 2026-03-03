@@ -3,27 +3,27 @@
 
   const testimonials = [
     {
-      quote: "Aico has transformed our customer support. We're now handling 3x more inquiries with the same team size, and our customers are happier than ever.",
-      author: "Sarah Chen",
-      role: "VP of Customer Success",
-      company: "TechCorp Global",
-      avatar: "SC",
+      quote: "AICO handles our service scheduling calls flawlessly. Customers think they're speaking to our best employee — and we've reduced call wait times to near zero.",
+      author: "Operations Lead",
+      role: "Automotive Dealership",
+      company: "Autohaus Reit",
+      avatar: "AR",
       rating: 5
     },
     {
-      quote: "The knowledge base integration is phenomenal. Our AI agent provides accurate answers instantly, and it learns from every interaction. It's like having our best support rep available 24/7.",
-      author: "Marcus Rodriguez",
-      role: "CTO",
-      company: "InnovateLabs",
-      avatar: "MR",
+      quote: "The knowledge base integration is phenomenal. Our AI agent provides accurate answers instantly, pulling from service manuals and pricing docs. It learns from every interaction.",
+      author: "Service Manager",
+      role: "After-Sales Operations",
+      company: "Autohaus Brunkhorst",
+      avatar: "AB",
       rating: 5
     },
     {
-      quote: "Implementation was seamless, and the ROI was immediate. Within the first month, we reduced our response times by 85% and our support costs by 60%.",
-      author: "Emily Watson",
-      role: "Head of Operations",
-      company: "ScaleUp Inc",
-      avatar: "EW",
+      quote: "We were skeptical about voice AI for insurance claims intake, but AICO's structured conversation flows capture every detail. Our agents now focus on complex cases only.",
+      author: "Claims Director",
+      role: "Insurance Operations",
+      company: "Enterprise Partner",
+      avatar: "EP",
       rating: 5
     }
   ];
@@ -112,9 +112,9 @@
     gap: 8px;
     padding: 6px 16px;
     border-radius: 999px;
-    border: 1px solid rgba(102, 126, 234, 0.32);
-    background: rgba(102, 126, 234, 0.12);
-    color: #4c5fe3;
+    border: 1px solid rgba(20, 91, 122, 0.32);
+    background: rgba(20, 91, 122, 0.12);
+    color: #145B7A;
     font-size: 13px;
     font-weight: 600;
     text-transform: uppercase;
@@ -143,18 +143,18 @@
   .spotlight-card {
     border-radius: 28px;
     padding: 48px;
-    border: 1px solid rgba(102, 126, 234, 0.28);
-    background: rgba(12, 19, 36, 0.65);
+    border: 1px solid rgba(20, 91, 122, 0.28);
+    background: rgba(11, 18, 38, 0.65);
     backdrop-filter: blur(40px);
     color: #f8fafc;
-    box-shadow: 0 40px 90px rgba(9, 12, 24, 0.4);
+    box-shadow: 0 40px 90px rgba(11, 18, 38, 0.4);
     display: flex;
     flex-direction: column;
     gap: 32px;
   }
 
   :global([data-theme="light"]) .spotlight-card {
-    background: rgba(248, 249, 255, 0.86);
+    background: rgba(241, 245, 249, 0.86);
     color: var(--text-primary);
   }
 
@@ -170,8 +170,8 @@
     text-transform: uppercase;
     padding: 6px 16px;
     border-radius: 999px;
-    border: 1px solid rgba(102, 126, 234, 0.32);
-    background: rgba(102, 126, 234, 0.14);
+    border: 1px solid rgba(20, 91, 122, 0.32);
+    background: rgba(20, 91, 122, 0.14);
   }
 
   .rating {
@@ -203,7 +203,7 @@
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #145B7A 0%, #0B1226 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -232,7 +232,7 @@
   .company {
     font-size: 14px;
     font-weight: 600;
-    color: #5c6cf3;
+    color: #145B7A;
   }
 
   .testimonials-stack {
@@ -243,8 +243,8 @@
   .testimonial-card {
     padding: 32px;
     border-radius: 22px;
-    border: 1px solid rgba(102, 126, 234, 0.22);
-    background: rgba(12, 19, 36, 0.55);
+    border: 1px solid rgba(20, 91, 122, 0.22);
+    background: rgba(11, 18, 38, 0.55);
     backdrop-filter: blur(30px);
     color: #f1f5f9;
     display: flex;
@@ -254,13 +254,13 @@
   }
 
   :global([data-theme="light"]) .testimonial-card {
-    background: rgba(248, 249, 255, 0.82);
+    background: rgba(241, 245, 249, 0.82);
     color: var(--text-primary);
   }
 
   .testimonial-card:hover {
     transform: translateY(-6px);
-    border-color: rgba(102, 126, 234, 0.4);
+    border-color: rgba(20, 91, 122, 0.4);
   }
 
   .card-top {

@@ -8,7 +8,7 @@
       description: 'Get a walkthrough of call flows, integrations, and pricing built for your operations team.',
       icon: 'calendar',
       actions: [
-        { label: 'Book 30-min strategy call', href: 'mailto:sales@aico.ai' },
+        { label: 'Book 30-min strategy call', href: 'mailto:nikita@aicoflow.com' },
         { label: 'Download deployment brief', href: '#cta' }
       ]
     },
@@ -18,8 +18,8 @@
       description: 'Existing customers can open a ticket or hop into a live bridge with our voice reliability team.',
       icon: 'lifebuoy',
       actions: [
-        { label: 'Create support ticket', href: 'mailto:support@aico.ai' },
-        { label: 'View status page', href: 'https://status.aico.ai' }
+        { label: 'Create support ticket', href: 'mailto:support@aicoflow.com' },
+        { label: 'View status page', href: 'https://aicoflow.com' }
       ]
     },
     {
@@ -28,7 +28,7 @@
       description: 'Partner with Aico to embed our agents into your stack or co-deliver voice automation programs.',
       icon: 'handshake',
       actions: [
-        { label: 'Contact partnerships', href: 'mailto:partnerships@aico.ai' },
+        { label: 'Contact partnerships', href: 'mailto:nikita@aicoflow.com' },
         { label: 'Explore partner playbook', href: '#use-cases' }
       ]
     }
@@ -117,15 +117,15 @@
     gap: 24px;
     padding: 36px;
     border-radius: 28px;
-    border: 1px solid rgba(102, 126, 234, 0.22);
-    background: rgba(15, 23, 42, 0.55);
+    border: 1px solid rgba(20, 91, 122, 0.22);
+    background: rgba(11, 18, 38, 0.55);
     backdrop-filter: blur(28px);
     color: #f8fafc;
     box-shadow: 0 40px 90px rgba(8, 12, 24, 0.45);
   }
 
   :global([data-theme="light"]) .contact-intro {
-    background: rgba(248, 249, 255, 0.85);
+    background: rgba(241, 245, 249, 0.85);
     color: var(--text-primary);
   }
 
@@ -135,9 +135,9 @@
     gap: 8px;
     padding: 6px 16px;
     border-radius: 999px;
-    border: 1px solid rgba(102, 126, 234, 0.32);
-    background: rgba(102, 126, 234, 0.14);
-    color: #dbe3ff;
+    border: 1px solid rgba(20, 91, 122, 0.32);
+    background: rgba(20, 91, 122, 0.14);
+    color: #A7F3D0;
     font-size: 13px;
     font-weight: 600;
     text-transform: uppercase;
@@ -146,7 +146,7 @@
   }
 
   :global([data-theme="light"]) .eyebrow {
-    color: #4c5fe3;
+    color: #145B7A;
   }
 
   h2 {
@@ -193,10 +193,10 @@
   .contact-card {
     padding: 32px;
     border-radius: 24px;
-    border: 1px solid rgba(102, 126, 234, 0.22);
-    background: rgba(11, 17, 32, 0.55);
+    border: 1px solid rgba(20, 91, 122, 0.22);
+    background: rgba(11, 18, 38, 0.55);
     backdrop-filter: blur(30px);
-    color: #edf2ff;
+    color: #A7F3D0;
     display: flex;
     flex-direction: column;
     gap: 18px;
@@ -205,13 +205,13 @@
   }
 
   :global([data-theme="light"]) .contact-card {
-    background: rgba(248, 249, 255, 0.8);
+    background: rgba(241, 245, 249, 0.8);
     color: var(--text-primary);
   }
 
   .contact-card:hover {
     transform: translateY(-6px);
-    border-color: rgba(102, 126, 234, 0.4);
+    border-color: rgba(20, 91, 122, 0.4);
   }
 
   .card-header {
@@ -225,11 +225,11 @@
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: rgba(214, 219, 255, 0.95);
+    color: rgba(167, 243, 208, 0.95);
   }
 
   :global([data-theme="light"]) .tag {
-    color: rgba(76, 95, 227, 0.9);
+    color: rgba(20, 91, 122, 0.9);
   }
 
   h3 {
@@ -250,12 +250,12 @@
     width: 40px;
     height: 40px;
     border-radius: 14px;
-    background: rgba(102, 126, 234, 0.18);
-    color: #cbd5ff;
+    background: rgba(20, 91, 122, 0.18);
+    color: #A7F3D0;
   }
 
   :global([data-theme="light"]) .icon-badge {
-    color: #4c5fe3;
+    color: #145B7A;
   }
 
   .card-actions {
@@ -273,15 +273,15 @@
     color: inherit;
     padding: 10px 14px;
     border-radius: 14px;
-    border: 1px solid rgba(102, 126, 234, 0.25);
-    background: rgba(102, 126, 234, 0.12);
+    border: 1px solid rgba(20, 91, 122, 0.25);
+    background: rgba(20, 91, 122, 0.12);
     transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
   }
 
   .card-link:hover {
     transform: translateY(-2px);
-    border-color: rgba(102, 126, 234, 0.4);
-    background: rgba(102, 126, 234, 0.2);
+    border-color: rgba(20, 91, 122, 0.4);
+    background: rgba(20, 91, 122, 0.2);
   }
 
   @keyframes cardFadeIn {

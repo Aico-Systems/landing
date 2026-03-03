@@ -71,7 +71,7 @@
 
         <div class="panel-footnote">
           <Icon name="message-circle" size={18} strokeWidth={2} />
-          Prefer async? <a href="mailto:hello@aico.ai">Email our team</a> with your
+          Prefer async? <a href="mailto:nikita@aicoflow.com">Email our team</a> with your
           goals.
         </div>
       </div>
@@ -99,15 +99,15 @@
     align-items: stretch;
     padding: clamp(40px, 5vw, 72px);
     border-radius: 36px;
-    border: 1px solid rgba(102, 126, 234, 0.28);
-    background: rgba(12, 19, 36, 0.65);
+    border: 1px solid rgba(20, 91, 122, 0.28);
+    background: rgba(11, 18, 38, 0.65);
     backdrop-filter: blur(38px);
     color: #f8fafc;
     box-shadow: 0 48px 120px rgba(9, 12, 24, 0.42);
   }
 
   :global([data-theme="light"]) .cta-shell {
-    background: rgba(248, 249, 255, 0.9);
+    background: rgba(241, 245, 249, 0.9);
     color: var(--text-primary);
   }
 
@@ -141,7 +141,7 @@
     padding: 16px 22px;
     border-radius: 14px;
     border: 1px solid rgba(255, 255, 255, 0.4);
-    background: rgba(15, 23, 42, 0.35);
+    background: rgba(11, 18, 38, 0.35);
     backdrop-filter: blur(16px);
     color: inherit;
     font-size: 16px;
@@ -156,13 +156,13 @@
 
   .email-input:focus {
     outline: none;
-    border-color: rgba(102, 126, 234, 0.65);
-    background: rgba(15, 23, 42, 0.5);
+    border-color: rgba(20, 91, 122, 0.65);
+    background: rgba(11, 18, 38, 0.5);
   }
 
   :global([data-theme="light"]) .email-input {
     background: rgba(255, 255, 255, 0.7);
-    border-color: rgba(102, 126, 234, 0.35);
+    border-color: rgba(20, 91, 122, 0.35);
     color: var(--text-primary);
   }
 
@@ -182,8 +182,8 @@
 
   .cta-panel {
     border-radius: 28px;
-    border: 1px solid rgba(102, 126, 234, 0.28);
-    background: rgba(9, 14, 28, 0.55);
+    border: 1px solid rgba(20, 91, 122, 0.28);
+    background: rgba(11, 18, 38, 0.55);
     backdrop-filter: blur(32px);
     padding: 32px 36px;
     display: flex;
@@ -192,7 +192,7 @@
   }
 
   :global([data-theme="light"]) .cta-panel {
-    background: rgba(248, 249, 255, 0.85);
+    background: rgba(241, 245, 249, 0.85);
     color: var(--text-primary);
   }
 
@@ -223,7 +223,7 @@
   .panel-footnote {
     margin-top: auto;
     padding-top: 20px;
-    border-top: 1px solid rgba(148, 163, 209, 0.3);
+    border-top: 1px solid rgba(94, 234, 212, 0.3);
     display: inline-flex;
     align-items: center;
     gap: 10px;

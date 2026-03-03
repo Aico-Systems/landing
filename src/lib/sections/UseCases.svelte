@@ -161,9 +161,9 @@
     gap: 8px;
     padding: 6px 14px;
     border-radius: 999px;
-    border: 1px solid rgba(102, 126, 234, 0.32);
-    background: rgba(102, 126, 234, 0.12);
-    color: #4c5fe3;
+    border: 1px solid rgba(20, 91, 122, 0.32);
+    background: rgba(20, 91, 122, 0.12);
+    color: #145B7A;
     font-size: 13px;
     font-weight: 600;
     text-transform: uppercase;
@@ -203,7 +203,7 @@
     gap: 14px;
     padding: 18px 20px;
     background: transparent;
-    border: 1px solid rgba(102, 126, 234, 0.16);
+    border: 1px solid rgba(20, 91, 122, 0.16);
     border-radius: 16px;
     cursor: pointer;
     transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
@@ -213,13 +213,13 @@
   }
 
   .tab:hover {
-    border-color: rgba(102, 126, 234, 0.32);
+    border-color: rgba(20, 91, 122, 0.32);
     transform: translateX(4px);
   }
 
   .tab.active {
-    border-color: rgba(102, 126, 234, 0.45);
-    background: rgba(102, 126, 234, 0.14);
+    border-color: rgba(20, 91, 122, 0.45);
+    background: rgba(20, 91, 122, 0.14);
     transform: translateX(6px);
   }
 
@@ -227,7 +227,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #4c5fe3;
+    color: #145B7A;
   }
 
   .tab-copy {
@@ -260,16 +260,16 @@
     gap: 28px;
     border-radius: 26px;
     padding: 40px;
-    border: 1px solid rgba(102, 126, 234, 0.22);
-    background: rgba(11, 17, 32, 0.62);
+    border: 1px solid rgba(20, 91, 122, 0.22);
+    background: rgba(11, 18, 38, 0.62);
     backdrop-filter: blur(32px);
     color: #f8fafc;
-    box-shadow: 0 35px 90px rgba(9, 12, 24, 0.4);
+    box-shadow: 0 35px 90px rgba(11, 18, 38, 0.4);
     animation: fadeIn 0.5s ease-out;
   }
 
   :global([data-theme="light"]) .use-case-card {
-    background: rgba(248, 249, 255, 0.86);
+    background: rgba(241, 245, 249, 0.86);
     color: var(--text-primary);
   }
 
@@ -297,7 +297,7 @@
     padding: 6px 16px;
     border-radius: 999px;
     width: fit-content;
-    border: 1px solid rgba(102, 126, 234, 0.35);
+    border: 1px solid rgba(20, 91, 122, 0.35);
   }
 
   h3 {
@@ -359,7 +359,7 @@
 
   .card-footer {
     padding-top: 20px;
-    border-top: 1px solid rgba(102, 126, 234, 0.18);
+    border-top: 1px solid rgba(20, 91, 122, 0.18);
     display: grid;
     gap: 10px;
   }

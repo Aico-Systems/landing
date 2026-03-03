@@ -363,9 +363,9 @@
   const texturePalettes: Record<ThemeKey, TexturePalette> = {
     light: {
       gradient: [
-        { stop: 0, color: "#f6f7ff" },
-        { stop: 0.55, color: "#e7ebff" },
-        { stop: 1, color: "#d5dbff" },
+        { stop: 0, color: "#F8FAFC" },
+        { stop: 0.55, color: "#E2F0F5" },
+        { stop: 1, color: "#C5E4ED" },
       ],
       highlight: {
         color: "rgba(255, 255, 255, 0.7)",
@@ -374,24 +374,24 @@
         outerRadius: 0.34,
         opacity: 0.35,
       },
-      grid: { color: "#c3ccff", opacity: 0.22 },
-      vignette: { start: 0.68, end: 1, color: "rgba(91, 108, 255, 0.22)" },
+      grid: { color: "#A7D8E8", opacity: 0.22 },
+      vignette: { start: 0.68, end: 1, color: "rgba(20, 91, 122, 0.18)" },
     },
     dark: {
       gradient: [
-        { stop: 0, color: "#0a1224" },
-        { stop: 0.5, color: "#0b1530" },
-        { stop: 1, color: "#081224" },
+        { stop: 0, color: "#0B1226" },
+        { stop: 0.5, color: "#0E1830" },
+        { stop: 1, color: "#0B1226" },
       ],
       highlight: {
-        color: "rgba(118, 151, 255, 0.5)",
+        color: "rgba(20, 91, 122, 0.5)",
         center: [0.42, 0.36],
         innerRadius: 0.05,
         outerRadius: 0.32,
         opacity: 0.32,
       },
-      grid: { color: "#1c2b4d", opacity: 0.35 },
-      vignette: { start: 0.62, end: 1, color: "rgba(44, 58, 112, 0.32)" },
+      grid: { color: "#1A3045", opacity: 0.35 },
+      vignette: { start: 0.62, end: 1, color: "rgba(20, 91, 122, 0.28)" },
     },
   };
 
@@ -481,18 +481,18 @@
   // Clean theme configuration - pure, cold colors only
   const themeStyles = {
     light: {
-      background: "#f5f7ff",
+      background: "#F8FAFC",
       gradient:
-        "linear-gradient(158deg, rgba(255,255,255,0.96) 0%, rgba(220,227,255,0.75) 48%, rgba(180,194,255,0.58) 100%)",
+        "linear-gradient(158deg, rgba(255,255,255,0.96) 0%, rgba(220,237,245,0.75) 48%, rgba(180,224,240,0.58) 100%)",
       overlay:
-        "radial-gradient(circle at 46% 34%, rgba(180,190,255,0.12) 0%, rgba(120,140,255,0.08) 32%, rgba(255,255,255,0) 64%)",
-      baseColor: "#e8edff",
-      emissive: "#c5d1ff",
+        "radial-gradient(circle at 46% 34%, rgba(20,91,122,0.08) 0%, rgba(20,91,122,0.04) 32%, rgba(255,255,255,0) 64%)",
+      baseColor: "#E2F0F5",
+      emissive: "#C5E4ED",
       emissiveIntensity: 0.12,
       shininess: 22,
-      cityColor: "#3d51ff",
-      arcColor: ["#667eea", "#764ba2"] as [string, string],
-      ringColor: "rgba(68, 86, 255, 0.5)",
+      cityColor: "#145B7A",
+      arcColor: ["#A7F3D0", "#145B7A"] as [string, string],
+      ringColor: "rgba(20, 91, 122, 0.5)",
       autoRotateSpeed: 0.2,
       exposure: 1.1,
       lights: {
@@ -503,12 +503,12 @@
           position: [180, 240, 200] as [number, number, number],
         },
         fill: {
-          color: "#c8d5ff",
+          color: "#B8E4ED",
           intensity: 0.35,
           position: [-120, 100, -240] as [number, number, number],
         },
         rim: {
-          color: "#e8ecf5",
+          color: "#E2F0F5",
           intensity: 0.45,
           position: [-100, 280, 120] as [number, number, number],
         },
@@ -520,30 +520,30 @@
       gradient:
         "linear-gradient(165deg, rgba(6,8,16,0.98) 0%, rgba(12,16,28,0.95) 52%, rgba(6,8,16,0.98) 100%)",
       overlay:
-        "radial-gradient(circle at 52% 36%, rgba(102, 126, 234, 0.08) 0%, rgba(6,8,16,0.4) 62%)",
+        "radial-gradient(circle at 52% 36%, rgba(20, 91, 122, 0.08) 0%, rgba(6,8,16,0.4) 62%)",
       baseColor: "#111420",
       emissive: "#090b12",
       emissiveIntensity: 0.15,
       shininess: 10,
-      cityColor: "#b8c4ff",
-      arcColor: ["#667eea", "#8a7ed4"] as [string, string],
-      ringColor: "rgba(184, 196, 255, 0.45)",
+      cityColor: "#A7F3D0",
+      arcColor: ["#A7F3D0", "#5EEAD4"] as [string, string],
+      ringColor: "rgba(167, 243, 208, 0.45)",
       autoRotateSpeed: 0.2,
       exposure: 1.0,
       lights: {
-        ambient: { color: "#b8c4ff", intensity: 0.6 },
+        ambient: { color: "#A7F3D0", intensity: 0.6 },
         key: {
-          color: "#e0e7ff",
+          color: "#D1FAE5",
           intensity: 0.95,
           position: [200, 200, 320] as [number, number, number],
         },
         fill: {
-          color: "#667eea",
+          color: "#145B7A",
           intensity: 0.42,
           position: [-140, 80, -240] as [number, number, number],
         },
         rim: {
-          color: "#8a7ed4",
+          color: "#5EEAD4",
           intensity: 0.38,
           position: [-90, 320, 140] as [number, number, number],
         },
@@ -1165,8 +1165,8 @@
       --globe-gradient,
       linear-gradient(
         160deg,
-        rgba(250, 251, 255, 0.98) 0%,
-        rgba(220, 227, 255, 0.45) 60%,
+        rgba(248, 250, 252, 0.98) 0%,
+        rgba(220, 237, 245, 0.45) 60%,
         rgba(255, 255, 255, 0.95) 100%
       )
     );
@@ -1208,7 +1208,7 @@
       --globe-overlay,
       radial-gradient(
         circle at 45% 30%,
-        rgba(140, 160, 255, 0.08) 0%,
+        rgba(20, 91, 122, 0.08) 0%,
         rgba(255, 255, 255, 0) 60%
       )
     );
@@ -1233,7 +1233,7 @@
     background: radial-gradient(
       circle at 48% 22%,
       rgba(255, 255, 255, 0.35),
-      rgba(248, 249, 255, 0)
+      rgba(248, 250, 252, 0)
     );
     opacity: 0.5;
     filter: blur(42px);
@@ -1247,7 +1247,7 @@
   :global([data-theme="dark"]) .design-haze {
     background: radial-gradient(
       circle at 48% 22%,
-      rgba(102, 126, 234, 0.12),
+      rgba(20, 91, 122, 0.12),
       rgba(6, 8, 16, 0)
     );
     opacity: 0.4;
@@ -1291,7 +1291,7 @@
     padding: 8px 12px;
     border-radius: 12px;
     background: rgba(15, 23, 42, 0.92);
-    border: 1px solid rgba(102, 126, 234, 0.24);
+    border: 1px solid rgba(20, 91, 122, 0.24);
     color: #e2e8f0;
     font-size: 12px;
     letter-spacing: 0.02em;

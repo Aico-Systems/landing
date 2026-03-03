@@ -62,23 +62,23 @@
     }
 
     .btn-primary {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #0B1226 0%, #145B7A 100%);
         color: white;
     }
 
     .btn-primary:hover:not(:disabled) {
         transform: translateY(-2px);
-        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        box-shadow: 0 10px 25px rgba(20, 91, 122, 0.4);
     }
 
     .btn-secondary {
         background: transparent;
-        color: #667eea;
-        border: 2px solid #667eea;
+        color: #145B7A;
+        border: 2px solid #145B7A;
     }
 
     .btn-secondary:hover:not(:disabled) {
-        background: #667eea;
+        background: #145B7A;
         color: white;
     }
 </style>

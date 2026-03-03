@@ -111,7 +111,7 @@
 
   :global(body) {
     font-family:
-      "Inter",
+      "Sora",
       -apple-system,
       BlinkMacSystemFont,
       "Segoe UI",
@@ -191,23 +191,23 @@
   }
 
   :global(.btn-primary) {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #0B1226 0%, #145B7A 100%);
     color: white;
   }
 
   :global(.btn-primary:hover) {
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 10px 25px rgba(20, 91, 122, 0.4);
   }
 
   :global(.btn-secondary) {
     background: transparent;
-    color: #667eea;
-    border: 2px solid #667eea;
+    color: #145B7A;
+    border: 2px solid #145B7A;
   }
 
   :global(.btn-secondary:hover) {
-    background: #667eea;
+    background: #145B7A;
     color: white;
   }
 
@@ -228,8 +228,8 @@
   .spinner {
     width: 48px;
     height: 48px;
-    border: 4px solid rgba(102, 126, 234, 0.1);
-    border-top-color: #667eea;
+    border: 4px solid rgba(20, 91, 122, 0.1);
+    border-top-color: #145B7A;
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
   }

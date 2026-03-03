@@ -90,7 +90,7 @@
       ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
 
       // Draw globe outline
-      ctx.strokeStyle = 'rgba(102, 126, 234, 0.3)';
+      ctx.strokeStyle = 'rgba(20, 91, 122, 0.3)';
       ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
@@ -100,7 +100,7 @@
       for (let i = 0; i < 12; i++) {
         const angle = (i / 12) * Math.PI + rotation;
         
-        ctx.strokeStyle = 'rgba(102, 126, 234, 0.15)';
+        ctx.strokeStyle = 'rgba(20, 91, 122, 0.15)';
         ctx.lineWidth = 1;
         ctx.beginPath();
         
@@ -126,7 +126,7 @@
         const controlX = centerX;
         const controlY = centerY - radius * 0.5;
 
-        ctx.strokeStyle = `rgba(102, 126, 234, ${0.5 * (1 - arc.progress)})`;
+        ctx.strokeStyle = `rgba(20, 91, 122, ${0.5 * (1 - arc.progress)})`;
         ctx.lineWidth = 2;
         ctx.beginPath();
 
@@ -151,8 +151,8 @@
           const y = t2 * t2 * arc.start.y + 2 * t2 * t * controlY + t * t * arc.end.y;
 
           const gradient = ctx.createRadialGradient(x, y, 0, x, y, 8);
-          gradient.addColorStop(0, 'rgba(102, 126, 234, 0.8)');
-          gradient.addColorStop(1, 'rgba(102, 126, 234, 0)');
+          gradient.addColorStop(0, 'rgba(167, 243, 208, 0.8)');
+          gradient.addColorStop(1, 'rgba(167, 243, 208, 0)');
 
           ctx.fillStyle = gradient;
           ctx.beginPath();

@@ -1,16 +1,22 @@
 /**
  * Shared style constants and utilities
- * Provides consistent styling across components (DRY)
+ * Brand: AICO P1 Triad Arctic Ops
  */
 
 // Color palette
 export const colors = {
   primary: {
-    gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    start: '#667eea',
-    end: '#764ba2',
-    light: '#4c5fe3',
-    rgb: { r: 102, g: 126, b: 234 }
+    gradient: 'linear-gradient(135deg, #0B1226 0%, #145B7A 100%)',
+    start: '#0B1226',
+    end: '#145B7A',
+    light: '#145B7A',
+    rgb: { r: 20, g: 91, b: 122 }
+  },
+  accent: {
+    mint: '#A7F3D0',
+    mintHover: '#6EE7B7',
+    signal: '#5EEAD4',
+    rgb: { r: 167, g: 243, b: 208 }
   },
   text: {
     primary: 'var(--text-primary)',
@@ -18,8 +24,8 @@ export const colors = {
   },
   background: {
     primary: 'var(--bg-primary)',
-    card: 'rgba(16, 24, 40, 0.55)',
-    overlay: 'rgba(102, 126, 234, 0.12)'
+    card: 'rgba(11, 18, 38, 0.55)',
+    overlay: 'rgba(20, 91, 122, 0.12)'
   }
 } as const;
 
@@ -81,7 +87,7 @@ export const mixins = {
   card: `
     padding: ${spacing.xl};
     border-radius: ${borderRadius.xl};
-    border: 1px solid rgba(102, 126, 234, 0.22);
+    border: 1px solid rgba(20, 91, 122, 0.22);
     background: ${colors.background.card};
     backdrop-filter: blur(28px);
   `,
@@ -100,7 +106,7 @@ export const mixins = {
     }
   `,
   focusRing: `
-    outline: 2px solid ${colors.primary.start};
+    outline: 2px solid #A7F3D0;
     outline-offset: 2px;
   `
 } as const;

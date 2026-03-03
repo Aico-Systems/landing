@@ -7,10 +7,10 @@
 		<div class="footer-content">
 			<div class="footer-brand">
 				<div class="logo">
-					<img src="/Logo.svg" alt="Aico" class="logo-img" />
-					<span class="logo-text">Aico</span>
+					<img src="/Logo.svg" alt="AICO" class="logo-img" />
+					<span class="logo-text">AICO</span>
 				</div>
-				<p>Your brand’s voice, operationalized by AI.</p>
+				<p>The Conversation Infrastructure.</p>
 				<div class="status-pill">
 					<span class="status-dot"></span>
 					Systems operational
@@ -30,7 +30,7 @@
 						<h4>Company</h4>
 						<a href="#contact">Contact</a>
 						<a href="#testimonials">Customers</a>
-						<a href="mailto:hello@aico.ai">Press</a>
+						<a href="mailto:nikita@aicoflow.com">Press</a>
 					</div>
 
 					<div class="footer-column">
@@ -44,11 +44,11 @@
 				<div class="footer-meta">
 					<div class="meta-item">
 						<Icon name="map-pin" size={16} strokeWidth={1.8} />
-						San Francisco · New York · Remote-first
+						Germany · Remote-first
 					</div>
 					<div class="meta-item">
 						<Icon name="mail" size={16} strokeWidth={1.8} />
-						<a href="mailto:hello@aico.ai">hello@aico.ai</a>
+						<a href="mailto:nikita@aicoflow.com">nikita@aicoflow.com</a>
 					</div>
 					<div class="meta-item socials">
 						<span>Follow</span>
@@ -72,7 +72,7 @@
 		</div>
 
 		<div class="footer-bottom">
-			<p>&copy; 2025 Aico. All rights reserved.</p>
+			<p>&copy; 2026 AICO. All rights reserved.</p>
 			<div class="footer-legal">
 				<a href="#privacy">Privacy Policy</a>
 				<a href="#terms">Terms of Service</a>
@@ -83,15 +83,15 @@
 
 <style>
 	.footer {
-		background: rgba(4, 7, 14, 0.9);
+		background: rgba(11, 18, 38, 0.9);
 		color: rgba(226, 232, 240, 0.75);
 		padding: 64px 0 32px;
 		margin-top: 120px;
-		border-top: 1px solid rgba(102, 126, 234, 0.08);
+		border-top: 1px solid rgba(20, 91, 122, 0.08);
 	}
 
 	:global([data-theme="light"]) .footer {
-		background: rgba(241, 244, 255, 0.8);
+		background: rgba(241, 245, 249, 0.8);
 		color: var(--text-secondary);
 	}
 
@@ -182,7 +182,7 @@
 	}
 
 	.footer-column a:hover {
-		color: #667eea;
+		color: #145B7A;
 	}
 
 	.footer-meta {
@@ -208,7 +208,7 @@
 	}
 
 	.meta-item a:hover {
-		color: #667eea;
+		color: #145B7A;
 	}
 
 	.meta-item :global(svg) {
@@ -233,14 +233,14 @@
 		width: 34px;
 		height: 34px;
 		border-radius: 50%;
-		border: 1px solid rgba(102, 126, 234, 0.2);
+		border: 1px solid rgba(20, 91, 122, 0.2);
 		transition:
 			border-color 0.3s ease,
 			transform 0.3s ease;
 	}
 
 	.meta-item.socials a:hover {
-		border-color: rgba(102, 126, 234, 0.5);
+		border-color: rgba(20, 91, 122, 0.5);
 		transform: translateY(-1px);
 	}
 
@@ -249,7 +249,7 @@
 		justify-content: space-between;
 		align-items: center;
 		padding-top: 30px;
-		border-top: 1px solid rgba(102, 126, 234, 0.12);
+		border-top: 1px solid rgba(20, 91, 122, 0.12);
 		font-size: 14px;
 	}
 
@@ -263,7 +263,7 @@
 	}
 
 	.footer-legal a:hover {
-		color: #667eea;
+		color: #145B7A;
 	}
 
 	@media (max-width: 968px) {
