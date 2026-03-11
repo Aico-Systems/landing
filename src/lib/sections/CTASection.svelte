@@ -71,8 +71,8 @@
 
         <div class="panel-footnote">
           <Icon name="message-circle" size={18} strokeWidth={2} />
-          Prefer async? <a href="mailto:nikita@aicoflow.com">Email our team</a> with your
-          goals.
+          Prefer async? <a href="mailto:nikita@aicoflow.com">Email our team</a> with
+          your goals.
         </div>
       </div>
     </div>
@@ -139,15 +139,12 @@
     flex: 1;
     min-width: 260px;
     padding: 16px 22px;
-    border-radius: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    background: rgba(11, 18, 38, 0.35);
-    backdrop-filter: blur(16px);
+    border-radius: 10px;
+    border: 1px solid rgba(148, 163, 184, 0.38);
+    background: rgba(11, 18, 38, 0.22);
     color: inherit;
     font-size: 16px;
-    transition:
-      border-color 0.3s ease,
-      background 0.3s ease;
+    transition: border-color 0.2s ease;
   }
 
   .email-input::placeholder {
@@ -156,13 +153,12 @@
 
   .email-input:focus {
     outline: none;
-    border-color: rgba(20, 91, 122, 0.65);
-    background: rgba(11, 18, 38, 0.5);
+    border-color: rgba(20, 91, 122, 0.42);
   }
 
   :global([data-theme="light"]) .email-input {
-    background: rgba(255, 255, 255, 0.7);
-    border-color: rgba(20, 91, 122, 0.35);
+    background: rgba(255, 255, 255, 0.92);
+    border-color: rgba(148, 163, 184, 0.55);
     color: var(--text-primary);
   }
 

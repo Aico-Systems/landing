@@ -12,9 +12,9 @@
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        padding: 6px 14px;
+        padding: 5px 12px;
         border-radius: 999px;
-        font-size: 13px;
+        font-size: 11px;
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.08em;
@@ -26,27 +26,20 @@
         background: rgba(167, 243, 208, 0.12);
         border: 1px solid rgba(167, 243, 208, 0.30);
         color: #145B7A;
-        backdrop-filter: blur(16px);
     }
 
     :global([data-theme="dark"]) .badge-default {
-        background: rgba(167, 243, 208, 0.12);
         color: #A7F3D0;
-    }
-
-    :global([data-theme="light"]) .badge-default {
-        background: rgba(167, 243, 208, 0.14);
-        color: #145B7A;
     }
 
     .badge-outline {
         background: transparent;
-        border: 1px solid rgba(167, 243, 208, 0.30);
-        color: #A7F3D0;
+        border: 1px solid rgba(20, 91, 122, 0.34);
+        color: #145B7A;
     }
 
-    :global([data-theme="light"]) .badge-outline {
-        color: #145B7A;
-        border-color: rgba(20, 91, 122, 0.4);
+    :global([data-theme="dark"]) .badge-outline {
+        border-color: rgba(167, 243, 208, 0.35);
+        color: #A7F3D0;
     }
 </style>

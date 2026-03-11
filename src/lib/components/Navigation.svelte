@@ -1,167 +1,307 @@
 <script lang="ts">
-	import { onDestroy, onMount } from "svelte";
-	import { theme, toggleTheme } from "../../stores/theme";
-	import Icon from "./Icon.svelte";
+  import { onDestroy, onMount } from "svelte";
+  import { theme, toggleTheme } from "../../stores/theme";
+  import Icon from "./Icon.svelte";
 
-	const sections = [
-		{ id: "how-it-works", label: "Launch Plan" },
-		{ id: "features", label: "Platform" },
-		{ id: "use-cases", label: "Solutions" },
-		{ id: "testimonials", label: "Customers" },
-		{ id: "contact", label: "Contact" },
-	];
+  const sections = [
+    { id: "how-it-works", label: "Launch Plan" },
+    { id: "features", label: "Platform" },
+    { id: "use-cases", label: "Solutions" },
+    { id: "testimonials", label: "Customers" },
+    { id: "contact", label: "Contact" },
+  ];
 
-	let isScrolled = false;
-	let activeSection = "hero";
+  let isScrolled = false;
+  let activeSection = "hero";
 
-	function scrollToSection(sectionId: string) {
-		const element = document.getElementById(sectionId);
-		if (element) element.scrollIntoView({ behavior: "smooth", block: "start" });
-	}
+  function scrollToSection(sectionId: string) {
+    const element = document.getElementById(sectionId);
+    if (element) element.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 
-	let scrollTimeout: number;
-	let rafId: number;
+  let scrollTimeout: number;
+  let rafId: number;
 
-	function handleScroll() {
-		if (typeof window === "undefined") return;
-		if (rafId) cancelAnimationFrame(rafId);
-		rafId = requestAnimationFrame(() => {
-			isScrolled = window.scrollY > 8;
-			clearTimeout(scrollTimeout);
-			scrollTimeout = window.setTimeout(() => {
-				const midpoint = window.scrollY + window.innerHeight / 2;
-				const order = ["hero","how-it-works","features","use-cases","testimonials","contact","cta"];
-				for (const id of order) {
-					const node = document.getElementById(id);
-					if (!node) continue;
-					const rect = node.getBoundingClientRect();
-					const top = rect.top + window.scrollY;
-					const bottom = top + rect.height;
-					if (midpoint >= top && midpoint <= bottom) { activeSection = id; break; }
-				}
-			}, 50);
-		});
-	}
+  function handleScroll() {
+    if (typeof window === "undefined") return;
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(() => {
+      isScrolled = window.scrollY > 8;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = window.setTimeout(() => {
+        const midpoint = window.scrollY + window.innerHeight / 2;
+        const order = [
+          "hero",
+          "how-it-works",
+          "features",
+          "use-cases",
+          "testimonials",
+          "contact",
+          "cta",
+        ];
+        for (const id of order) {
+          const node = document.getElementById(id);
+          if (!node) continue;
+          const rect = node.getBoundingClientRect();
+          const top = rect.top + window.scrollY;
+          const bottom = top + rect.height;
+          if (midpoint >= top && midpoint <= bottom) {
+            activeSection = id;
+            break;
+          }
+        }
+      }, 50);
+    });
+  }
 
-	onMount(() => {
-		handleScroll();
-		window.addEventListener("scroll", handleScroll, { passive: true });
-		window.addEventListener("resize", handleScroll, { passive: true });
-	});
+  onMount(() => {
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll, { passive: true });
+  });
 
-	onDestroy(() => {
-		window.removeEventListener("scroll", handleScroll);
-		window.removeEventListener("resize", handleScroll);
-		clearTimeout(scrollTimeout);
-		if (rafId) cancelAnimationFrame(rafId);
-	});
+  onDestroy(() => {
+    window.removeEventListener("scroll", handleScroll);
+    window.removeEventListener("resize", handleScroll);
+    clearTimeout(scrollTimeout);
+    if (rafId) cancelAnimationFrame(rafId);
+  });
 </script>
 
 <nav class:scrolled={isScrolled}>
-	<div class="container nav-shell">
-		<button type="button" class="brand" on:click={() => scrollToSection("hero")} aria-label="Go to hero">
-			<img src="/Logo.svg" alt="AICO" class="logo-img" />
-			<span class="logo-text">AICO</span>
-			<span class="brand-pill">Voice AI</span>
-		</button>
-		<div class="nav-center">
-			{#each sections as section}
-				<button type="button" class="nav-link" class:active={activeSection === section.id} on:click={() => scrollToSection(section.id)}>
-					<span>{section.label}</span>
-					<span class="indicator"></span>
-				</button>
-			{/each}
-		</div>
-		<div class="nav-actions">
-			<button type="button" on:click={toggleTheme} class="theme-toggle" aria-label="Toggle theme">
-				{#if $theme === "light"}<Icon name="moon" size={18} />{:else}<Icon name="sun" size={18} />{/if}
-			</button>
-			<button type="button" class="btn btn-secondary ghost" on:click={() => scrollToSection("use-cases")}>See AICO in action</button>
-			<button type="button" class="btn btn-primary nav-cta" on:click={() => scrollToSection("cta")}>Book a pilot</button>
-		</div>
-	</div>
+  <div class="container nav-shell">
+    <button
+      type="button"
+      class="brand"
+      on:click={() => scrollToSection("hero")}
+      aria-label="Go to hero"
+    >
+      <img src="/Logo.svg" alt="AICO" class="logo-img" />
+      <span class="logo-text">AICO</span>
+      <span class="brand-pill">Voice AI</span>
+    </button>
+    <div class="nav-center">
+      {#each sections as section}
+        <button
+          type="button"
+          class="nav-link"
+          class:active={activeSection === section.id}
+          on:click={() => scrollToSection(section.id)}
+        >
+          <span>{section.label}</span>
+          <span class="indicator"></span>
+        </button>
+      {/each}
+    </div>
+    <div class="nav-actions">
+      <button
+        type="button"
+        on:click={toggleTheme}
+        class="theme-toggle"
+        aria-label="Toggle theme"
+      >
+        {#if $theme === "light"}<Icon name="moon" size={18} />{:else}<Icon
+            name="sun"
+            size={18}
+          />{/if}
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary ghost"
+        on:click={() => scrollToSection("use-cases")}>See AICO in action</button
+      >
+      <button
+        type="button"
+        class="btn btn-primary nav-cta"
+        on:click={() => scrollToSection("cta")}>Book a pilot</button
+      >
+    </div>
+  </div>
 </nav>
 
 <style>
-	nav {
-		position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-		transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-		background: rgba(11, 18, 38, 0.24);
-		border-bottom: 1px solid transparent;
-		backdrop-filter: blur(16px);
-		will-change: background, border-color;
-		transform: translateZ(0);
-	}
-	:global([data-theme="light"]) nav { background: rgba(248, 250, 252, 0.7); }
-	nav.scrolled {
-		background: rgba(11, 18, 38, 0.6);
-		border-bottom-color: rgba(20, 91, 122, 0.18);
-		box-shadow: 0 18px 36px rgba(11, 18, 38, 0.25);
-	}
-	:global([data-theme="light"]) nav.scrolled {
-		background: rgba(255, 255, 255, 0.92);
-		box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
-	}
-	.nav-shell { display: flex; align-items: center; justify-content: space-between; gap: 32px; padding: 18px 0; }
-	.brand {
-		display: inline-flex; align-items: center; gap: 12px;
-		background: none; border: none; cursor: pointer;
-		padding: 8px 14px; border-radius: 18px;
-		transition: background 0.3s ease, transform 0.3s ease;
-		color: var(--text-primary);
-	}
-	.brand:hover { background: rgba(20, 91, 122, 0.12); transform: translateY(-1px); }
-	.logo-img { height: 28px; width: auto; }
-	.logo-text { font-size: 18px; font-weight: 700; letter-spacing: 0.04em; }
-	.brand-pill {
-		font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em;
-		color: #A7F3D0;
-		border: 1px solid rgba(167, 243, 208, 0.30);
-		border-radius: 999px; padding: 4px 10px;
-	}
-	:global([data-theme="light"]) .brand-pill { color: #145B7A; }
-	.nav-center { display: flex; align-items: center; gap: 20px; }
-	.nav-link {
-		position: relative; background: none; border: none; cursor: pointer;
-		padding: 8px 0; font-size: 14px; font-weight: 600; letter-spacing: 0.04em;
-		color: var(--text-tertiary); transition: color 0.3s ease;
-	}
-	.nav-link:hover { color: var(--text-secondary); }
-	.nav-link .indicator {
-		position: absolute; left: 0; right: 0; bottom: -8px; height: 2px;
-		border-radius: 999px;
-		background: linear-gradient(90deg, #A7F3D0, #145B7A);
-		opacity: 0; transform: scaleX(0.4);
-		transition: opacity 0.3s ease, transform 0.3s ease;
-	}
-	.nav-link.active { color: var(--text-primary); }
-	.nav-link.active .indicator { opacity: 1; transform: scaleX(1); }
-	.nav-actions { display: inline-flex; align-items: center; gap: 14px; }
-	.theme-toggle {
-		display: inline-flex; align-items: center; justify-content: center;
-		width: 34px; height: 34px; border-radius: 50%;
-		border: 1px solid rgba(20, 91, 122, 0.28);
-		background: rgba(20, 91, 122, 0.12);
-		color: #145B7A; cursor: pointer;
-		transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
-	}
-	.theme-toggle:hover { transform: translateY(-1px); border-color: rgba(20, 91, 122, 0.45); background: rgba(20, 91, 122, 0.2); }
-	:global([data-theme="dark"]) .theme-toggle { color: #A7F3D0; background: rgba(20, 91, 122, 0.25); border-color: rgba(167, 243, 208, 0.22); }
-	.ghost {
-		padding: 10px 20px !important; border-radius: 14px !important;
-		border: 1px solid rgba(167, 243, 208, 0.3) !important;
-		background: rgba(20, 91, 122, 0.1) !important;
-		color: #A7F3D0 !important;
-	}
-	:global([data-theme="light"]) .ghost { color: #145B7A !important; background: rgba(20, 91, 122, 0.08) !important; }
-	.ghost:hover { border-color: rgba(167, 243, 208, 0.6) !important; background: rgba(20, 91, 122, 0.2) !important; }
-	.nav-cta { padding: 10px 22px !important; border-radius: 14px !important; font-size: 14px !important; }
-	@media (max-width: 960px) { .nav-center { display: none; } }
-	@media (max-width: 640px) {
-		.nav-shell { gap: 16px; }
-		.brand { padding: 6px 10px; }
-		.brand-pill { display: none; }
-		.ghost { display: none !important; }
-		.nav-cta { padding: 10px 18px !important; }
-	}
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+    background: rgba(11, 18, 38, 0.32);
+    border-bottom: 1px solid transparent;
+    backdrop-filter: blur(12px);
+    will-change: background, border-color;
+    transform: translateZ(0);
+  }
+  :global([data-theme="light"]) nav {
+    background: rgba(248, 250, 252, 0.7);
+  }
+  nav.scrolled {
+    background: rgba(11, 18, 38, 0.74);
+    border-bottom-color: rgba(20, 91, 122, 0.18);
+    box-shadow: 0 8px 24px rgba(11, 18, 38, 0.22);
+  }
+  :global([data-theme="light"]) nav.scrolled {
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  }
+  .nav-shell {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    padding: 18px 0;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px 14px;
+    border-radius: 18px;
+    transition: background 0.2s ease;
+    color: var(--text-primary);
+  }
+  .brand:hover {
+    background: rgba(20, 91, 122, 0.12);
+  }
+  .logo-img {
+    height: 28px;
+    width: auto;
+  }
+  .logo-text {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  .brand-pill {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #a7f3d0;
+    border: 1px solid rgba(167, 243, 208, 0.3);
+    border-radius: 999px;
+    padding: 4px 10px;
+  }
+  :global([data-theme="light"]) .brand-pill {
+    color: #145b7a;
+  }
+  .nav-center {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .nav-link {
+    position: relative;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px 0;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--text-tertiary);
+    transition: color 0.3s ease;
+  }
+  .nav-link:hover {
+    color: var(--text-secondary);
+  }
+  .nav-link .indicator {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -8px;
+    height: 2px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #a7f3d0, #145b7a);
+    opacity: 0;
+    transform: scaleX(0.4);
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease;
+  }
+  .nav-link.active {
+    color: var(--text-primary);
+  }
+  .nav-link.active .indicator {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  .nav-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid rgba(20, 91, 122, 0.28);
+    background: rgba(20, 91, 122, 0.12);
+    color: #145b7a;
+    cursor: pointer;
+    transition:
+      border-color 0.2s ease,
+      background 0.2s ease;
+  }
+  .theme-toggle:hover {
+    border-color: rgba(20, 91, 122, 0.45);
+    background: rgba(20, 91, 122, 0.2);
+  }
+  :global([data-theme="dark"]) .theme-toggle {
+    color: #a7f3d0;
+    background: rgba(20, 91, 122, 0.25);
+    border-color: rgba(167, 243, 208, 0.22);
+  }
+  .ghost {
+    padding: 10px 16px !important;
+    border-radius: 10px !important;
+    border: 1px solid rgba(167, 243, 208, 0.3) !important;
+    background: transparent !important;
+    color: #a7f3d0 !important;
+  }
+  :global([data-theme="light"]) .ghost {
+    color: #145b7a !important;
+    background: transparent !important;
+    border-color: rgba(20, 91, 122, 0.28) !important;
+  }
+  .ghost:hover {
+    border-color: rgba(20, 91, 122, 0.5) !important;
+    background: rgba(20, 91, 122, 0.08) !important;
+  }
+  .nav-cta {
+    padding: 10px 18px !important;
+    border-radius: 10px !important;
+    font-size: 14px !important;
+  }
+  @media (max-width: 960px) {
+    .nav-center {
+      display: none;
+    }
+  }
+  @media (max-width: 640px) {
+    .nav-shell {
+      gap: 16px;
+    }
+    .brand {
+      padding: 6px 10px;
+    }
+    .brand-pill {
+      display: none;
+    }
+    .ghost {
+      display: none !important;
+    }
+    .nav-cta {
+      padding: 10px 18px !important;
+    }
+  }
 </style>

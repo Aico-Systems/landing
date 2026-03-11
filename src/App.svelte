@@ -174,41 +174,42 @@
   }
 
   :global(.btn) {
-    display: inline-block;
-    padding: 14px 32px;
-    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 10px 18px;
+    border-radius: 10px;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 14px;
     cursor: pointer;
     transition:
-      transform 0.2s ease,
-      box-shadow 0.2s ease;
-    border: none;
+      background-color 0.2s ease,
+      border-color 0.2s ease;
+    border: 1px solid transparent;
     text-align: center;
-    /* GPU acceleration for smoother animations */
-    will-change: transform;
-    transform: translateZ(0);
   }
 
   :global(.btn-primary) {
-    background: linear-gradient(135deg, #0B1226 0%, #145B7A 100%);
+    background: #145b7a;
+    border-color: #145b7a;
     color: white;
   }
 
   :global(.btn-primary:hover) {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(20, 91, 122, 0.4);
+    background: #114d67;
+    border-color: #114d67;
   }
 
   :global(.btn-secondary) {
-    background: transparent;
-    color: #145B7A;
-    border: 2px solid #145B7A;
+    background: var(--card-bg);
+    color: var(--text-primary);
+    border-color: var(--border-color);
   }
 
   :global(.btn-secondary:hover) {
-    background: #145B7A;
-    color: white;
+    background: var(--bg-secondary);
+    border-color: rgba(20, 91, 122, 0.35);
   }
 
   /* Loading spinner styles */
@@ -229,7 +230,7 @@
     width: 48px;
     height: 48px;
     border: 4px solid rgba(20, 91, 122, 0.1);
-    border-top-color: #145B7A;
+    border-top-color: #145b7a;
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
   }
