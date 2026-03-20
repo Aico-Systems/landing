@@ -56,12 +56,6 @@
   const orgId = resolveOrgId();
   const scriptUrl = widgetUrl ? `${widgetUrl}/widget.js` : "";
   const isConfigured = Boolean(widgetUrl && apiUrl && orgId);
-  const embedSnippet = [
-    `<script src="${scriptUrl || "https://widget.example.com/widget.js"}"><\\/script>`,
-    "",
-    `<ac-booking org-id="${orgId || "your-booking-slug"}" api-url="${apiUrl || "https://api.example.com"}"></ac-booking>`,
-  ].join("\n");
-
   async function ensureWidgetScript(): Promise<void> {
     if (typeof window === "undefined" || !scriptUrl) return;
     const widgetWindow = window as WidgetWindow;
@@ -152,8 +146,8 @@
     }
   }
 
-  function scrollToCta() {
-    document.getElementById("cta")?.scrollIntoView({
+  function scrollToSection(sectionId: string) {
+    document.getElementById(sectionId)?.scrollIntoView({
       behavior: "smooth",
       block: "start",
     });
@@ -172,93 +166,82 @@
   <div class="container">
     <div class="booking-shell">
       <div class="booking-copy">
-        <Badge variant="default">Live Booking Widget</Badge>
-        <h2>Book a working session straight from the landing page.</h2>
+        <Badge variant="default">Book A Pilot</Badge>
+        <h2>Schedule a working session with the AICO team.</h2>
         <p class="lead">
-          The same booking widget can be embedded on any site, microsite, or
-          campaign page. Here it is wired into the landing experience with the
-          exact production host for the current environment.
+          Pick a time that works for your team. In the session we review your
+          use case, integration surface, and the fastest path to a production
+          rollout.
         </p>
 
-        <div class="signal-list">
-          <div>
-            <span class="signal-icon"><Icon name="calendar-check-2" size={18} strokeWidth={1.8} /></span>
-            Real availability from the booking backend
+        <div class="booking-points">
+          <div class="point-card">
+            <span class="point-icon"><Icon name="calendar-check-2" size={18} strokeWidth={1.8} /></span>
+            <div>
+              <strong>Working session</strong>
+              <span>Map the workflow, call volume, and handoff requirements.</span>
+            </div>
           </div>
-          <div>
-            <span class="signal-icon"><Icon name="globe" size={18} strokeWidth={1.8} /></span>
-            Stable widget URL served from Shady deploy infrastructure
+          <div class="point-card">
+            <span class="point-icon"><Icon name="cpu" size={18} strokeWidth={1.8} /></span>
+            <div>
+              <strong>Technical fit</strong>
+              <span>Review telephony, tooling, CRM, and internal API touchpoints.</span>
+            </div>
           </div>
-          <div>
-            <span class="signal-icon"><Icon name="sparkles" size={18} strokeWidth={1.8} /></span>
-            Brand-aligned presentation without copying widget logic into landing
+          <div class="point-card">
+            <span class="point-icon"><Icon name="shield-check" size={18} strokeWidth={1.8} /></span>
+            <div>
+              <strong>Rollout plan</strong>
+              <span>Align on security, compliance, pilot scope, and deployment model.</span>
+            </div>
           </div>
         </div>
 
-        <div class="meta-grid">
-          <div class="meta-card">
-            <span class="meta-label">Widget URL</span>
-            <strong>{widgetUrl || "Not configured"}</strong>
-          </div>
-          <div class="meta-card">
-            <span class="meta-label">Default booking slug</span>
-            <strong>{orgId || "Not configured"}</strong>
-          </div>
-        </div>
+        <p class="booking-note">
+          Security review, procurement questions, and enterprise rollout constraints
+          are part of the conversation, not an afterthought.
+        </p>
 
         <div class="action-row">
-          <Button variant="primary" onClick={scrollToCta}>Need a custom rollout?</Button>
-          {#if scriptUrl}
-            <a
-              class="inline-link"
-              href={scriptUrl}
-              target="_blank"
-              rel="noreferrer"
-            >Open widget script</a>
-          {/if}
+          <Button variant="primary" onClick={() => scrollToSection("cta")}>Talk To Sales</Button>
+          <Button variant="secondary" onClick={() => scrollToSection("how-it-works")}>See Delivery Model</Button>
         </div>
       </div>
 
       <div class="booking-preview">
-        <div class="preview-card">
-          <div class="preview-header">
-            <span class="preview-pill">Interactive Preview</span>
-            <span class="preview-status" data-state={widgetState}>
-              {#if widgetState === "ready"}
-                Live
-              {:else if widgetState === "loading"}
-                Loading
-              {:else}
-                Pending
-              {/if}
-            </span>
+        <div class="preview-header">
+          <div class="preview-copy">
+            <span class="preview-pill">Live Scheduling</span>
+            <h3>Choose a time and book directly.</h3>
           </div>
-
-          <div class="widget-frame">
-            <div bind:this={widgetHost} class:widget-host-ready={widgetState === "ready"}></div>
-
-            {#if widgetState === "loading"}
-              <div class="widget-message">
-                <span class="spin">
-                  <Icon name="loader-circle" size={20} strokeWidth={1.8} />
-                </span>
-                Loading booking experience...
-              </div>
-            {:else if widgetState === "error"}
-              <div class="widget-message error">
-                <Icon name="triangle-alert" size={20} strokeWidth={1.8} />
-                {widgetError}
-              </div>
+          <span class="preview-status" data-state={widgetState}>
+            {#if widgetState === "ready"}
+              Live
+            {:else if widgetState === "loading"}
+              Loading
+            {:else}
+              Pending
             {/if}
-          </div>
+          </span>
         </div>
 
-        <div class="embed-card">
-          <div class="embed-header">
-            <h3>Embed snippet</h3>
-            <span>Copy into any page shell</span>
-          </div>
-          <pre><code>{embedSnippet}</code></pre>
+        <div class="widget-stage" class:pending={widgetState !== "ready"}>
+          <div bind:this={widgetHost} class:widget-host-ready={widgetState === "ready"}></div>
+
+          {#if widgetState === "loading"}
+            <div class="widget-message">
+              <span class="spin">
+                <Icon name="loader-circle" size={20} strokeWidth={1.8} />
+              </span>
+              Loading availability...
+            </div>
+          {:else if widgetState === "error"}
+            <div class="widget-message error">
+              <Icon name="triangle-alert" size={20} strokeWidth={1.8} />
+              {widgetError}
+            </div>
+          {/if}
         </div>
       </div>
     </div>
@@ -280,36 +263,59 @@
 
   .booking-copy {
     display: grid;
-    gap: 24px;
+    gap: 22px;
   }
 
   .booking-copy h2 {
-    font-size: clamp(36px, 4.5vw, 52px);
-    line-height: 1.1;
+    font-size: clamp(34px, 4.2vw, 48px);
+    line-height: 1.08;
     color: var(--text-primary);
+    letter-spacing: -0.03em;
   }
 
   .lead {
     font-size: 18px;
-    line-height: 1.75;
+    line-height: 1.7;
     color: var(--text-secondary);
-    max-width: 60ch;
+    max-width: 58ch;
   }
 
-  .signal-list {
+  .booking-points {
     display: grid;
     gap: 14px;
-    color: var(--text-secondary);
   }
 
-  .signal-list div {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+  .point-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 14px;
+    padding: 18px 20px;
+    border-radius: 22px;
+    border: 1px solid rgba(20, 91, 122, 0.18);
+    background: rgba(248, 250, 252, 0.52);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 18px 44px rgba(15, 23, 42, 0.06);
+  }
+
+  :global([data-theme="dark"]) .point-card {
+    background: rgba(11, 18, 38, 0.52);
+    box-shadow: 0 24px 60px rgba(2, 6, 23, 0.26);
+  }
+
+  .point-card strong {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--text-primary);
     font-size: 15px;
   }
 
-  .signal-icon {
+  .point-card span:last-child {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .point-icon {
     width: 34px;
     height: 34px;
     display: inline-flex;
@@ -320,52 +326,16 @@
     color: #145b7a;
   }
 
-  :global([data-theme="dark"]) .signal-icon {
+  :global([data-theme="dark"]) .point-icon {
     background: rgba(167, 243, 208, 0.14);
     color: #a7f3d0;
   }
 
-  .meta-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
-  }
-
-  .meta-card,
-  .preview-card,
-  .embed-card {
-    border-radius: 28px;
-    border: 1px solid rgba(20, 91, 122, 0.18);
-    background: rgba(248, 250, 252, 0.78);
-    backdrop-filter: blur(18px);
-    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
-  }
-
-  :global([data-theme="dark"]) .meta-card,
-  :global([data-theme="dark"]) .preview-card,
-  :global([data-theme="dark"]) .embed-card {
-    background: rgba(11, 18, 38, 0.68);
-    box-shadow: 0 32px 80px rgba(2, 6, 23, 0.34);
-  }
-
-  .meta-card {
-    display: grid;
-    gap: 8px;
-    padding: 20px 22px;
-  }
-
-  .meta-label {
-    font-size: 12px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+  .booking-note {
+    max-width: 54ch;
     color: var(--text-tertiary);
-  }
-
-  .meta-card strong {
-    font-size: 15px;
-    line-height: 1.5;
-    color: var(--text-primary);
-    word-break: break-word;
+    font-size: 14px;
+    line-height: 1.7;
   }
 
   .action-row {
@@ -375,26 +345,13 @@
     flex-wrap: wrap;
   }
 
-  .inline-link {
-    color: #145b7a;
-    font-weight: 600;
-  }
-
-  :global([data-theme="dark"]) .inline-link {
-    color: #5eead4;
-  }
-
   .booking-preview {
     display: grid;
     gap: 18px;
+    align-content: start;
   }
 
-  .preview-card {
-    padding: 24px;
-  }
-
-  .preview-header,
-  .embed-header {
+  .preview-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -402,7 +359,13 @@
   }
 
   .preview-header {
-    margin-bottom: 18px;
+    margin-bottom: 0;
+    padding: 0 4px;
+  }
+
+  .preview-copy {
+    display: grid;
+    gap: 6px;
   }
 
   .preview-pill {
@@ -410,6 +373,13 @@
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--text-tertiary);
+  }
+
+  .preview-copy h3 {
+    font-size: 22px;
+    line-height: 1.2;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
   }
 
   .preview-status {
@@ -432,9 +402,13 @@
     color: #a7f3d0;
   }
 
-  .widget-frame {
+  .widget-stage {
     position: relative;
-    min-height: 720px;
+    overflow: visible;
+  }
+
+  .widget-stage.pending {
+    min-height: 520px;
     border-radius: 24px;
     border: 1px solid rgba(20, 91, 122, 0.18);
     background:
@@ -444,14 +418,14 @@
     overflow: hidden;
   }
 
-  :global([data-theme="dark"]) .widget-frame {
+  :global([data-theme="dark"]) .widget-stage.pending {
     background:
       radial-gradient(circle at top, rgba(94, 234, 212, 0.18), transparent 42%),
       rgba(15, 23, 42, 0.8);
   }
 
   .widget-host-ready {
-    min-height: 100%;
+    min-height: 0;
   }
 
   .widget-host-ready :global(ac-booking) {
@@ -484,41 +458,6 @@
     color: #fca5a5;
   }
 
-  .embed-card {
-    padding: 22px 24px;
-  }
-
-  .embed-header {
-    margin-bottom: 14px;
-  }
-
-  .embed-header h3 {
-    font-size: 18px;
-    color: var(--text-primary);
-  }
-
-  .embed-header span {
-    font-size: 13px;
-    color: var(--text-tertiary);
-  }
-
-  .embed-card pre {
-    margin: 0;
-    padding: 18px 20px;
-    border-radius: 18px;
-    overflow: auto;
-    background: rgba(15, 23, 42, 0.94);
-    color: #e2e8f0;
-    font-family:
-      "JetBrains Mono",
-      "SFMono-Regular",
-      Consolas,
-      "Liberation Mono",
-      monospace;
-    font-size: 13px;
-    line-height: 1.7;
-  }
-
   .spin {
     animation: spin 1.1s linear infinite;
   }
@@ -543,18 +482,14 @@
       padding: 88px 0;
     }
 
-    .meta-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .widget-frame {
-      min-height: 640px;
+    .widget-stage.pending {
+      min-height: 420px;
       padding: 14px;
     }
 
-    .preview-card,
-    .embed-card {
-      padding: 18px;
+    .preview-header {
+      align-items: flex-start;
+      flex-direction: column;
     }
   }
 </style>
