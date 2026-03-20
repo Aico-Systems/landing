@@ -1,4 +1,4 @@
-<script lang="ts">
+I<script lang="ts">
   import { onMount } from "svelte";
   import { theme } from "../../stores/theme";
   import Badge from "../components/Badge.svelte";
