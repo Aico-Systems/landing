@@ -7,6 +7,7 @@
   export let fallback: any = null;
   export let rootMargin: string = "100px";
   export let threshold: number = 0;
+  export let eager = false;
 
   let LoadedComponent: any = null;
   let isLoading = false;
@@ -14,7 +15,7 @@
   let containerElement: HTMLDivElement;
 
   async function loadComponent() {
-    if (isLoading || LoadedComponent) return;
+    if (isLoading || LoadedComponent || !component) return;
 
     isLoading = true;
     try {
@@ -30,6 +31,10 @@
 
   function handleVisible(event: Event) {
     loadComponent();
+  }
+
+  $: if (eager) {
+    void loadComponent();
   }
 
   onMount(() => {

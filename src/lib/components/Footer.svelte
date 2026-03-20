@@ -1,5 +1,17 @@
 <script lang="ts">
 	import Icon from "./Icon.svelte";
+	import {
+		getSectionIdFromHash,
+		requestSectionNavigation,
+	} from "../utils/sectionNavigation";
+
+	function handleSectionLinkClick(event: MouseEvent, href: string) {
+		const sectionId = getSectionIdFromHash(href);
+		if (!sectionId) return;
+
+		event.preventDefault();
+		requestSectionNavigation(sectionId);
+	}
 </script>
 
 <footer class="footer">
@@ -21,23 +33,51 @@
 				<div class="footer-links">
 					<div class="footer-column">
 						<h4>Product</h4>
-						<a href="#hero">Overview</a>
-						<a href="#features">Platform</a>
-						<a href="#use-cases">Solutions</a>
+						<a href="#hero" on:click={(event) => handleSectionLinkClick(event, "#hero")}
+							>Overview</a
+						>
+						<a
+							href="#features"
+							on:click={(event) => handleSectionLinkClick(event, "#features")}
+							>Platform</a
+						>
+						<a
+							href="#use-cases"
+							on:click={(event) => handleSectionLinkClick(event, "#use-cases")}
+							>Solutions</a
+						>
 					</div>
 
 					<div class="footer-column">
 						<h4>Company</h4>
-						<a href="#contact">Contact</a>
-						<a href="#testimonials">Customers</a>
+						<a
+							href="#contact"
+							on:click={(event) => handleSectionLinkClick(event, "#contact")}
+							>Contact</a
+						>
+						<a
+							href="#testimonials"
+							on:click={(event) => handleSectionLinkClick(event, "#testimonials")}
+							>Customers</a
+						>
 						<a href="mailto:nikita@aicoflow.com">Press</a>
 					</div>
 
 					<div class="footer-column">
 						<h4>Resources</h4>
-						<a href="#how-it-works">Implementation</a>
-						<a href="#cta">Security</a>
-						<a href="#use-cases">Customer stories</a>
+						<a
+							href="#how-it-works"
+							on:click={(event) => handleSectionLinkClick(event, "#how-it-works")}
+							>Implementation</a
+						>
+						<a href="#cta" on:click={(event) => handleSectionLinkClick(event, "#cta")}
+							>Security</a
+						>
+						<a
+							href="#use-cases"
+							on:click={(event) => handleSectionLinkClick(event, "#use-cases")}
+							>Customer stories</a
+						>
 					</div>
 				</div>
 

@@ -12,7 +12,7 @@
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        padding: 5px 12px;
+        padding: 6px 12px;
         border-radius: 999px;
         font-size: 11px;
         font-weight: 600;
@@ -23,23 +23,26 @@
     }
 
     .badge-default {
-        background: rgba(167, 243, 208, 0.12);
-        border: 1px solid rgba(167, 243, 208, 0.30);
+        background: rgba(20, 91, 122, 0.08);
+        border: 1px solid rgba(20, 91, 122, 0.18);
         color: #145B7A;
     }
 
     :global([data-theme="dark"]) .badge-default {
+        background: rgba(167, 243, 208, 0.08);
+        border-color: rgba(167, 243, 208, 0.18);
         color: #A7F3D0;
     }
 
     .badge-outline {
-        background: transparent;
-        border: 1px solid rgba(20, 91, 122, 0.34);
+        background: rgba(255, 255, 255, 0.5);
+        border: 1px solid rgba(20, 91, 122, 0.18);
         color: #145B7A;
     }
 
     :global([data-theme="dark"]) .badge-outline {
-        border-color: rgba(167, 243, 208, 0.35);
+        background: rgba(15, 23, 42, 0.45);
+        border-color: rgba(167, 243, 208, 0.18);
         color: #A7F3D0;
     }
 </style>

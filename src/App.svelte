@@ -1,15 +1,17 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { onMount, tick } from "svelte";
+  import Navigation from "./lib/components/Navigation.svelte";
   import Footer from "./lib/components/Footer.svelte";
+  import LazyComponent from "./lib/components/LazyComponent.svelte";
+  import Hero from "./lib/sections/Hero.svelte";
+  import {
+    SECTION_NAVIGATION_EVENT,
+    getSectionIdFromHash,
+    scrollToSectionElement,
+    type SectionId,
+    type SectionNavigationDetail,
+  } from "./lib/utils/sectionNavigation";
 
-  // Defer ALL imports except critical components
-  let Navigation: any;
-  let Hero: any;
-  let LazyComponent: any;
-
-  // Lazy load heavy components using dynamic imports
-  const lazyWebGLBackground = () =>
-    import("./lib/components/WebGLBackground.svelte");
   const lazyHowItWorks = () => import("./lib/sections/HowItWorks.svelte");
   const lazyFeatures = () => import("./lib/sections/Features.svelte");
   const lazyUseCases = () => import("./lib/sections/UseCases.svelte");
@@ -19,94 +21,166 @@
     import("./lib/sections/ContactSection.svelte");
   const lazyCTASection = () => import("./lib/sections/CTASection.svelte");
 
-  let showWebGL = false;
-  let isReady = false;
+  let WebGLBackground: any = null;
+  let loadAllSections = false;
+  let pendingNavigation: { sectionId: SectionId; behavior: ScrollBehavior } | null =
+    null;
 
-  onMount(async () => {
-    // Load critical components immediately
-    const [navModule, heroModule, lazyModule] = await Promise.all([
-      import("./lib/components/Navigation.svelte"),
-      import("./lib/sections/Hero.svelte"),
-      import("./lib/components/LazyComponent.svelte"),
-    ]);
+  const wait = (ms: number) =>
+    new Promise<void>((resolve) => window.setTimeout(resolve, ms));
 
-    Navigation = navModule.default;
-    Hero = heroModule.default;
-    LazyComponent = lazyModule.default;
-    isReady = true;
+  async function waitForSectionElement(
+    sectionId: SectionId,
+    timeoutMs = 5000,
+  ): Promise<boolean> {
+    const start = performance.now();
 
-    // Defer heavy initialization to next idle period
-    requestIdleCallback(
-      () => {
-        requestAnimationFrame(() => {
-          showWebGL = true;
-        });
-      },
-      { timeout: 2000 },
+    while (performance.now() - start <= timeoutMs) {
+      if (document.getElementById(sectionId)) {
+        return true;
+      }
+
+      await wait(50);
+    }
+
+    return false;
+  }
+
+  async function navigateToSection(
+    sectionId: SectionId,
+    behavior: ScrollBehavior = "smooth",
+  ) {
+    pendingNavigation = { sectionId, behavior };
+
+    if (sectionId !== "hero") {
+      loadAllSections = true;
+    }
+
+    await tick();
+    const sectionReady =
+      sectionId === "hero" ? true : await waitForSectionElement(sectionId);
+
+    if (
+      !sectionReady ||
+      !pendingNavigation ||
+      pendingNavigation.sectionId !== sectionId
+    ) {
+      return;
+    }
+
+    scrollToSectionElement(sectionId, behavior);
+    pendingNavigation = null;
+  }
+
+  async function loadWebGLBackground() {
+    if (WebGLBackground) return;
+
+    const module = await import("./lib/components/WebGLBackground.svelte");
+    WebGLBackground = module.default;
+  }
+
+  onMount(() => {
+    const handleRequestedNavigation = (event: Event) => {
+      const { sectionId, behavior = "smooth" } = (
+        event as CustomEvent<SectionNavigationDetail>
+      ).detail;
+
+      void navigateToSection(sectionId, behavior);
+    };
+
+    const handleHashChange = () => {
+      const sectionId = getSectionIdFromHash(window.location.hash);
+      if (!sectionId) return;
+      void navigateToSection(sectionId, "auto");
+    };
+
+    window.addEventListener(
+      SECTION_NAVIGATION_EVENT,
+      handleRequestedNavigation as EventListener,
     );
+    window.addEventListener("hashchange", handleHashChange);
+
+    const initialSection = getSectionIdFromHash(window.location.hash);
+    if (initialSection) {
+      void navigateToSection(initialSection, "auto");
+    }
+
+    if ("requestIdleCallback" in window) {
+      requestIdleCallback(
+        () => {
+          void loadWebGLBackground();
+        },
+        { timeout: 2000 },
+      );
+    } else {
+      setTimeout(() => {
+        void loadWebGLBackground();
+      }, 0);
+    }
+
+    return () => {
+      window.removeEventListener(
+        SECTION_NAVIGATION_EVENT,
+        handleRequestedNavigation as EventListener,
+      );
+      window.removeEventListener("hashchange", handleHashChange);
+    };
   });
 </script>
 
-{#if isReady}
-  {#if showWebGL && LazyComponent}
-    <svelte:component this={LazyComponent} component={lazyWebGLBackground} />
-  {/if}
-  <div class="blur-layer"></div>
-
-  {#if Navigation}
-    <svelte:component this={Navigation} />
-  {/if}
-
-  <main>
-    {#if Hero}
-      <svelte:component this={Hero} />
-    {/if}
-
-    {#if LazyComponent}
-      <svelte:component
-        this={LazyComponent}
-        component={lazyHowItWorks}
-        rootMargin="200px"
-      />
-      <svelte:component
-        this={LazyComponent}
-        component={lazyFeatures}
-        rootMargin="200px"
-      />
-      <svelte:component
-        this={LazyComponent}
-        component={lazyUseCases}
-        rootMargin="200px"
-      />
-      <svelte:component
-        this={LazyComponent}
-        component={lazyBookingSection}
-        rootMargin="200px"
-      />
-      <svelte:component
-        this={LazyComponent}
-        component={lazyTestimonials}
-        rootMargin="200px"
-      />
-      <svelte:component
-        this={LazyComponent}
-        component={lazyContactSection}
-        rootMargin="200px"
-      />
-      <svelte:component
-        this={LazyComponent}
-        component={lazyCTASection}
-        rootMargin="200px"
-      />
-    {/if}
-    <Footer />
-  </main>
-{:else}
-  <!-- Ultra-minimal loading state -->
-  <div class="app-loading">
-    <div class="spinner"></div>
-  </div>
+{#if WebGLBackground}
+  <svelte:component this={WebGLBackground} />
 {/if}
+<div class="blur-layer"></div>
+
+<Navigation />
+
+<main>
+  <Hero />
+  <svelte:component
+    this={LazyComponent}
+    component={lazyHowItWorks}
+    eager={loadAllSections}
+    rootMargin="200px"
+  />
+  <svelte:component
+    this={LazyComponent}
+    component={lazyFeatures}
+    eager={loadAllSections}
+    rootMargin="200px"
+  />
+  <svelte:component
+    this={LazyComponent}
+    component={lazyUseCases}
+    eager={loadAllSections}
+    rootMargin="200px"
+  />
+  <svelte:component
+    this={LazyComponent}
+    component={lazyBookingSection}
+    eager={loadAllSections}
+    rootMargin="200px"
+  />
+  <svelte:component
+    this={LazyComponent}
+    component={lazyTestimonials}
+    eager={loadAllSections}
+    rootMargin="200px"
+  />
+  <svelte:component
+    this={LazyComponent}
+    component={lazyContactSection}
+    eager={loadAllSections}
+    rootMargin="200px"
+  />
+  <svelte:component
+    this={LazyComponent}
+    component={lazyCTASection}
+    eager={loadAllSections}
+    rootMargin="200px"
+  />
+  <Footer />
+</main>
 
 <style>
   :global(*) {
@@ -145,9 +219,10 @@
   :global(section) {
     position: relative;
     z-index: 2;
-    /* Enable content-visibility for better rendering performance */
-    content-visibility: auto;
-    contain-intrinsic-size: auto 500px;
+  }
+
+  :global(section[id]) {
+    scroll-margin-top: 104px;
   }
 
   :global(h1, h2, h3, h4, h5, h6) {
@@ -185,15 +260,18 @@
     justify-content: center;
     min-height: 44px;
     padding: 10px 18px;
-    border-radius: 10px;
+    border-radius: 12px;
     font-weight: 600;
     font-size: 14px;
     cursor: pointer;
     transition:
       background-color 0.2s ease,
-      border-color 0.2s ease;
+      border-color 0.2s ease,
+      color 0.2s ease,
+      box-shadow 0.2s ease;
     border: 1px solid transparent;
     text-align: center;
+    box-shadow: none;
   }
 
   :global(.btn-primary) {
@@ -205,45 +283,29 @@
   :global(.btn-primary:hover) {
     background: #114d67;
     border-color: #114d67;
+    box-shadow: 0 1px 0 rgba(15, 23, 42, 0.12);
   }
 
   :global(.btn-secondary) {
-    background: var(--card-bg);
+    background: rgba(255, 255, 255, 0.78);
     color: var(--text-primary);
-    border-color: var(--border-color);
+    border-color: rgba(15, 23, 42, 0.12);
   }
 
   :global(.btn-secondary:hover) {
-    background: var(--bg-secondary);
-    border-color: rgba(20, 91, 122, 0.35);
+    background: rgba(255, 255, 255, 0.92);
+    border-color: rgba(20, 91, 122, 0.28);
+    box-shadow: 0 1px 0 rgba(15, 23, 42, 0.08);
   }
 
-  /* Loading spinner styles */
-  .app-loading {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--bg-primary);
-    z-index: 9999;
+  :global([data-theme="dark"] .btn-secondary) {
+    background: rgba(15, 23, 42, 0.72);
+    border-color: rgba(148, 163, 184, 0.22);
   }
 
-  .spinner {
-    width: 48px;
-    height: 48px;
-    border: 4px solid rgba(20, 91, 122, 0.1);
-    border-top-color: #145b7a;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
+  :global([data-theme="dark"] .btn-secondary:hover) {
+    background: rgba(15, 23, 42, 0.88);
+    border-color: rgba(167, 243, 208, 0.22);
   }
 
-  @keyframes spin {
-    to {
-      transform: rotate(360deg);
-    }
-  }
 </style>

@@ -1,5 +1,9 @@
 <script lang="ts">
   import Icon from '../components/Icon.svelte';
+  import {
+    getSectionIdFromHash,
+    requestSectionNavigation,
+  } from "../utils/sectionNavigation";
 
   const channels = [
     {
@@ -33,6 +37,14 @@
       ]
     }
   ];
+
+  function handleActionClick(event: MouseEvent, href: string) {
+    const sectionId = getSectionIdFromHash(href);
+    if (!sectionId) return;
+
+    event.preventDefault();
+    requestSectionNavigation(sectionId);
+  }
 </script>
 
 <section id="contact" class="contact">
@@ -84,7 +96,11 @@
             <p>{channel.description}</p>
             <div class="card-actions">
               {#each channel.actions as action}
-                <a href={action.href} class="card-link">
+                <a
+                  href={action.href}
+                  class="card-link"
+                  on:click={(event) => handleActionClick(event, action.href)}
+                >
                   {action.label}
                   <Icon name="arrow-up-right" size={16} strokeWidth={1.8} />
                 </a>

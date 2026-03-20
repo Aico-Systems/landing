@@ -1,9 +1,10 @@
-I<script lang="ts">
+<script lang="ts">
   import { onMount } from "svelte";
   import { theme } from "../../stores/theme";
   import Badge from "../components/Badge.svelte";
   import Button from "../components/Button.svelte";
   import Icon from "../components/Icon.svelte";
+  import { requestSectionNavigation } from "../utils/sectionNavigation";
 
   type WidgetWindow = Window & {
     __AICO_BOOKING_WIDGET_READY__?: Promise<void>;
@@ -146,13 +147,6 @@ I<script lang="ts">
     }
   }
 
-  function scrollToSection(sectionId: string) {
-    document.getElementById(sectionId)?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-  }
-
   onMount(() => {
     void mountWidget();
   });
@@ -204,8 +198,14 @@ I<script lang="ts">
         </p>
 
         <div class="action-row">
-          <Button variant="primary" onClick={() => scrollToSection("cta")}>Talk To Sales</Button>
-          <Button variant="secondary" onClick={() => scrollToSection("how-it-works")}>See Delivery Model</Button>
+          <Button variant="primary" onClick={() => requestSectionNavigation("cta")}
+            >Talk To Sales</Button
+          >
+          <Button
+            variant="secondary"
+            onClick={() => requestSectionNavigation("how-it-works")}
+            >See Delivery Model</Button
+          >
         </div>
       </div>
 
