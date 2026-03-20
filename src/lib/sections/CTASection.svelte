@@ -17,11 +17,11 @@
   <div class="container">
     <div class="cta-shell">
       <div class="cta-copy">
-        <Badge variant="outline">Pilot Aico</Badge>
+        <Badge variant="outline">Pilot AICOYO</Badge>
         <h2>Spin up your voice agent pilot in days, not months.</h2>
         <p>
           Share a work email and our team will schedule a working session. Bring
-          your call flows, tools, and success metrics—we’ll show you how Aico
+          your call flows, tools, and success metrics—we’ll show you how AICOYO
           maps to them instantly.
         </p>
 
@@ -232,6 +232,11 @@
   }
 
   @media (max-width: 968px) {
+    .cta-section {
+      padding: 92px 0;
+      min-height: auto;
+    }
+
     .cta-shell {
       grid-template-columns: 1fr;
       padding: 36px 28px;
@@ -244,6 +249,49 @@
 
     .cta-panel {
       padding: 28px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .cta-section {
+      padding: 80px 0;
+    }
+
+    .cta-shell {
+      gap: 24px;
+      padding: 24px 18px;
+      border-radius: 24px;
+    }
+
+    .cta-copy h2 {
+      font-size: 30px;
+      line-height: 1.1;
+    }
+
+    .cta-copy p {
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    .email-input {
+      min-width: 0;
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 15px;
+    }
+
+    .cta-form :global(.btn) {
+      width: 100%;
+    }
+
+    .cta-panel {
+      padding: 22px 18px;
+      border-radius: 20px;
+    }
+
+    .panel-footnote {
+      align-items: flex-start;
+      line-height: 1.6;
     }
   }
 </style>

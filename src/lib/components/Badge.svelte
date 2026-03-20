@@ -11,38 +11,26 @@
     .badge {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
-        padding: 6px 12px;
+        gap: 6px;
+        min-height: var(--control-height-sm);
+        padding: 0 10px;
         border-radius: 999px;
-        font-size: 11px;
+        border: 1px solid var(--accent-border);
+        font-size: 10px;
         font-weight: 600;
         text-transform: uppercase;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.12em;
         width: fit-content;
         white-space: nowrap;
     }
 
     .badge-default {
-        background: rgba(20, 91, 122, 0.08);
-        border: 1px solid rgba(20, 91, 122, 0.18);
-        color: #145B7A;
-    }
-
-    :global([data-theme="dark"]) .badge-default {
-        background: rgba(167, 243, 208, 0.08);
-        border-color: rgba(167, 243, 208, 0.18);
-        color: #A7F3D0;
+        background: var(--accent-soft);
+        color: var(--accent-primary);
     }
 
     .badge-outline {
-        background: rgba(255, 255, 255, 0.5);
-        border: 1px solid rgba(20, 91, 122, 0.18);
-        color: #145B7A;
-    }
-
-    :global([data-theme="dark"]) .badge-outline {
-        background: rgba(15, 23, 42, 0.45);
-        border-color: rgba(167, 243, 208, 0.18);
-        color: #A7F3D0;
+        background: var(--surface-elevated);
+        color: var(--accent-primary);
     }
 </style>

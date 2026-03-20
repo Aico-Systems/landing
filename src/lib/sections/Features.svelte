@@ -71,7 +71,7 @@
       <span class="eyebrow">Built for scaled voice automation</span>
       <h2>The platform your operators and engineers both love.</h2>
       <p>
-        Aico fuses the reliability of a contact center with the adaptability of
+        AICOYO fuses the reliability of a contact center with the adaptability of
         modern AI. Every layer—from voice to knowledge to tooling—was designed
         for mission-critical teams.
       </p>
@@ -233,6 +233,16 @@
   }
 
   @media (max-width: 968px) {
+    .features {
+      padding: 92px 0;
+    }
+
+    .section-intro {
+      margin-bottom: 40px;
+      text-align: left;
+      align-items: flex-start;
+    }
+
     .features-grid {
       grid-template-columns: 1fr;
       gap: 24px;
@@ -251,6 +261,32 @@
     .section-intro {
       text-align: left;
       align-items: flex-start;
+    }
+
+    .features {
+      padding: 80px 0;
+    }
+
+    .section-intro h2 {
+      font-size: 30px;
+    }
+
+    .section-intro p {
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    .feature-card {
+      padding: 24px 18px;
+      border-radius: 18px;
+    }
+
+    .feature-header {
+      align-items: flex-start;
+    }
+
+    .feature-pill {
+      font-size: 15px;
     }
   }
 </style>

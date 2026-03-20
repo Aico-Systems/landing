@@ -29,7 +29,7 @@
     {
       tag: 'Partnerships',
       title: 'Integrations & co-selling',
-      description: 'Partner with Aico to embed our agents into your stack or co-deliver voice automation programs.',
+      description: 'Partner with AICOYO to embed our agents into your stack or co-deliver voice automation programs.',
       icon: 'handshake',
       actions: [
         { label: 'Contact partnerships', href: 'mailto:nikita@aicoflow.com' },
@@ -52,7 +52,7 @@
     <div class="contact-shell">
       <div class="contact-intro">
         <span class="eyebrow">Let’s build your voice ops</span>
-        <h2>Talk to the Aico team.</h2>
+        <h2>Talk to the AICOYO team.</h2>
         <p>
           Whether you are designing a pilot or rolling out globally, our specialists will help you map each call journey,
           connect tooling, and ship with confidence.
@@ -327,7 +327,7 @@
 
   @media (max-width: 768px) {
     .contact {
-      padding: 100px 0;
+      padding: 88px 0;
     }
 
     .contact-intro {
@@ -336,6 +336,39 @@
 
     .contact-card {
       padding: 28px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .contact {
+      padding: 80px 0;
+    }
+
+    h2 {
+      font-size: 30px;
+    }
+
+    .contact-intro,
+    .contact-card {
+      padding: 22px 18px;
+      border-radius: 20px;
+    }
+
+    .contact-intro p,
+    .contact-card p {
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .highlight {
+      align-items: start;
+      grid-template-columns: 28px 1fr;
+      gap: 12px;
+    }
+
+    .card-link {
+      width: 100%;
+      justify-content: space-between;
     }
   }
 </style>

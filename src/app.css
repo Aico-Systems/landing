@@ -11,19 +11,63 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
+  --blueprint-content-max-width: 1200px;
+  --blueprint-radius-xs: 4px;
+  --blueprint-radius-sm: 6px;
+  --blueprint-radius-md: 10px;
+  --blueprint-radius-lg: 16px;
+  --blueprint-radius-xl: 24px;
+  --control-height-sm: 30px;
+  --control-height-md: 36px;
+  --control-height-lg: 44px;
+  --transition-duration-fast: 0.18s;
+  --transition-duration: 0.28s;
+  --transition-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-easing-smooth: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --transition-colors:
+    color var(--transition-duration-fast) var(--transition-easing),
+    background-color var(--transition-duration-fast) var(--transition-easing),
+    border-color var(--transition-duration-fast) var(--transition-easing);
+  --transition-button:
+    var(--transition-colors),
+    box-shadow var(--transition-duration-fast) var(--transition-easing),
+    transform 0.2s var(--transition-easing-smooth);
+
   /* Light theme (default) */
   --text-primary: #0F172A;
   --text-secondary: #475569;
   --text-tertiary: #64748B;
-  --bg-primary: #F8FAFC;
-  --bg-secondary: #F1F5F9;
+  --bg-primary: #F6F8FB;
+  --bg-secondary: #EEF2F7;
   --bg-tertiary: #E2E8F0;
   --bg-secondary-rgb: 241, 245, 249;
-  --border-color: rgba(0, 0, 0, 0.05);
-  --shadow-color: rgba(0, 0, 0, 0.1);
-  --nav-bg: rgba(248, 250, 252, 0.95);
+  --border-color: rgba(15, 23, 42, 0.08);
+  --border-subtle: rgba(15, 23, 42, 0.08);
+  --border-strong: rgba(15, 23, 42, 0.14);
+  --shadow-color: rgba(15, 23, 42, 0.04);
+  --panel-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --panel-shadow-lg: 0 6px 18px rgba(15, 23, 42, 0.08);
+  --nav-bg: rgba(246, 248, 251, 0.86);
   --card-bg: #ffffff;
-  --hover-bg: rgba(0, 0, 0, 0.05);
+  --hover-bg: rgba(15, 23, 42, 0.05);
+  --surface-elevated: rgba(255, 255, 255, 0.92);
+  --surface-elevated-strong: rgba(255, 255, 255, 0.97);
+  --surface-muted: rgba(15, 23, 42, 0.04);
+  --surface-overlay: rgba(255, 255, 255, 0.88);
+  --surface-overlay-strong: rgba(255, 255, 255, 0.96);
+  --accent-primary: #145B7A;
+  --accent-primary-strong: #114d67;
+  --accent-soft: rgba(20, 91, 122, 0.08);
+  --accent-soft-strong: rgba(20, 91, 122, 0.14);
+  --accent-border: rgba(20, 91, 122, 0.14);
+  --button-primary-bg: #145B7A;
+  --button-primary-bg-hover: #114d67;
+  --button-primary-text: #FFFFFF;
+  --button-secondary-bg: rgba(255, 255, 255, 0.92);
+  --button-secondary-bg-hover: rgba(255, 255, 255, 0.98);
+  --button-secondary-text: #0F172A;
+  --button-secondary-border: rgba(15, 23, 42, 0.12);
+  --button-secondary-border-hover: rgba(20, 91, 122, 0.18);
   --gradient-start: #0B1226;
   --gradient-end: #145B7A;
 }
@@ -37,11 +81,33 @@
   --bg-secondary: #0F172A;
   --bg-tertiary: #1E293B;
   --bg-secondary-rgb: 15, 23, 42;
-  --border-color: rgba(255, 255, 255, 0.12);
+  --border-color: rgba(148, 163, 184, 0.16);
+  --border-subtle: rgba(148, 163, 184, 0.16);
+  --border-strong: rgba(148, 163, 184, 0.24);
   --shadow-color: rgba(0, 0, 0, 0.5);
-  --nav-bg: rgba(11, 18, 38, 0.98);
+  --panel-shadow: 0 1px 2px rgba(2, 6, 23, 0.18);
+  --panel-shadow-lg: 0 8px 20px rgba(2, 6, 23, 0.22);
+  --nav-bg: rgba(11, 18, 38, 0.9);
   --card-bg: #0F172A;
   --hover-bg: rgba(255, 255, 255, 0.06);
+  --surface-elevated: rgba(15, 23, 42, 0.9);
+  --surface-elevated-strong: rgba(15, 23, 42, 0.96);
+  --surface-muted: rgba(255, 255, 255, 0.05);
+  --surface-overlay: rgba(11, 18, 38, 0.88);
+  --surface-overlay-strong: rgba(11, 18, 38, 0.94);
+  --accent-primary: #5EEAD4;
+  --accent-primary-strong: #A7F3D0;
+  --accent-soft: rgba(167, 243, 208, 0.08);
+  --accent-soft-strong: rgba(167, 243, 208, 0.14);
+  --accent-border: rgba(167, 243, 208, 0.16);
+  --button-primary-bg: #5EEAD4;
+  --button-primary-bg-hover: #7CEFD9;
+  --button-primary-text: #06261F;
+  --button-secondary-bg: rgba(15, 23, 42, 0.92);
+  --button-secondary-bg-hover: rgba(30, 41, 59, 0.96);
+  --button-secondary-text: #F8FAFC;
+  --button-secondary-border: rgba(148, 163, 184, 0.18);
+  --button-secondary-border-hover: rgba(167, 243, 208, 0.18);
 }
 
 :root {
@@ -89,10 +155,10 @@ html {
   z-index: 1;
   backdrop-filter: blur(6px);
   pointer-events: none;
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(255, 255, 255, 0.015);
 }
 
 [data-theme="dark"] .blur-layer {
-  backdrop-filter: blur(8px);
-  background: rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(7px);
+  background: rgba(0, 0, 0, 0.18);
 }

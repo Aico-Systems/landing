@@ -3,7 +3,7 @@
 
   const testimonials = [
     {
-      quote: "AICO handles our service scheduling calls flawlessly. Customers think they're speaking to our best employee — and we've reduced call wait times to near zero.",
+      quote: "AICOYO handles our service scheduling calls flawlessly. Customers think they're speaking to our best employee — and we've reduced call wait times to near zero.",
       author: "Operations Lead",
       role: "Automotive Dealership",
       company: "Autohaus Reit",
@@ -19,7 +19,7 @@
       rating: 5
     },
     {
-      quote: "We were skeptical about voice AI for insurance claims intake, but AICO's structured conversation flows capture every detail. Our agents now focus on complex cases only.",
+      quote: "We were skeptical about voice AI for insurance claims intake, but AICOYO's structured conversation flows capture every detail. Our agents now focus on complex cases only.",
       author: "Claims Director",
       role: "Insurance Operations",
       company: "Enterprise Partner",
@@ -36,8 +36,8 @@
   <div class="container">
     <div class="section-header">
       <span class="eyebrow">Proof from the field</span>
-      <h2>Teams trust Aico to run conversations that matter.</h2>
-      <p>Leaders across support, operations, and revenue desks rely on Aico for enterprise-grade calls with measurable ROI.</p>
+      <h2>Teams trust AICOYO to run conversations that matter.</h2>
+      <p>Leaders across support, operations, and revenue desks rely on AICOYO for enterprise-grade calls with measurable ROI.</p>
     </div>
 
     <div class="testimonials-layout">
@@ -308,7 +308,22 @@
 
   @media (max-width: 768px) {
     .testimonials {
-      padding: 96px 0;
+      padding: 88px 0;
+    }
+
+    .section-header {
+      text-align: left;
+      align-items: flex-start;
+      margin-bottom: 40px;
+    }
+
+    .section-header h2 {
+      font-size: 30px;
+    }
+
+    .section-header p {
+      font-size: 16px;
+      line-height: 1.65;
     }
 
     .spotlight-card {
@@ -317,6 +332,31 @@
 
     .testimonial-card {
       padding: 28px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .testimonials {
+      padding: 80px 0;
+    }
+
+    .spotlight-card,
+    .testimonial-card {
+      padding: 22px 18px;
+      border-radius: 20px;
+    }
+
+    .spotlight-header,
+    .spotlight-footer,
+    .card-top {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    blockquote {
+      font-size: 20px;
+      line-height: 1.5;
     }
   }
 </style>

@@ -5,7 +5,7 @@
     {
       badge: 'Day 0',
       title: 'Blueprint your knowledge fabric',
-      description: 'Sync call recordings, SOPs, policies, and product docs. Aico auto-clusters everything into reusable knowledge packs ready for RAG.',
+      description: 'Sync call recordings, SOPs, policies, and product docs. AICOYO auto-clusters everything into reusable knowledge packs ready for RAG.',
       icon: 'book-open',
       bullets: [
         'Segment intent libraries without manual tagging',
@@ -45,7 +45,7 @@
         <span class="eyebrow">Go live without rewriting your ops</span>
         <h2>Design, train, and deploy in less than a week.</h2>
         <p>
-          Aico wraps around your existing playbooks, tools, and compliance rules. We orchestrate knowledge, tooling, and voice so you can launch production-ready agents fast—without guesswork.
+          AICOYO wraps around your existing playbooks, tools, and compliance rules. We orchestrate knowledge, tooling, and voice so you can launch production-ready agents fast—without guesswork.
         </p>
 
         <div class="intro-card">
@@ -327,7 +327,25 @@
 
   @media (max-width: 768px) {
     .how-it-works {
-      padding: 96px 0;
+      padding: 88px 0;
+    }
+
+    .intro {
+      gap: 18px;
+    }
+
+    h2 {
+      font-size: 32px;
+    }
+
+    .intro-card {
+      margin-top: 12px;
+      padding: 22px;
+    }
+
+    .card-stats {
+      flex-direction: column;
+      gap: 14px;
     }
 
     .timeline-step {
@@ -337,6 +355,27 @@
 
     .timeline-card {
       padding: 24px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .how-it-works {
+      padding: 80px 0;
+    }
+
+    h2 {
+      font-size: 28px;
+    }
+
+    .intro p,
+    .timeline-card p,
+    .timeline-card li {
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .timeline-card {
+      padding: 20px 18px;
     }
   }
 </style>

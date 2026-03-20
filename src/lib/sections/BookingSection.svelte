@@ -161,7 +161,7 @@
     <div class="booking-shell">
       <div class="booking-copy">
         <Badge variant="default">Book A Pilot</Badge>
-        <h2>Schedule a working session with the AICO team.</h2>
+        <h2>Schedule a working session with the AICOYO team.</h2>
         <p class="lead">
           Pick a time that works for your team. In the session we review your
           use case, integration surface, and the fastest path to a production
@@ -349,6 +349,7 @@
     display: grid;
     gap: 18px;
     align-content: start;
+    min-width: 0;
   }
 
   .preview-header {
@@ -405,6 +406,7 @@
   .widget-stage {
     position: relative;
     overflow: visible;
+    min-width: 0;
   }
 
   .widget-stage.pending {
@@ -426,11 +428,14 @@
 
   .widget-host-ready {
     min-height: 0;
+    min-width: 0;
+    width: 100%;
   }
 
   .widget-host-ready :global(ac-booking) {
     display: block;
     width: 100%;
+    max-width: 100%;
   }
 
   .widget-message {
@@ -482,6 +487,35 @@
       padding: 88px 0;
     }
 
+    .booking-copy h2 {
+      font-size: 30px;
+    }
+
+    .lead {
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    .point-card {
+      padding: 16px;
+      border-radius: 18px;
+    }
+
+    .point-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+    }
+
+    .action-row {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+
+    .action-row :global(.btn) {
+      width: 100%;
+    }
+
     .widget-stage.pending {
       min-height: 420px;
       padding: 14px;
@@ -490,6 +524,34 @@
     .preview-header {
       align-items: flex-start;
       flex-direction: column;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .booking-section {
+      padding: 80px 0;
+    }
+
+    .booking-copy {
+      gap: 18px;
+    }
+
+    .widget-stage.pending {
+      min-height: 360px;
+      border-radius: 18px;
+      padding: 12px;
+    }
+
+    .widget-message {
+      inset: 12px;
+      border-radius: 16px;
+      font-size: 14px;
+      text-align: center;
+      padding: 0 12px;
+    }
+
+    .preview-copy h3 {
+      font-size: 20px;
     }
   }
 </style>

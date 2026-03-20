@@ -19,8 +19,8 @@
 		<div class="footer-content">
 			<div class="footer-brand">
 				<div class="logo">
-					<img src="/Logo.svg" alt="AICO" class="logo-img" />
-					<span class="logo-text">AICO</span>
+					<img src="/Logo.svg" alt="AICOYO" class="logo-img" />
+					<span class="logo-text">AICOYO</span>
 				</div>
 				<p>The Conversation Infrastructure.</p>
 				<div class="status-pill">
@@ -112,7 +112,7 @@
 		</div>
 
 		<div class="footer-bottom">
-			<p>&copy; 2026 AICO. All rights reserved.</p>
+			<p>&copy; 2026 AICOYO. All rights reserved.</p>
 			<div class="footer-legal">
 				<a href="#privacy">Privacy Policy</a>
 				<a href="#terms">Terms of Service</a>
@@ -157,9 +157,10 @@
 		width: auto;
 	}
 
-	.footer-brand p {
-		font-size: 14px;
-	}
+		.footer-brand p {
+			font-size: 14px;
+			max-width: 28ch;
+		}
 
 	.status-pill {
 		margin-top: 20px;
@@ -201,11 +202,16 @@
 		align-items: flex-start;
 	}
 
-	.footer-links {
-		display: flex;
-		gap: 48px;
-		flex-wrap: wrap;
-	}
+		.footer-links {
+			display: flex;
+			gap: 48px;
+			flex-wrap: wrap;
+			width: 100%;
+		}
+
+		.footer-column {
+			min-width: 0;
+		}
 
 	.footer-column h4 {
 		color: var(--text-primary);
@@ -255,9 +261,9 @@
 		flex-shrink: 0;
 	}
 
-	.meta-item.socials {
-		gap: 14px;
-	}
+		.meta-item.socials {
+			gap: 14px;
+		}
 
 	.meta-item.socials span {
 		font-size: 12px;
@@ -307,6 +313,11 @@
 	}
 
 	@media (max-width: 968px) {
+		.footer {
+			padding: 56px 0 28px;
+			margin-top: 96px;
+		}
+
 		.footer-content {
 			grid-template-columns: 1fr;
 			gap: 36px;
@@ -331,4 +342,116 @@
 			text-align: center;
 		}
 	}
-</style>
+
+		@media (max-width: 640px) {
+			.footer {
+				padding: 48px 0 24px;
+				margin-top: 80px;
+			}
+
+			.footer-content {
+				gap: 28px;
+				margin-bottom: 32px;
+				text-align: center;
+			}
+
+			.footer-brand {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+			}
+
+			.footer-brand .logo {
+				font-size: 20px;
+				margin-bottom: 12px;
+				justify-content: center;
+			}
+
+			.footer-brand p {
+				max-width: none;
+				font-size: 15px;
+				line-height: 1.55;
+			}
+
+			.status-pill {
+				margin-top: 16px;
+				padding: 0 12px;
+				min-height: 30px;
+				font-size: 11px;
+				letter-spacing: 0.1em;
+				justify-content: center;
+			}
+
+			.footer-right {
+				align-items: center;
+				text-align: center;
+			}
+
+			.footer-links {
+				display: grid;
+				grid-template-columns: 1fr;
+				gap: 20px;
+				width: 100%;
+			}
+
+			.footer-column {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+			}
+
+			.footer-column h4 {
+				margin-bottom: 12px;
+				font-size: 15px;
+			}
+
+			.footer-column a {
+				margin-bottom: 10px;
+				font-size: 15px;
+				line-height: 1.5;
+			}
+
+			.footer-meta {
+				gap: 10px;
+				font-size: 15px;
+				justify-items: center;
+			}
+
+			.meta-item {
+				width: auto;
+				max-width: 100%;
+				align-items: center;
+				justify-content: center;
+				line-height: 1.5;
+				text-align: center;
+			}
+
+			.meta-item.socials {
+				align-items: center;
+				justify-content: center;
+				gap: 12px;
+				flex-wrap: nowrap;
+			}
+
+			.meta-item.socials span {
+				margin-right: 2px;
+			}
+
+			.footer-legal {
+				flex-direction: column;
+				gap: 12px;
+			}
+		}
+
+		@media (max-width: 420px) {
+			.footer {
+				padding: 40px 0 22px;
+				margin-top: 72px;
+			}
+
+			.footer-bottom {
+				padding-top: 22px;
+				gap: 12px;
+			}
+		}
+	</style>

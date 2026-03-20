@@ -6,7 +6,7 @@
       title: 'Support Control Tower',
       badge: 'Customer Experience',
       headline: 'Resolve any inbound issue without looping in a human.',
-      description: 'Aico listens for intent shifts, updates orders, and closes tickets while keeping empathy and compliance intact.',
+      description: 'AICOYO listens for intent shifts, updates orders, and closes tickets while keeping empathy and compliance intact.',
       icon: 'life-buoy',
       stats: [
         { label: 'Average handle time', value: '-52%' },
@@ -27,7 +27,7 @@
       title: 'Revenue Desk',
       badge: 'Revenue Teams',
       headline: 'Qualify, schedule, and route leads on the first ring.',
-      description: 'Whether inbound phone leads or website call-backs, Aico qualifies prospects, captures context, and books meetings in real time.',
+      description: 'Whether inbound phone leads or website call-backs, AICOYO qualifies prospects, captures context, and books meetings in real time.',
       icon: 'target',
       stats: [
         { label: 'Qualified pipeline', value: '+47%' },
@@ -48,7 +48,7 @@
       title: 'Ops Command Center',
       badge: 'Internal Operations',
       headline: 'Give every employee a voice concierge for systems, policies, and approvals.',
-      description: 'Aico handles IT, HR, and facilities requests by orchestrating knowledge, automations, and approvals in seconds.',
+      description: 'AICOYO handles IT, HR, and facilities requests by orchestrating knowledge, automations, and approvals in seconds.',
       icon: 'building-2',
       stats: [
         { label: 'Ticket deflection', value: '78%' },
@@ -73,7 +73,7 @@
 <section id="use-cases" class="use-cases">
   <div class="container">
     <div class="section-header">
-      <span class="eyebrow">Where teams deploy Aico</span>
+      <span class="eyebrow">Where teams deploy AICOYO</span>
       <h2>A single brain powering every conversational workflow.</h2>
       <p>Pick a use case to see how the globe above repositions to match your audience and KPIs.</p>
     </div>
@@ -378,6 +378,21 @@
   }
 
   @media (max-width: 968px) {
+    .use-cases {
+      padding: 92px 0;
+    }
+
+    .section-header {
+      margin-bottom: 40px;
+      text-align: left;
+      align-items: flex-start;
+    }
+
+    .section-header p {
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
     .use-cases-container {
       grid-template-columns: 1fr;
       gap: 32px;
@@ -387,10 +402,22 @@
       flex-direction: row;
       overflow-x: auto;
       padding-bottom: 8px;
+      margin: 0 -4px;
+      padding-inline: 4px;
+      scroll-snap-type: x proximity;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      position: static;
+    }
+
+    .use-cases-tabs::-webkit-scrollbar {
+      display: none;
     }
 
     .tab {
       min-width: 220px;
+      flex: 0 0 auto;
+      scroll-snap-align: start;
     }
 
     .use-case-card {
@@ -404,6 +431,71 @@
     .stats {
       grid-template-columns: 1fr;
       gap: 24px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .use-cases {
+      padding: 80px 0;
+    }
+
+    .section-header h2 {
+      font-size: 30px;
+    }
+
+    .use-cases-tabs {
+      gap: 12px;
+      margin: 0 -2px;
+      padding-inline: 2px;
+    }
+
+    .tab {
+      min-width: min(280px, calc(100vw - 40px));
+      padding: 14px 16px;
+      border-radius: 14px;
+    }
+
+    .tab:hover,
+    .tab.active {
+      transform: none;
+    }
+
+    .tab-title {
+      font-size: 15px;
+    }
+
+    .use-case-content {
+      min-height: auto;
+    }
+
+    .use-case-card {
+      padding: 24px 18px;
+      gap: 22px;
+      border-radius: 20px;
+    }
+
+    h3 {
+      font-size: 24px;
+    }
+
+    .card-header p {
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .stats {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px 14px;
+    }
+
+    .stat-value {
+      font-size: 26px;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .stats {
+      grid-template-columns: 1fr;
     }
   }
 </style>

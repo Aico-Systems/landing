@@ -22,9 +22,11 @@
   let activeSection: SectionId = "hero";
   let sectionObserver: IntersectionObserver | null = null;
   let sectionMutationObserver: MutationObserver | null = null;
+  let mobileMenuOpen = false;
 
   function navigate(sectionId: SectionId) {
     activeSection = sectionId;
+    mobileMenuOpen = false;
     requestSectionNavigation(sectionId);
   }
 
@@ -87,14 +89,26 @@
 
     window.addEventListener("scroll", updateScrolledState, { passive: true });
     window.addEventListener("resize", observeSections, { passive: true });
+    window.addEventListener("resize", closeMobileMenuOnDesktop, { passive: true });
   });
 
   onDestroy(() => {
     window.removeEventListener("scroll", updateScrolledState);
     window.removeEventListener("resize", observeSections);
+    window.removeEventListener("resize", closeMobileMenuOnDesktop);
     sectionObserver?.disconnect();
     sectionMutationObserver?.disconnect();
   });
+
+  function toggleMobileMenu() {
+    mobileMenuOpen = !mobileMenuOpen;
+  }
+
+  function closeMobileMenuOnDesktop() {
+    if (window.innerWidth > 640) {
+      mobileMenuOpen = false;
+    }
+  }
 </script>
 
 <nav class:scrolled={isScrolled}>
@@ -106,8 +120,8 @@
         on:click={() => navigate("hero")}
         aria-label="Go to hero"
       >
-        <img src="/Logo.svg" alt="AICO" class="logo-img" />
-        <span class="logo-text">AICO</span>
+        <img src="/Logo.svg" alt="AICOYO" class="logo-img" />
+        <span class="logo-text">AICOYO</span>
         <span class="brand-pill">Voice AI</span>
       </button>
       <div class="nav-center">
@@ -138,13 +152,48 @@
         <button
           type="button"
           class="btn btn-secondary ghost"
-          on:click={() => navigate("use-cases")}>See AICO in action</button
+          on:click={() => navigate("use-cases")}>See AICOYO in action</button
         >
         <button
           type="button"
           class="btn btn-primary nav-cta"
           on:click={() => navigate("booking")}>Book a pilot</button
         >
+        <button
+          type="button"
+          class="menu-toggle"
+          class:expanded={mobileMenuOpen}
+          aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={mobileMenuOpen}
+          on:click={toggleMobileMenu}
+        >
+          <span class="toggle-icon" aria-hidden="true">
+            <span class="line line-1"></span>
+            <span class="line line-2"></span>
+            <span class="line line-3"></span>
+          </span>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-panel" class:open={mobileMenuOpen}>
+      <div class="mobile-links">
+        {#each sections as section}
+          <button
+            type="button"
+            class="mobile-link"
+            class:active={activeSection === section.id}
+            on:click={() => navigate(section.id)}
+          >
+            {section.label}
+          </button>
+        {/each}
+        <button
+          type="button"
+          class="mobile-link mobile-link-secondary"
+          on:click={() => navigate("use-cases")}
+        >
+          See AICOYO in action
+        </button>
       </div>
     </div>
   </div>
@@ -181,12 +230,12 @@
     justify-content: space-between;
     gap: 20px;
     margin: 0 auto;
-    padding: 10px 14px;
-    border-radius: 16px;
-    border: 1px solid rgba(15, 23, 42, 0.08);
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(14px);
-    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+    padding: 10px 12px;
+    border-radius: var(--blueprint-radius-lg);
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-overlay);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--panel-shadow);
     transition:
       border-radius 0.24s ease,
       padding 0.24s ease,
@@ -199,16 +248,8 @@
     border-radius: 0;
     border-left-color: transparent;
     border-right-color: transparent;
-    padding: 10px 18px;
-    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-  }
-  :global([data-theme="dark"]) .nav-shell {
-    border-color: rgba(148, 163, 184, 0.16);
-    background: rgba(11, 18, 38, 0.74);
-    box-shadow: 0 8px 24px rgba(2, 6, 23, 0.18);
-  }
-  :global([data-theme="dark"]) nav.scrolled .nav-shell {
-    box-shadow: 0 10px 30px rgba(2, 6, 23, 0.24);
+    padding: 10px 16px;
+    box-shadow: var(--panel-shadow-lg);
   }
   .brand {
     display: inline-flex;
@@ -225,8 +266,8 @@
     color: var(--text-primary);
   }
   .brand:hover {
-    background: rgba(20, 91, 122, 0.06);
-    border-color: rgba(20, 91, 122, 0.12);
+    background: var(--surface-muted);
+    border-color: var(--accent-border);
   }
   .logo-img {
     height: 28px;
@@ -238,37 +279,38 @@
     letter-spacing: 0.04em;
   }
   .brand-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--control-height-sm);
     font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: #145b7a;
-    border: 1px solid rgba(20, 91, 122, 0.16);
+    line-height: 1;
+    color: var(--accent-primary);
+    border: 1px solid var(--accent-border);
     border-radius: 999px;
-    padding: 5px 8px;
-    background: rgba(20, 91, 122, 0.05);
+    padding: 0 8px;
+    background: var(--accent-soft);
     white-space: nowrap;
-  }
-  :global([data-theme="dark"]) .brand-pill {
-    color: #a7f3d0;
-    border-color: rgba(167, 243, 208, 0.16);
-    background: rgba(167, 243, 208, 0.06);
   }
   .nav-center {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 2px;
   }
   .nav-link {
     position: relative;
     background: transparent;
     border: 1px solid transparent;
     cursor: pointer;
-    padding: 8px 10px;
-    border-radius: 10px;
+    min-height: var(--control-height-md);
+    padding: 0 10px;
+    border-radius: var(--blueprint-radius-md);
     font-size: 13px;
     font-weight: 600;
     letter-spacing: 0.02em;
-    color: var(--text-tertiary);
+    color: var(--text-secondary);
     white-space: nowrap;
     transition:
       color 0.2s ease,
@@ -277,24 +319,16 @@
   }
   .nav-link:hover {
     color: var(--text-primary);
-    background: rgba(20, 91, 122, 0.05);
-    border-color: rgba(20, 91, 122, 0.1);
+    background: var(--surface-muted);
+    border-color: var(--border-subtle);
   }
   .nav-link .indicator {
     display: none;
   }
   .nav-link.active {
     color: var(--text-primary);
-    background: rgba(20, 91, 122, 0.08);
-    border-color: rgba(20, 91, 122, 0.16);
-  }
-  :global([data-theme="dark"]) .nav-link:hover {
-    background: rgba(167, 243, 208, 0.05);
-    border-color: rgba(167, 243, 208, 0.08);
-  }
-  :global([data-theme="dark"]) .nav-link.active {
-    background: rgba(167, 243, 208, 0.08);
-    border-color: rgba(167, 243, 208, 0.14);
+    background: var(--accent-soft);
+    border-color: var(--accent-border);
   }
   .nav-actions {
     display: inline-flex;
@@ -307,74 +341,267 @@
     justify-content: center;
     width: 36px;
     height: 36px;
-    border-radius: 10px;
-    border: 1px solid rgba(20, 91, 122, 0.16);
-    background: rgba(20, 91, 122, 0.05);
-    color: #145b7a;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
     cursor: pointer;
+    transition: var(--transition-button);
+  }
+  .menu-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition-button);
+  }
+  .menu-toggle:hover {
+    background: var(--surface-muted);
+    color: var(--text-primary);
+  }
+  .menu-toggle:active {
+    transform: scale(0.96);
+  }
+  .toggle-icon {
+    position: relative;
+    width: 18px;
+    height: 14px;
+  }
+  .line {
+    position: absolute;
+    display: block;
+    left: 0;
+    width: 18px;
+    height: 2px;
+    border-radius: 1px;
+    background-color: currentColor;
     transition:
-      border-color 0.2s ease,
-      background 0.2s ease,
-      color 0.2s ease;
+      transform 220ms cubic-bezier(0.32, 0.72, 0, 1),
+      opacity 220ms cubic-bezier(0.32, 0.72, 0, 1);
+    will-change: transform, opacity;
+  }
+  .line-1 {
+    top: 0;
+  }
+  .line-2 {
+    top: 6px;
+  }
+  .line-3 {
+    top: 12px;
+  }
+  .menu-toggle.expanded .line-1 {
+    transform: translateY(6px) rotate(45deg);
+  }
+  .menu-toggle.expanded .line-2 {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  .menu-toggle.expanded .line-3 {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+  .mobile-panel {
+    display: none;
   }
   .theme-toggle:hover {
-    border-color: rgba(20, 91, 122, 0.22);
-    background: rgba(20, 91, 122, 0.1);
-  }
-  :global([data-theme="dark"]) .theme-toggle {
-    color: #a7f3d0;
-    background: rgba(167, 243, 208, 0.06);
-    border-color: rgba(167, 243, 208, 0.14);
+    background: var(--surface-muted);
+    color: var(--text-primary);
   }
   .ghost {
-    min-height: 40px !important;
-    padding: 9px 14px !important;
+    min-height: var(--control-height-md) !important;
+    padding: 0 12px !important;
     font-size: 13px !important;
-    background: rgba(255, 255, 255, 0.4) !important;
-    color: #145b7a !important;
-    border-color: rgba(20, 91, 122, 0.16) !important;
-  }
-  :global([data-theme="dark"]) .ghost {
-    background: rgba(15, 23, 42, 0.62) !important;
-    color: #cbd5e1 !important;
-    border-color: rgba(148, 163, 184, 0.16) !important;
+    background: var(--surface-elevated) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-subtle) !important;
   }
   .ghost:hover {
-    border-color: rgba(20, 91, 122, 0.24) !important;
-    background: rgba(20, 91, 122, 0.08) !important;
+    border-color: var(--accent-border) !important;
+    background: var(--surface-elevated-strong) !important;
   }
   .nav-cta {
-    min-height: 40px !important;
-    padding: 9px 16px !important;
+    min-height: var(--control-height-md) !important;
+    padding: 0 14px !important;
     font-size: 13px !important;
   }
   @media (max-width: 960px) {
+    .nav-frame {
+      padding: 0 16px;
+    }
+
+    .nav-shell {
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+    }
+
     .nav-center {
+      order: 3;
+      width: 100%;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      scroll-snap-type: x proximity;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .nav-center::-webkit-scrollbar {
       display: none;
     }
+
+    .nav-link {
+      flex: 0 0 auto;
+      scroll-snap-align: start;
+    }
+
+    .nav-actions {
+      margin-left: auto;
+    }
   }
+
   @media (max-width: 640px) {
     .nav-frame {
-      padding: 0 12px;
+      padding: 0 10px;
     }
     nav.scrolled .nav-frame {
       padding: 0;
     }
     .nav-shell {
-      gap: 16px;
-      padding: 9px 10px;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 14px;
+      background: var(--surface-overlay-strong);
+      border-color: var(--border-subtle);
+      box-shadow: var(--panel-shadow-lg);
+      backdrop-filter: blur(10px);
     }
     .brand {
-      padding: 6px 8px;
+      gap: 8px;
+      padding: 2px 2px;
     }
     .brand-pill {
       display: none;
     }
+    .logo-img {
+      height: 24px;
+    }
+    .logo-text {
+      font-size: 14px;
+    }
+    .nav-center {
+      display: none;
+    }
+    .nav-actions {
+      gap: 5px;
+    }
     .ghost {
       display: none !important;
     }
+    .menu-toggle {
+      display: inline-flex;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text-secondary);
+    }
     .nav-cta {
-      padding: 10px 18px !important;
+      min-height: 34px !important;
+      padding: 7px 12px !important;
+      font-size: 12px !important;
+      border-radius: 10px !important;
+    }
+    .theme-toggle {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text-secondary);
+    }
+    .mobile-panel {
+      display: block;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition:
+        max-height 0.24s ease,
+        opacity 0.2s ease,
+        transform 0.2s ease;
+      transform: translateY(-4px);
+      pointer-events: none;
+    }
+    .mobile-panel.open {
+      max-height: 420px;
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .mobile-links {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 6px;
+      margin-top: 6px;
+      padding: 10px;
+      border-radius: 14px;
+      border: 1px solid var(--border-subtle);
+      background: var(--surface-elevated-strong);
+      box-shadow: var(--panel-shadow);
+      backdrop-filter: blur(10px);
+    }
+    .mobile-link {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      text-align: left;
+      min-height: var(--control-height-md);
+      padding: 0 12px;
+      border-radius: var(--blueprint-radius-md);
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text-primary);
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.2;
+      cursor: pointer;
+      transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+    }
+    .mobile-link:hover {
+      background: var(--surface-muted);
+      border-color: var(--border-subtle);
+    }
+    .mobile-link.active {
+      background: var(--accent-soft);
+      border-color: var(--accent-border);
+    }
+    .mobile-link-secondary {
+      color: var(--accent-primary);
+    }
+  }
+
+  @media (max-width: 420px) {
+    .nav-frame {
+      padding: 0 8px;
+    }
+
+    .nav-shell {
+      padding: 8px;
+    }
+
+    .nav-cta {
+      padding: 8px 10px !important;
+      font-size: 11px !important;
+    }
+
+    .mobile-links {
+      gap: 6px;
+      padding: 8px;
     }
   }
 </style>
