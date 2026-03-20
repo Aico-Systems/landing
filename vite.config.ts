@@ -86,8 +86,8 @@ export default defineConfig({
     warmup: {
       clientFiles: [
         './src/App.svelte',
-        './src/lib/Hero.svelte',
-        './src/lib/Navigation.svelte'
+        './src/lib/sections/Hero.svelte',
+        './src/lib/components/Navigation.svelte'
       ]
     }
   }

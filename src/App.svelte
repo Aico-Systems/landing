@@ -13,6 +13,7 @@
   const lazyHowItWorks = () => import("./lib/sections/HowItWorks.svelte");
   const lazyFeatures = () => import("./lib/sections/Features.svelte");
   const lazyUseCases = () => import("./lib/sections/UseCases.svelte");
+  const lazyBookingSection = () => import("./lib/sections/BookingSection.svelte");
   const lazyTestimonials = () => import("./lib/sections/Testimonials.svelte");
   const lazyContactSection = () =>
     import("./lib/sections/ContactSection.svelte");
@@ -75,6 +76,11 @@
       <svelte:component
         this={LazyComponent}
         component={lazyUseCases}
+        rootMargin="200px"
+      />
+      <svelte:component
+        this={LazyComponent}
+        component={lazyBookingSection}
         rootMargin="200px"
       />
       <svelte:component

@@ -42,7 +42,7 @@
         </p>
 
         <div class="hero-actions">
-          <Button variant="primary" onClick={() => scrollToSection("cta")}>
+          <Button variant="primary" onClick={() => scrollToSection("booking")}>
             Book a Pilot
           </Button>
           <Button variant="secondary" onClick={() => scrollToSection("how-it-works")}>

@@ -7,6 +7,7 @@
     { id: "how-it-works", label: "Launch Plan" },
     { id: "features", label: "Platform" },
     { id: "use-cases", label: "Solutions" },
+    { id: "booking", label: "Book Live" },
     { id: "testimonials", label: "Customers" },
     { id: "contact", label: "Contact" },
   ];
@@ -35,6 +36,7 @@
           "how-it-works",
           "features",
           "use-cases",
+          "booking",
           "testimonials",
           "contact",
           "cta",
@@ -113,7 +115,7 @@
       <button
         type="button"
         class="btn btn-primary nav-cta"
-        on:click={() => scrollToSection("cta")}>Book a pilot</button
+        on:click={() => scrollToSection("booking")}>Book a pilot</button
       >
     </div>
   </div>
