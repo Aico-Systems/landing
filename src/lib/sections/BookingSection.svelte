@@ -1,10 +1,9 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import { locale, t } from "../../i18n";
   import { theme } from "../../stores/theme";
   import Badge from "../components/Badge.svelte";
-  import Button from "../components/Button.svelte";
   import Icon from "../components/Icon.svelte";
-  import { requestSectionNavigation } from "../utils/sectionNavigation";
 
   type WidgetWindow = Window & {
     __AICO_BOOKING_WIDGET_READY__?: Promise<void>;
@@ -18,6 +17,7 @@
   let widgetElement: HTMLElement | null = null;
   let widgetState: "idle" | "loading" | "ready" | "error" = "idle";
   let widgetError = "";
+  let widgetLocale: "en" | "de" = "en";
 
   let widgetScriptPromise: Promise<void> | null = null;
 
@@ -57,6 +57,7 @@
   const orgId = resolveOrgId();
   const scriptUrl = widgetUrl ? `${widgetUrl}/widget.js` : "";
   const isConfigured = Boolean(widgetUrl && apiUrl && orgId);
+  $: widgetLocale = $locale === "de" ? "de" : "en";
   async function ensureWidgetScript(): Promise<void> {
     if (typeof window === "undefined" || !scriptUrl) return;
     const widgetWindow = window as WidgetWindow;
@@ -89,7 +90,7 @@
         existing.addEventListener("load", () => resolve(), { once: true });
         existing.addEventListener(
           "error",
-          () => reject(new Error("Booking widget failed to load.")),
+          () => reject(new Error($t("booking.errors.scriptFailed"))),
           { once: true },
         );
         return;
@@ -101,7 +102,7 @@
       script.dataset.aicoBookingWidget = "true";
       script.onload = () => resolve();
       script.onerror = () =>
-        reject(new Error("Booking widget failed to load."));
+        reject(new Error($t("booking.errors.scriptFailed")));
       document.head.appendChild(script);
     });
 
@@ -117,7 +118,7 @@
   async function mountWidget() {
     if (!widgetHost || !isConfigured) {
       widgetState = "error";
-      widgetError = "Booking preview is not configured for this environment yet.";
+      widgetError = $t("booking.errors.notConfigured");
       return;
     }
 
@@ -138,12 +139,12 @@
       widgetElement.setAttribute("org-id", orgId);
       widgetElement.setAttribute("api-url", apiUrl);
       widgetElement.setAttribute("theme", $theme);
-      widgetElement.setAttribute("locale", "en");
+      widgetElement.setAttribute("locale", widgetLocale);
       widgetState = "ready";
     } catch (error) {
       widgetState = "error";
       widgetError =
-        error instanceof Error ? error.message : "Booking preview failed to load.";
+        error instanceof Error ? error.message : $t("booking.errors.loadFailed");
     }
   }
 
@@ -153,6 +154,7 @@
 
   $: if (widgetElement) {
     widgetElement.setAttribute("theme", $theme);
+    widgetElement.setAttribute("locale", widgetLocale);
   }
 </script>
 
@@ -160,68 +162,54 @@
   <div class="container">
     <div class="booking-shell">
       <div class="booking-copy">
-        <Badge variant="default">Book A Pilot</Badge>
-        <h2>Schedule a working session with the AICOYO team.</h2>
+        <Badge variant="default">{$t("booking.badge")}</Badge>
+        <h2>{$t("booking.title")}</h2>
         <p class="lead">
-          Pick a time that works for your team. In the session we review your
-          use case, integration surface, and the fastest path to a production
-          rollout.
+          {$t("booking.lead")}
         </p>
 
         <div class="booking-points">
           <div class="point-card">
             <span class="point-icon"><Icon name="calendar-check-2" size={18} strokeWidth={1.8} /></span>
             <div>
-              <strong>Working session</strong>
-              <span>Map the workflow, call volume, and handoff requirements.</span>
+              <strong>{$t("booking.points.sessionTitle")}</strong>
+              <span>{$t("booking.points.sessionBody")}</span>
             </div>
           </div>
           <div class="point-card">
             <span class="point-icon"><Icon name="cpu" size={18} strokeWidth={1.8} /></span>
             <div>
-              <strong>Technical fit</strong>
-              <span>Review telephony, tooling, CRM, and internal API touchpoints.</span>
+              <strong>{$t("booking.points.fitTitle")}</strong>
+              <span>{$t("booking.points.fitBody")}</span>
             </div>
           </div>
           <div class="point-card">
             <span class="point-icon"><Icon name="shield-check" size={18} strokeWidth={1.8} /></span>
             <div>
-              <strong>Rollout plan</strong>
-              <span>Align on security, compliance, pilot scope, and deployment model.</span>
+              <strong>{$t("booking.points.rolloutTitle")}</strong>
+              <span>{$t("booking.points.rolloutBody")}</span>
             </div>
           </div>
         </div>
 
         <p class="booking-note">
-          Security review, procurement questions, and enterprise rollout constraints
-          are part of the conversation, not an afterthought.
+          {$t("booking.note")}
         </p>
-
-        <div class="action-row">
-          <Button variant="primary" onClick={() => requestSectionNavigation("cta")}
-            >Talk To Sales</Button
-          >
-          <Button
-            variant="secondary"
-            onClick={() => requestSectionNavigation("how-it-works")}
-            >See Delivery Model</Button
-          >
-        </div>
       </div>
 
       <div class="booking-preview">
         <div class="preview-header">
           <div class="preview-copy">
-            <span class="preview-pill">Live Scheduling</span>
-            <h3>Choose a time and book directly.</h3>
+            <span class="preview-pill">{$t("booking.preview.pill")}</span>
+            <h3>{$t("booking.preview.title")}</h3>
           </div>
           <span class="preview-status" data-state={widgetState}>
             {#if widgetState === "ready"}
-              Live
+              {$t("booking.preview.status.ready")}
             {:else if widgetState === "loading"}
-              Loading
+              {$t("booking.preview.status.loading")}
             {:else}
-              Pending
+              {$t("booking.preview.status.pending")}
             {/if}
           </span>
         </div>
@@ -234,7 +222,7 @@
               <span class="spin">
                 <Icon name="loader-circle" size={20} strokeWidth={1.8} />
               </span>
-              Loading availability...
+              {$t("booking.preview.loading")}
             </div>
           {:else if widgetState === "error"}
             <div class="widget-message error">
@@ -336,13 +324,6 @@
     color: var(--text-tertiary);
     font-size: 14px;
     line-height: 1.7;
-  }
-
-  .action-row {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
   }
 
   .booking-preview {
@@ -480,6 +461,10 @@
     .booking-shell {
       grid-template-columns: 1fr;
     }
+
+    .booking-preview {
+      order: -1;
+    }
   }
 
   @media (max-width: 720px) {
@@ -505,15 +490,6 @@
       width: 30px;
       height: 30px;
       border-radius: 10px;
-    }
-
-    .action-row {
-      display: grid;
-      grid-template-columns: 1fr;
-    }
-
-    .action-row :global(.btn) {
-      width: 100%;
     }
 
     .widget-stage.pending {

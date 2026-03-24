@@ -1,4 +1,7 @@
 import { mount } from 'svelte'
+import { initI18n } from './i18n';
+
+initI18n();
 
 // Defer CSS loading to not block initial render
 requestIdleCallback(() => {

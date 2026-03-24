@@ -1,49 +1,63 @@
 <script lang="ts">
   import Icon from '../components/Icon.svelte';
+  import { t } from "../../i18n";
 
-  const testimonials = [
+  type Testimonial = {
+    quote: string;
+    author: string;
+    role: string;
+    company: string;
+    avatar: string;
+    rating: number;
+  };
+
+  let testimonials: Testimonial[] = [];
+  let spotlight: Testimonial | undefined;
+  let rest: Testimonial[] = [];
+
+  $: testimonials = [
     {
-      quote: "AICOYO handles our service scheduling calls flawlessly. Customers think they're speaking to our best employee — and we've reduced call wait times to near zero.",
-      author: "Operations Lead",
-      role: "Automotive Dealership",
-      company: "Autohaus Reit",
+      quote: $t("testimonials.items.one.quote"),
+      author: $t("testimonials.items.one.author"),
+      role: $t("testimonials.items.one.role"),
+      company: $t("testimonials.items.one.company"),
       avatar: "AR",
       rating: 5
     },
     {
-      quote: "The knowledge base integration is phenomenal. Our AI agent provides accurate answers instantly, pulling from service manuals and pricing docs. It learns from every interaction.",
-      author: "Service Manager",
-      role: "After-Sales Operations",
-      company: "Autohaus Brunkhorst",
+      quote: $t("testimonials.items.two.quote"),
+      author: $t("testimonials.items.two.author"),
+      role: $t("testimonials.items.two.role"),
+      company: $t("testimonials.items.two.company"),
       avatar: "AB",
       rating: 5
     },
     {
-      quote: "We were skeptical about voice AI for insurance claims intake, but AICOYO's structured conversation flows capture every detail. Our agents now focus on complex cases only.",
-      author: "Claims Director",
-      role: "Insurance Operations",
-      company: "Enterprise Partner",
+      quote: $t("testimonials.items.three.quote"),
+      author: $t("testimonials.items.three.author"),
+      role: $t("testimonials.items.three.role"),
+      company: $t("testimonials.items.three.company"),
       avatar: "EP",
       rating: 5
     }
   ];
 
-  const spotlight = testimonials[0];
-  const rest = testimonials.slice(1);
+  $: spotlight = testimonials[0];
+  $: rest = testimonials.slice(1);
 </script>
 
 <section id="testimonials" class="testimonials">
   <div class="container">
     <div class="section-header">
-      <span class="eyebrow">Proof from the field</span>
-      <h2>Teams trust AICOYO to run conversations that matter.</h2>
-      <p>Leaders across support, operations, and revenue desks rely on AICOYO for enterprise-grade calls with measurable ROI.</p>
+      <span class="eyebrow">{$t("testimonials.eyebrow")}</span>
+      <h2>{$t("testimonials.title")}</h2>
+      <p>{$t("testimonials.body")}</p>
     </div>
 
     <div class="testimonials-layout">
       <div class="spotlight-card">
         <div class="spotlight-header">
-          <span class="badge">Spotlight</span>
+          <span class="badge">{$t("testimonials.spotlight")}</span>
           <div class="rating">
             <Icon name="star" size={18} strokeWidth={0} />
             <Icon name="star" size={18} strokeWidth={0} />
@@ -52,17 +66,19 @@
             <Icon name="star" size={18} strokeWidth={0} />
           </div>
         </div>
-        <blockquote>
-          “{spotlight.quote}”
-        </blockquote>
-        <div class="spotlight-footer">
-          <div class="avatar">{spotlight.avatar}</div>
-          <div>
-            <div class="name">{spotlight.author}</div>
-            <div class="role">{spotlight.role}</div>
-            <div class="company">{spotlight.company}</div>
+        {#if spotlight}
+          <blockquote>
+            “{spotlight.quote}”
+          </blockquote>
+          <div class="spotlight-footer">
+            <div class="avatar">{spotlight.avatar}</div>
+            <div>
+              <div class="name">{spotlight.author}</div>
+              <div class="role">{spotlight.role}</div>
+              <div class="company">{spotlight.company}</div>
+            </div>
           </div>
-        </div>
+        {/if}
       </div>
 
       <div class="testimonials-stack">

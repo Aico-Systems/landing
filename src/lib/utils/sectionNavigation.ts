@@ -4,9 +4,6 @@ export const SECTION_IDS = [
   "features",
   "use-cases",
   "booking",
-  "testimonials",
-  "contact",
-  "cta",
 ] as const;
 
 export type SectionId = (typeof SECTION_IDS)[number];

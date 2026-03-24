@@ -1,39 +1,50 @@
 <script lang="ts">
   import Icon from '../components/Icon.svelte';
-  
-  const steps = [
+  import { t } from "../../i18n";
+
+  type Step = {
+    badge: string;
+    title: string;
+    description: string;
+    icon: string;
+    bullets: string[];
+  };
+
+  let steps: Step[] = [];
+
+  $: steps = [
     {
-      badge: 'Day 0',
-      title: 'Blueprint your knowledge fabric',
-      description: 'Sync call recordings, SOPs, policies, and product docs. AICOYO auto-clusters everything into reusable knowledge packs ready for RAG.',
-      icon: 'book-open',
+      badge: $t("howItWorks.steps.day0.badge"),
+      title: $t("howItWorks.steps.day0.title"),
+      description: $t("howItWorks.steps.day0.description"),
+      icon: "book-open",
       bullets: [
-        'Segment intent libraries without manual tagging',
-        'Flag regulated phrases and compliance guardrails',
-        'Preview sample responses by vertical and persona'
-      ]
+        $t("howItWorks.steps.day0.bullets.one"),
+        $t("howItWorks.steps.day0.bullets.two"),
+        $t("howItWorks.steps.day0.bullets.three"),
+      ],
     },
     {
-      badge: 'Day 1',
-      title: 'Compose your AI call team',
-      description: 'Drag-and-drop call flows, assign real-time tools, and layer sentiment guardrails so the agent adapts like your best rep.',
-      icon: 'blocks',
+      badge: $t("howItWorks.steps.day1.badge"),
+      title: $t("howItWorks.steps.day1.title"),
+      description: $t("howItWorks.steps.day1.description"),
+      icon: "blocks",
       bullets: [
-        'Voice, tone, and pacing auto-tuned to your brand',
-        'Connect CRMs, ticketing, billing, and internal APIs',
-        'Set escalation paths with one-click handoffs'
-      ]
+        $t("howItWorks.steps.day1.bullets.one"),
+        $t("howItWorks.steps.day1.bullets.two"),
+        $t("howItWorks.steps.day1.bullets.three"),
+      ],
     },
     {
-      badge: 'Day 5',
-      title: 'Ship to production with confidence',
-      description: 'Launch with enterprise controls. Monitor transcripts, latency, and automations from a mission control built for operations teams.',
-      icon: 'rocket',
+      badge: $t("howItWorks.steps.day5.badge"),
+      title: $t("howItWorks.steps.day5.title"),
+      description: $t("howItWorks.steps.day5.description"),
+      icon: "rocket",
       bullets: [
-        'Live shadowing with “tap-in” agent assist',
-        'QA dashboards surface anomalies instantly',
-        'Continuous learning from every interaction'
-      ]
+        $t("howItWorks.steps.day5.bullets.one"),
+        $t("howItWorks.steps.day5.bullets.two"),
+        $t("howItWorks.steps.day5.bullets.three"),
+      ],
     }
   ];
 </script>
@@ -42,25 +53,25 @@
   <div class="container">
     <div class="content-grid">
       <div class="intro">
-        <span class="eyebrow">Go live without rewriting your ops</span>
-        <h2>Design, train, and deploy in less than a week.</h2>
+        <span class="eyebrow">{$t("howItWorks.eyebrow")}</span>
+        <h2>{$t("howItWorks.title")}</h2>
         <p>
-          AICOYO wraps around your existing playbooks, tools, and compliance rules. We orchestrate knowledge, tooling, and voice so you can launch production-ready agents fast—without guesswork.
+          {$t("howItWorks.body")}
         </p>
 
         <div class="intro-card">
           <div>
-            <span class="card-label">Ops mission control</span>
-            <p>Realtime dashboards for QA reviewers, CX leads, and revenue teams work out-of-the-box.</p>
+            <span class="card-label">{$t("howItWorks.card.label")}</span>
+            <p>{$t("howItWorks.card.body")}</p>
           </div>
           <div class="card-stats">
             <div>
               <span class="stat-value">12+</span>
-              <span class="stat-label">native integrations</span>
+              <span class="stat-label">{$t("howItWorks.card.integrations")}</span>
             </div>
             <div>
               <span class="stat-value">4 hrs</span>
-              <span class="stat-label">avg. pilot kickoff</span>
+              <span class="stat-label">{$t("howItWorks.card.kickoff")}</span>
             </div>
           </div>
         </div>

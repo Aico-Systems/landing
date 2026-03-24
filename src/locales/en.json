@@ -1,0 +1,357 @@
+{
+  "nav": {
+    "brandPill": "Voice AI",
+    "language": "Language",
+    "english": "English",
+    "german": "German",
+    "goToHero": "Go to hero",
+    "toggleTheme": "Toggle theme",
+    "openMenu": "Open navigation menu",
+    "closeMenu": "Close navigation menu",
+    "seeInAction": "See AICOYO in action",
+    "bookPilot": "Book a pilot",
+    "sections": {
+      "howItWorks": "Launch Plan",
+      "features": "Platform",
+      "useCases": "Solutions",
+      "booking": "Book Live"
+    }
+  },
+  "hero": {
+    "badge": "The Conversation Infrastructure",
+    "title": "Launch call agents that sound like your best team member.",
+    "body": "AICOYO blends enterprise telephony, RAG, and live tooling so every conversation is on-brand, compliant, and outcome-driven from the first hello.",
+    "actions": {
+      "book": "Book a Pilot",
+      "flow": "Experience the Flow"
+    },
+    "list": {
+      "one": "Adaptive talk tracks that mirror your operating manuals.",
+      "two": "Native integrations to trigger tools, CRMs, and internal APIs.",
+      "three": "Auditable transcripts, real-time QA, and tenant-aware controls."
+    },
+    "metrics": {
+      "latency": "Voice latency",
+      "availability": "Availability",
+      "providers": "LLM providers"
+    },
+    "trust": "Design. Deploy. Monitor. Transfer.",
+    "panel": {
+      "badge": "Live Call · Automotive",
+      "customer": "Customer: \"I'd like to schedule a service appointment.\"",
+      "agent": "AICOYO: \"Of course — I see your next service is due. Thursday at 10 AM works. Shall I book that?\"",
+      "latency": "Latency",
+      "nps": "NPS Prediction",
+      "playbook": "Playbook match",
+      "tasks": "Automated tasks",
+      "tasksValue": "Calendar · CRM · Follow-up",
+      "knowledge": "Knowledge hits",
+      "knowledgeValue": "Service handbook · Pricing",
+      "loadingVisualization": "Loading visualization"
+    }
+  },
+  "waveform": {
+    "placeholder": "+49 170 123 4567",
+    "startCall": "Start call",
+    "consent": "By calling, you confirm our outreach and acknowledge our privacy notes.",
+    "demoBadge": "Try our AI agent · Free demo call",
+    "status": {
+      "unavailable": "Demo unavailable.",
+      "started": "Call started. Check your phone.",
+      "failed": "Call could not be started.",
+      "network": "Network error. Please try again."
+    }
+  },
+  "howItWorks": {
+    "eyebrow": "Go live without rewriting your ops",
+    "title": "Design, train, and deploy in less than a week.",
+    "body": "AICOYO wraps around your existing playbooks, tools, and compliance rules. We orchestrate knowledge, tooling, and voice so you can launch production-ready agents fast without guesswork.",
+    "card": {
+      "label": "Ops mission control",
+      "body": "Realtime dashboards for QA reviewers, CX leads, and revenue teams work out-of-the-box.",
+      "integrations": "native integrations",
+      "kickoff": "avg. pilot kickoff"
+    },
+    "steps": {
+      "day0": {
+        "badge": "Day 0",
+        "title": "Blueprint your knowledge fabric",
+        "description": "Sync call recordings, SOPs, policies, and product docs. AICOYO auto-clusters everything into reusable knowledge packs ready for RAG.",
+        "bullets": {
+          "one": "Segment intent libraries without manual tagging",
+          "two": "Flag regulated phrases and compliance guardrails",
+          "three": "Preview sample responses by vertical and persona"
+        }
+      },
+      "day1": {
+        "badge": "Day 1",
+        "title": "Compose your AI call team",
+        "description": "Drag-and-drop call flows, assign real-time tools, and layer sentiment guardrails so the agent adapts like your best rep.",
+        "bullets": {
+          "one": "Voice, tone, and pacing auto-tuned to your brand",
+          "two": "Connect CRMs, ticketing, billing, and internal APIs",
+          "three": "Set escalation paths with one-click handoffs"
+        }
+      },
+      "day5": {
+        "badge": "Day 5",
+        "title": "Ship to production with confidence",
+        "description": "Launch with enterprise controls. Monitor transcripts, latency, and automations from a mission control built for operations teams.",
+        "bullets": {
+          "one": "Live shadowing with tap-in agent assist",
+          "two": "QA dashboards surface anomalies instantly",
+          "three": "Continuous learning from every interaction"
+        }
+      }
+    }
+  },
+  "features": {
+    "eyebrow": "Built for scaled voice automation",
+    "title": "The platform your operators and engineers both love.",
+    "body": "AICOYO fuses the reliability of a contact center with the adaptability of modern AI. Every layer from voice to knowledge to tooling was designed for mission-critical teams.",
+    "items": {
+      "voice": {
+        "title": "Carrier-grade voice infrastructure",
+        "description": "Managed SIP, PSTN, and WebRTC orchestration with adaptive jitter buffers keep every conversation crisp.",
+        "one": "Bring your own carrier or use our Telnyx and Twilio bridges",
+        "two": "Sub-300ms roundtrip with dynamic silence detection"
+      },
+      "knowledge": {
+        "title": "Knowledge that stays on brand",
+        "description": "RAG pipelines tuned for support, sales, and compliance with automatic grounding references in every reply.",
+        "one": "Automatic versioning of SOPs and product updates",
+        "two": "Citations embedded in transcripts for audits"
+      },
+      "workflow": {
+        "title": "Workflow automation from the call",
+        "description": "Trigger downstream systems mid-conversation through secure tool calls without brittle IVR trees.",
+        "one": "Native Salesforce, Zendesk, HubSpot, and custom API actions",
+        "two": "Intent-aware branching with guardrails and fallbacks"
+      },
+      "voiceEmotion": {
+        "title": "Human-grade voice and emotion",
+        "description": "Streaming STT plus expressive TTS that handles accents, interruptions, and sentiment pivots in real time.",
+        "one": "Dynamic prosody for empathy, urgency, or escalation",
+        "two": "Automatic backchanneling for natural conversations"
+      },
+      "analytics": {
+        "title": "Mission control analytics",
+        "description": "Monitor call quality, automation coverage, cost, and agent performance from a single cockpit.",
+        "one": "Real-time QA classifications and alerting",
+        "two": "Outcome attribution down to every automation"
+      },
+      "security": {
+        "title": "Enterprise safeguards by default",
+        "description": "Multi-tenant isolation, SOC2-ready logging, and redaction keep regulated teams secure.",
+        "one": "Data residency controls across regions",
+        "two": "Granular RBAC and audit trails for every action"
+      }
+    }
+  },
+  "useCases": {
+    "eyebrow": "Where teams see impact",
+    "title": "A single brain powering every conversational workflow.",
+    "body": "Pick a use case to see the workflow, measurable impact, and proof points that matter.",
+    "items": {
+      "support": {
+        "title": "Support Control Tower",
+        "badge": "Customer Experience",
+        "headline": "Resolve any inbound issue without looping in a human.",
+        "description": "AICOYO listens for intent shifts, updates orders, and closes tickets while keeping empathy and compliance intact.",
+        "stats": {
+          "one": "Average handle time",
+          "two": "First-contact resolution",
+          "three": "Agent escalations"
+        },
+        "highlights": {
+          "one": "Sync Zendesk, Freshdesk, or Salesforce Service to auto-log cases",
+          "two": "Offer proactive follow-ups via SMS or email in the same flow",
+          "three": "Live supervisors receive alerts on outlier calls instantly"
+        },
+        "quote": "Customers feel like they are speaking to our best rep. The automation saved us from hiring 15 seasonal agents this quarter.",
+        "author": "VP of Support, Orbit Health"
+      },
+      "revenue": {
+        "title": "Revenue Desk",
+        "badge": "Revenue Teams",
+        "headline": "Qualify, schedule, and route leads on the first ring.",
+        "description": "Whether inbound phone leads or website call-backs, AICOYO qualifies prospects, captures context, and books meetings in real time.",
+        "stats": {
+          "one": "Qualified pipeline",
+          "two": "Speed-to-lead",
+          "three": "No-show reduction"
+        },
+        "highlights": {
+          "one": "Native calendar orchestration with HubSpot and Salesforce",
+          "two": "Push lead notes and call summaries into your CRM automatically",
+          "three": "Answers pricing, features, and integrations with sourced citations"
+        },
+        "quote": "We finally cover inbound after-hours. Meetings turn up pre-qualified, and reps stay focused on closing.",
+        "author": "Head of Growth, Nova Commerce"
+      },
+      "ops": {
+        "title": "Ops Command Center",
+        "badge": "Internal Operations",
+        "headline": "Give every employee a voice concierge for systems, policies, and approvals.",
+        "description": "AICOYO handles IT, HR, and facilities requests by orchestrating knowledge, automations, and approvals in seconds.",
+        "stats": {
+          "one": "Ticket deflection",
+          "two": "Time to resolution",
+          "three": "Employee CSAT"
+        },
+        "highlights": {
+          "one": "Integrates with ServiceNow, Notion, and custom internal APIs",
+          "two": "Understands entitlements, regional policies, and SSO context",
+          "three": "Escalates to the right team with a complete audit trail"
+        },
+        "quote": "It is like giving every team a dedicated operations lead who never sleeps. Approvals, requests, and knowledge are instant.",
+        "author": "COO, Atlas Support"
+      }
+    }
+  },
+  "booking": {
+    "badge": "Book A Pilot",
+    "title": "Schedule a working session with the AICOYO team.",
+    "lead": "Pick a time that works for your team. In the session we review your use case, integration surface, and the fastest path to a production rollout.",
+    "points": {
+      "sessionTitle": "Working session",
+      "sessionBody": "Map the workflow, call volume, and handoff requirements.",
+      "fitTitle": "Technical fit",
+      "fitBody": "Review telephony, tooling, CRM, and internal API touchpoints.",
+      "rolloutTitle": "Rollout plan",
+      "rolloutBody": "Align on security, compliance, pilot scope, and deployment model."
+    },
+    "note": "Security review, procurement questions, and enterprise rollout constraints are part of the conversation, not an afterthought.",
+    "preview": {
+      "pill": "Live Scheduling",
+      "title": "Choose a time and book directly.",
+      "status": {
+        "ready": "Live",
+        "loading": "Loading",
+        "pending": "Pending"
+      },
+      "loading": "Loading availability..."
+    },
+    "errors": {
+      "notConfigured": "Booking preview is not configured for this environment yet.",
+      "loadFailed": "Booking preview failed to load.",
+      "scriptFailed": "Booking widget failed to load."
+    }
+  },
+  "testimonials": {
+    "eyebrow": "Proof from the field",
+    "title": "Teams trust AICOYO to run conversations that matter.",
+    "body": "Leaders across support, operations, and revenue desks rely on AICOYO for enterprise-grade calls with measurable ROI.",
+    "spotlight": "Spotlight",
+    "items": {
+      "one": {
+        "quote": "AICOYO handles our service scheduling calls flawlessly. Customers think they are speaking to our best employee and we have reduced call wait times to near zero.",
+        "author": "Operations Lead",
+        "role": "Automotive Dealership",
+        "company": "Autohaus Reit"
+      },
+      "two": {
+        "quote": "The knowledge base integration is phenomenal. Our AI agent provides accurate answers instantly, pulling from service manuals and pricing docs. It learns from every interaction.",
+        "author": "Service Manager",
+        "role": "After-Sales Operations",
+        "company": "Autohaus Brunkhorst"
+      },
+      "three": {
+        "quote": "We were skeptical about voice AI for insurance claims intake, but AICOYO's structured conversation flows capture every detail. Our agents now focus on complex cases only.",
+        "author": "Claims Director",
+        "role": "Insurance Operations",
+        "company": "Enterprise Partner"
+      }
+    }
+  },
+  "contact": {
+    "eyebrow": "Let's build your voice ops",
+    "title": "Talk to the AICOYO team.",
+    "body": "Whether you are designing a pilot or rolling out globally, our specialists will help you map each call journey, connect tooling, and ship with confidence.",
+    "highlights": {
+      "coverageTitle": "Global coverage",
+      "coverageBody": "08:00 to 24:00 local / weekend on-call",
+      "securityTitle": "Security ready",
+      "securityBody": "SOC2 Type II · HIPAA BAA · GDPR",
+      "teamsTitle": "Specialist teams",
+      "teamsBody": "Voice reliability · Knowledge ops · CX strategy"
+    },
+    "channels": {
+      "sales": {
+        "tag": "Sales",
+        "title": "Launch a pilot",
+        "description": "Get a walkthrough of call flows, integrations, and pricing built for your operations team.",
+        "actionOne": "Book 30-min strategy call",
+        "actionTwo": "Download deployment brief"
+      },
+      "support": {
+        "tag": "Support",
+        "title": "24/7 engineering desk",
+        "description": "Existing customers can open a ticket or hop into a live bridge with our voice reliability team.",
+        "actionOne": "Create support ticket",
+        "actionTwo": "View status page"
+      },
+      "partnerships": {
+        "tag": "Partnerships",
+        "title": "Integrations and co-selling",
+        "description": "Partner with AICOYO to embed our agents into your stack or co-deliver voice automation programs.",
+        "actionOne": "Contact partnerships",
+        "actionTwo": "Explore partner playbook"
+      }
+    }
+  },
+  "cta": {
+    "badge": "Pilot AICOYO",
+    "title": "Spin up your voice agent pilot in days, not months.",
+    "body": "Share a work email and our team will schedule a working session. Bring your call flows, tools, and success metrics and we will show you how AICOYO maps to them instantly.",
+    "emailPlaceholder": "Work email",
+    "submit": "Request a demo",
+    "perks": {
+      "one": "30-minute discovery with voice specialists",
+      "two": "Custom blueprint aligned to your call journeys",
+      "three": "Security review and deployment guidance"
+    },
+    "panelTitle": "What is included",
+    "panelItems": {
+      "one": "Live demo tailored to your industry playbooks",
+      "two": "Integration plan for telephony, CRM, and tooling",
+      "three": "Automation ROI forecast and roll-out timeline"
+    },
+    "footnote": {
+      "prefix": "Prefer async?",
+      "link": "Email our team",
+      "suffix": "with your goals."
+    }
+  },
+  "footer": {
+    "tagline": "The Conversation Infrastructure.",
+    "status": "Systems operational",
+    "columns": {
+      "explore": "Explore",
+      "resources": "Resources",
+      "legal": "Legal"
+    },
+    "links": {
+      "overview": "Overview",
+      "book": "Book live",
+      "platform": "Platform",
+      "solutions": "Solutions",
+      "implementation": "Launch plan",
+      "docs": "Docs",
+      "blog": "Blog",
+      "security": "Security",
+      "status": "Status",
+      "imprint": "Imprint",
+      "privacy": "Privacy",
+      "terms": "Terms",
+      "policies": "Policies"
+    },
+    "meta": {
+      "location": "Germany · Remote-first",
+      "follow": "Follow"
+    },
+    "legal": {
+      "copyright": "© 2026 AICOYO. All rights reserved."
+    }
+  }
+}

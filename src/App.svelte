@@ -5,6 +5,12 @@
   import LazyComponent from "./lib/components/LazyComponent.svelte";
   import Hero from "./lib/sections/Hero.svelte";
   import {
+    APP_NAVIGATION_EVENT,
+    normalizeAppPath,
+    type AppNavigationDetail,
+    type AppPath,
+  } from "./lib/utils/appNavigation";
+  import {
     SECTION_NAVIGATION_EVENT,
     getSectionIdFromHash,
     scrollToSectionElement,
@@ -16,15 +22,24 @@
   const lazyFeatures = () => import("./lib/sections/Features.svelte");
   const lazyUseCases = () => import("./lib/sections/UseCases.svelte");
   const lazyBookingSection = () => import("./lib/sections/BookingSection.svelte");
-  const lazyTestimonials = () => import("./lib/sections/Testimonials.svelte");
-  const lazyContactSection = () =>
-    import("./lib/sections/ContactSection.svelte");
-  const lazyCTASection = () => import("./lib/sections/CTASection.svelte");
+  const routeLoaders: Record<Exclude<AppPath, "/">, () => Promise<any>> = {
+    "/imprint/": () => import("./lib/pages/ImprintPage.svelte"),
+    "/privacy/": () => import("./lib/pages/PrivacyPage.svelte"),
+    "/terms/": () => import("./lib/pages/TermsPage.svelte"),
+    "/policies/": () => import("./lib/pages/PoliciesPage.svelte"),
+    "/docs/": () => import("./lib/pages/DocsPage.svelte"),
+    "/blog/": () => import("./lib/pages/BlogPage.svelte"),
+    "/security/": () => import("./lib/pages/SecurityPage.svelte"),
+    "/status/": () => import("./lib/pages/StatusPage.svelte"),
+  };
 
   let WebGLBackground: any = null;
+  let currentPageComponent: any = null;
+  let currentPath: AppPath = "/";
   let loadAllSections = false;
   let pendingNavigation: { sectionId: SectionId; behavior: ScrollBehavior } | null =
     null;
+  let routeLoadToken = 0;
 
   const wait = (ms: number) =>
     new Promise<void>((resolve) => window.setTimeout(resolve, ms));
@@ -50,6 +65,10 @@
     sectionId: SectionId,
     behavior: ScrollBehavior = "smooth",
   ) {
+    if (currentPath !== "/") {
+      return;
+    }
+
     pendingNavigation = { sectionId, behavior };
 
     if (sectionId !== "hero") {
@@ -79,31 +98,8 @@
     WebGLBackground = module.default;
   }
 
-  onMount(() => {
-    const handleRequestedNavigation = (event: Event) => {
-      const { sectionId, behavior = "smooth" } = (
-        event as CustomEvent<SectionNavigationDetail>
-      ).detail;
-
-      void navigateToSection(sectionId, behavior);
-    };
-
-    const handleHashChange = () => {
-      const sectionId = getSectionIdFromHash(window.location.hash);
-      if (!sectionId) return;
-      void navigateToSection(sectionId, "auto");
-    };
-
-    window.addEventListener(
-      SECTION_NAVIGATION_EVENT,
-      handleRequestedNavigation as EventListener,
-    );
-    window.addEventListener("hashchange", handleHashChange);
-
-    const initialSection = getSectionIdFromHash(window.location.hash);
-    if (initialSection) {
-      void navigateToSection(initialSection, "auto");
-    }
+  function scheduleWebGLBackgroundLoad() {
+    if (typeof window === "undefined" || currentPath !== "/" || WebGLBackground) return;
 
     if ("requestIdleCallback" in window) {
       requestIdleCallback(
@@ -112,75 +108,147 @@
         },
         { timeout: 2000 },
       );
-    } else {
-      setTimeout(() => {
-        void loadWebGLBackground();
-      }, 0);
+      return;
     }
 
+    setTimeout(() => {
+      void loadWebGLBackground();
+    }, 0);
+  }
+
+  async function loadCurrentPage(pathname: string) {
+    const normalizedPath = normalizeAppPath(pathname) || "/";
+    currentPath = normalizedPath;
+    pendingNavigation = null;
+
+    if (normalizedPath === "/") {
+      currentPageComponent = null;
+      return;
+    }
+
+    const loader = routeLoaders[normalizedPath];
+    const token = ++routeLoadToken;
+    const module = await loader();
+
+    if (routeLoadToken === token) {
+      currentPageComponent = module.default;
+    }
+  }
+
+  onMount(() => {
+    void loadCurrentPage(window.location.pathname);
+
+    const handleRequestedNavigation = (event: Event) => {
+      const { sectionId, behavior = "smooth" } = (
+        event as CustomEvent<SectionNavigationDetail>
+      ).detail;
+
+      void navigateToSection(sectionId, behavior);
+    };
+
+    const handleRequestedAppNavigation = (event: Event) => {
+      const { path } = (event as CustomEvent<AppNavigationDetail>).detail;
+      void loadCurrentPage(path);
+    };
+
+    const handleHashChange = () => {
+      if (currentPath !== "/") return;
+      const sectionId = getSectionIdFromHash(window.location.hash);
+      if (!sectionId) return;
+      void navigateToSection(sectionId, "auto");
+    };
+
+    const handlePopState = () => {
+      void loadCurrentPage(window.location.pathname);
+      if (normalizeAppPath(window.location.pathname) !== "/") {
+        return;
+      }
+
+      const sectionId = getSectionIdFromHash(window.location.hash);
+      if (sectionId) {
+        void navigateToSection(sectionId, "auto");
+      }
+    };
+
+    window.addEventListener(
+      APP_NAVIGATION_EVENT,
+      handleRequestedAppNavigation as EventListener,
+    );
+    window.addEventListener(
+      SECTION_NAVIGATION_EVENT,
+      handleRequestedNavigation as EventListener,
+    );
+    window.addEventListener("hashchange", handleHashChange);
+    window.addEventListener("popstate", handlePopState);
+
+    const initialSection =
+      normalizeAppPath(window.location.pathname) === "/"
+        ? getSectionIdFromHash(window.location.hash)
+        : null;
+    if (initialSection) {
+      void navigateToSection(initialSection, "auto");
+    }
+
+    scheduleWebGLBackgroundLoad();
+
     return () => {
+      window.removeEventListener(
+        APP_NAVIGATION_EVENT,
+        handleRequestedAppNavigation as EventListener,
+      );
       window.removeEventListener(
         SECTION_NAVIGATION_EVENT,
         handleRequestedNavigation as EventListener,
       );
       window.removeEventListener("hashchange", handleHashChange);
+      window.removeEventListener("popstate", handlePopState);
     };
   });
+
+  $: if (currentPath === "/") {
+    scheduleWebGLBackgroundLoad();
+  }
 </script>
 
-{#if WebGLBackground}
+{#if currentPath === "/" && WebGLBackground}
   <svelte:component this={WebGLBackground} />
 {/if}
-<div class="blur-layer"></div>
+{#if currentPath === "/"}
+  <div class="blur-layer"></div>
 
-<Navigation />
+  <Navigation />
 
-<main>
-  <Hero />
-  <svelte:component
-    this={LazyComponent}
-    component={lazyHowItWorks}
-    eager={loadAllSections}
-    rootMargin="200px"
-  />
-  <svelte:component
-    this={LazyComponent}
-    component={lazyFeatures}
-    eager={loadAllSections}
-    rootMargin="200px"
-  />
-  <svelte:component
-    this={LazyComponent}
-    component={lazyUseCases}
-    eager={loadAllSections}
-    rootMargin="200px"
-  />
-  <svelte:component
-    this={LazyComponent}
-    component={lazyBookingSection}
-    eager={loadAllSections}
-    rootMargin="200px"
-  />
-  <svelte:component
-    this={LazyComponent}
-    component={lazyTestimonials}
-    eager={loadAllSections}
-    rootMargin="200px"
-  />
-  <svelte:component
-    this={LazyComponent}
-    component={lazyContactSection}
-    eager={loadAllSections}
-    rootMargin="200px"
-  />
-  <svelte:component
-    this={LazyComponent}
-    component={lazyCTASection}
-    eager={loadAllSections}
-    rootMargin="200px"
-  />
-  <Footer />
-</main>
+  <main>
+    <Hero />
+    <svelte:component
+      this={LazyComponent}
+      component={lazyHowItWorks}
+      eager={loadAllSections}
+      rootMargin="200px"
+    />
+    <svelte:component
+      this={LazyComponent}
+      component={lazyFeatures}
+      eager={loadAllSections}
+      rootMargin="200px"
+    />
+    <svelte:component
+      this={LazyComponent}
+      component={lazyUseCases}
+      eager={loadAllSections}
+      rootMargin="200px"
+    />
+    <svelte:component
+      this={LazyComponent}
+      component={lazyBookingSection}
+      eager={loadAllSections}
+      rootMargin="200px"
+    />
+    <Footer />
+  </main>
+{:else if currentPageComponent}
+  <svelte:component this={currentPageComponent} />
+{/if}
 
 <style>
   :global(*) {

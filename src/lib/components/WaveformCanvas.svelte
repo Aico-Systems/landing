@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import { t } from "../../i18n";
   import { theme } from "../../stores/theme";
   import {
     prefersReducedMotion,
@@ -33,7 +34,7 @@
     const flowSlug = import.meta.env.VITE_DEMO_FLOW_SLUG;
     if (!flowSlug) {
       callStatus = "error";
-      statusMessage = "Demo nicht verfügbar.";
+      statusMessage = $t("waveform.status.unavailable");
       setTimeout(() => {
         callStatus = "idle";
         statusMessage = "";
@@ -74,16 +75,16 @@
         (data.status === "started" || data.status === "completed")
       ) {
         callStatus = "success";
-        statusMessage = "Anruf gestartet! Prüfe dein Telefon.";
+        statusMessage = $t("waveform.status.started");
         phoneNumber = "";
       } else {
         callStatus = "error";
         statusMessage =
-          data.message || data.error || "Anruf konnte nicht gestartet werden.";
+          data.message || data.error || $t("waveform.status.failed");
       }
     } catch (error) {
       callStatus = "error";
-      statusMessage = "Netzwerkfehler. Bitte versuche es erneut.";
+      statusMessage = $t("waveform.status.network");
     } finally {
       isSubmitting = false;
       setTimeout(() => {
@@ -240,7 +241,7 @@
             on:keydown={handleKeydown}
             on:focus={() => (inputFocused = true)}
             on:blur={() => (inputFocused = false)}
-            placeholder="+49 170 123 4567"
+            placeholder={$t("waveform.placeholder")}
             disabled={isSubmitting}
             class="phone-input"
           />
@@ -250,7 +251,7 @@
           class="call-button"
           on:click={initiateCall}
           disabled={isSubmitting || !phoneNumber.trim()}
-          aria-label="Anruf starten"
+          aria-label={$t("waveform.startCall")}
         >
           {#if isSubmitting}
             <svg
@@ -298,8 +299,7 @@
       </div>
 
       <div class="consent-text" class:visible={inputFocused}>
-        Mit dem Anruf bestätigst du unsere Kontaktaufnahme und unsere
-        Datenschutzhinweise gelesen zu haben
+        {$t("waveform.consent")}
       </div>
     </div>
 
@@ -325,7 +325,7 @@
           stroke-linejoin="round"
         />
       </svg>
-      Teste unseren KI-Agenten · Kostenloser Demo-Anruf
+      {$t("waveform.demoBadge")}
     </div>
 
     {#if statusMessage}

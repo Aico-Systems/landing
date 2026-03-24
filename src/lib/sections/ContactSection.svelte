@@ -1,39 +1,50 @@
 <script lang="ts">
   import Icon from '../components/Icon.svelte';
+  import { t } from "../../i18n";
   import {
     getSectionIdFromHash,
     requestSectionNavigation,
   } from "../utils/sectionNavigation";
 
-  const channels = [
+  type Channel = {
+    tag: string;
+    title: string;
+    description: string;
+    icon: string;
+    actions: Array<{ label: string; href: string }>;
+  };
+
+  let channels: Channel[] = [];
+
+  $: channels = [
     {
-      tag: 'Sales',
-      title: 'Launch a pilot',
-      description: 'Get a walkthrough of call flows, integrations, and pricing built for your operations team.',
-      icon: 'calendar',
+      tag: $t("contact.channels.sales.tag"),
+      title: $t("contact.channels.sales.title"),
+      description: $t("contact.channels.sales.description"),
+      icon: "calendar",
       actions: [
-        { label: 'Book 30-min strategy call', href: 'mailto:nikita@aicoflow.com' },
-        { label: 'Download deployment brief', href: '#cta' }
+        { label: $t("contact.channels.sales.actionOne"), href: "mailto:nikita@aicoflow.com" },
+        { label: $t("contact.channels.sales.actionTwo"), href: "#cta" }
       ]
     },
     {
-      tag: 'Support',
-      title: '24/7 engineering desk',
-      description: 'Existing customers can open a ticket or hop into a live bridge with our voice reliability team.',
-      icon: 'lifebuoy',
+      tag: $t("contact.channels.support.tag"),
+      title: $t("contact.channels.support.title"),
+      description: $t("contact.channels.support.description"),
+      icon: "lifebuoy",
       actions: [
-        { label: 'Create support ticket', href: 'mailto:support@aicoflow.com' },
-        { label: 'View status page', href: 'https://aicoflow.com' }
+        { label: $t("contact.channels.support.actionOne"), href: "mailto:support@aicoflow.com" },
+        { label: $t("contact.channels.support.actionTwo"), href: "https://aicoflow.com" }
       ]
     },
     {
-      tag: 'Partnerships',
-      title: 'Integrations & co-selling',
-      description: 'Partner with AICOYO to embed our agents into your stack or co-deliver voice automation programs.',
-      icon: 'handshake',
+      tag: $t("contact.channels.partnerships.tag"),
+      title: $t("contact.channels.partnerships.title"),
+      description: $t("contact.channels.partnerships.description"),
+      icon: "handshake",
       actions: [
-        { label: 'Contact partnerships', href: 'mailto:nikita@aicoflow.com' },
-        { label: 'Explore partner playbook', href: '#use-cases' }
+        { label: $t("contact.channels.partnerships.actionOne"), href: "mailto:nikita@aicoflow.com" },
+        { label: $t("contact.channels.partnerships.actionTwo"), href: "#use-cases" }
       ]
     }
   ];
@@ -51,33 +62,32 @@
   <div class="container">
     <div class="contact-shell">
       <div class="contact-intro">
-        <span class="eyebrow">Let’s build your voice ops</span>
-        <h2>Talk to the AICOYO team.</h2>
+        <span class="eyebrow">{$t("contact.eyebrow")}</span>
+        <h2>{$t("contact.title")}</h2>
         <p>
-          Whether you are designing a pilot or rolling out globally, our specialists will help you map each call journey,
-          connect tooling, and ship with confidence.
+          {$t("contact.body")}
         </p>
 
         <div class="contact-highlights">
           <div class="highlight">
             <Icon name="clock" size={18} strokeWidth={2} />
             <div>
-              <strong>Global coverage</strong>
-              <span>08:00 – 24:00 local / weekend on-call</span>
+              <strong>{$t("contact.highlights.coverageTitle")}</strong>
+              <span>{$t("contact.highlights.coverageBody")}</span>
             </div>
           </div>
           <div class="highlight">
             <Icon name="shield-check" size={18} strokeWidth={2} />
             <div>
-              <strong>Security ready</strong>
-              <span>SOC2 Type II · HIPAA BAA · GDPR</span>
+              <strong>{$t("contact.highlights.securityTitle")}</strong>
+              <span>{$t("contact.highlights.securityBody")}</span>
             </div>
           </div>
           <div class="highlight">
             <Icon name="users" size={18} strokeWidth={2} />
             <div>
-              <strong>Specialist teams</strong>
-              <span>Voice reliability · Knowledge ops · CX strategy</span>
+              <strong>{$t("contact.highlights.teamsTitle")}</strong>
+              <span>{$t("contact.highlights.teamsBody")}</span>
             </div>
           </div>
         </div>

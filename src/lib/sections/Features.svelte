@@ -1,66 +1,52 @@
 <script lang="ts">
   import Icon from "../components/Icon.svelte";
+  import { t } from "../../i18n";
 
-  const features = [
+  type Feature = {
+    icon: string;
+    title: string;
+    description: string;
+    highlights: string[];
+  };
+
+  let features: Feature[] = [];
+
+  $: features = [
     {
       icon: "phone-forwarded",
-      title: "Carrier-grade voice infrastructure",
-      description:
-        "Managed SIP, PSTN, and WebRTC orchestration with adaptive jitter buffers keep every conversation crisp.",
-      highlights: [
-        "Bring your own carrier or use our Telnyx & Twilio bridges",
-        "Sub-300ms roundtrip with dynamic silence detection",
-      ],
+      title: $t("features.items.voice.title"),
+      description: $t("features.items.voice.description"),
+      highlights: [$t("features.items.voice.one"), $t("features.items.voice.two")],
     },
     {
       icon: "brain",
-      title: "Knowledge that stays on brand",
-      description:
-        "RAG pipelines tuned for support, sales, and compliance with automatic grounding references in every reply.",
-      highlights: [
-        "Automatic versioning of SOPs and product updates",
-        "Citations embedded in transcripts for audits",
-      ],
+      title: $t("features.items.knowledge.title"),
+      description: $t("features.items.knowledge.description"),
+      highlights: [$t("features.items.knowledge.one"), $t("features.items.knowledge.two")],
     },
     {
       icon: "git-merge",
-      title: "Workflow automation from the call",
-      description:
-        "Trigger downstream systems mid-conversation through secure tool calls—without brittle IVR trees.",
-      highlights: [
-        "Native Salesforce, Zendesk, HubSpot, & custom API actions",
-        "Intent-aware branching with guardrails and fallbacks",
-      ],
+      title: $t("features.items.workflow.title"),
+      description: $t("features.items.workflow.description"),
+      highlights: [$t("features.items.workflow.one"), $t("features.items.workflow.two")],
     },
     {
       icon: "mic-2",
-      title: "Human-grade voice & emotion",
-      description:
-        "Streaming STT + expressive TTS that handles accents, interruptions, and sentiment pivots in real time.",
-      highlights: [
-        "Dynamic prosody for empathy, urgency, or escalation",
-        "Automatic backchanneling for natural conversations",
-      ],
+      title: $t("features.items.voiceEmotion.title"),
+      description: $t("features.items.voiceEmotion.description"),
+      highlights: [$t("features.items.voiceEmotion.one"), $t("features.items.voiceEmotion.two")],
     },
     {
       icon: "line-chart",
-      title: "Mission control analytics",
-      description:
-        "Monitor call quality, automation coverage, cost, and agent performance from a single glass cockpit.",
-      highlights: [
-        "Real-time QA classifications and alerting",
-        "Outcome attribution down to every automation",
-      ],
+      title: $t("features.items.analytics.title"),
+      description: $t("features.items.analytics.description"),
+      highlights: [$t("features.items.analytics.one"), $t("features.items.analytics.two")],
     },
     {
       icon: "shield-check",
-      title: "Enterprise safeguards by default",
-      description:
-        "Multi-tenant isolation, SOC2-ready logging, and redaction keep regulated teams secure.",
-      highlights: [
-        "Data residency controls across regions",
-        "Granular RBAC & audit trails for every action",
-      ],
+      title: $t("features.items.security.title"),
+      description: $t("features.items.security.description"),
+      highlights: [$t("features.items.security.one"), $t("features.items.security.two")],
     },
   ];
 </script>
@@ -68,12 +54,10 @@
 <section id="features" class="features">
   <div class="container">
     <div class="section-intro">
-      <span class="eyebrow">Built for scaled voice automation</span>
-      <h2>The platform your operators and engineers both love.</h2>
+      <span class="eyebrow">{$t("features.eyebrow")}</span>
+      <h2>{$t("features.title")}</h2>
       <p>
-        AICOYO fuses the reliability of a contact center with the adaptability of
-        modern AI. Every layer—from voice to knowledge to tooling—was designed
-        for mission-critical teams.
+        {$t("features.body")}
       </p>
     </div>
 

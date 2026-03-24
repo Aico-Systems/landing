@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import { t } from "../../i18n";
   import Icon from "../components/Icon.svelte";
   import Button from "../components/Button.svelte";
   import Badge from "../components/Badge.svelte";
@@ -27,14 +28,12 @@
   <div class="container">
     <div class="hero-grid">
       <div class="hero-copy">
-        <Badge variant="default">The Conversation Infrastructure</Badge>
+        <Badge variant="default">{$t("hero.badge")}</Badge>
         <h1 class="headline">
-          Launch call agents that sound like your best team member.
+          {$t("hero.title")}
         </h1>
         <p class="subheadline">
-          AICOYO blends enterprise telephony, RAG, and live tooling so every
-          conversation is on-brand, compliant, and outcome-driven from the first
-          hello.
+          {$t("hero.body")}
         </p>
 
         <div class="hero-actions">
@@ -42,48 +41,48 @@
             variant="primary"
             onClick={() => requestSectionNavigation("booking")}
           >
-            Book a Pilot
+            {$t("hero.actions.book")}
           </Button>
           <Button
             variant="secondary"
             onClick={() => requestSectionNavigation("how-it-works")}
           >
-            Experience the Flow
+            {$t("hero.actions.flow")}
           </Button>
         </div>
 
         <div class="hero-list">
           <div class="hero-list-item">
             <span class="list-icon"><Icon name="sparkles" size={18} strokeWidth={1.8} /></span>
-            Adaptive talk tracks that mirror your operating manuals.
+            {$t("hero.list.one")}
           </div>
           <div class="hero-list-item">
             <span class="list-icon"><Icon name="cpu" size={18} strokeWidth={1.8} /></span>
-            Native integrations to trigger tools, CRMs, and internal APIs.
+            {$t("hero.list.two")}
           </div>
           <div class="hero-list-item">
             <span class="list-icon"><Icon name="shield-check" size={18} strokeWidth={1.8} /></span>
-            Auditable transcripts, real-time QA, and tenant-aware controls.
+            {$t("hero.list.three")}
           </div>
         </div>
 
         <div class="hero-metrics">
           <div class="metric">
             <span class="metric-value">&lt; 300ms</span>
-            <span class="metric-label">Voice latency</span>
+            <span class="metric-label">{$t("hero.metrics.latency")}</span>
           </div>
           <div class="metric">
             <span class="metric-value">24/7</span>
-            <span class="metric-label">Availability</span>
+            <span class="metric-label">{$t("hero.metrics.availability")}</span>
           </div>
           <div class="metric">
             <span class="metric-value">5+</span>
-            <span class="metric-label">LLM providers</span>
+            <span class="metric-label">{$t("hero.metrics.providers")}</span>
           </div>
         </div>
 
         <div class="hero-trust">
-          <span class="trust-label">Design. Deploy. Monitor. Transfer.</span>
+          <span class="trust-label">{$t("hero.trust")}</span>
         </div>
       </div>
 
@@ -93,27 +92,27 @@
           {#if showWaveform && WaveformCanvas}
             <svelte:component this={WaveformCanvas} />
           {:else}
-            <div class="waveform-placeholder" aria-label="Loading visualization"></div>
+            <div class="waveform-placeholder" aria-label={$t("hero.panel.loadingVisualization")}></div>
           {/if}
         </div>
 
         <div class="hero-panel primary">
           <div class="panel-header">
-            <span class="badge">Live Call · Automotive</span>
+            <span class="badge">{$t("hero.panel.badge")}</span>
             <span class="timestamp">00:36</span>
           </div>
           <div class="panel-body">
             <div class="panel-transcript">
-              <div class="actor customer">Customer: "I'd like to schedule a service appointment."</div>
-              <div class="actor agent">AICOYO: "Of course — I see your next service is due. Thursday at 10 AM works. Shall I book that?"</div>
+              <div class="actor customer">{$t("hero.panel.customer")}</div>
+              <div class="actor agent">{$t("hero.panel.agent")}</div>
             </div>
             <div class="panel-metrics">
               <div>
-                <span class="metric-title">Latency</span>
+                <span class="metric-title">{$t("hero.panel.latency")}</span>
                 <span class="metric-score">240ms</span>
               </div>
               <div>
-                <span class="metric-title">NPS Prediction</span>
+                <span class="metric-title">{$t("hero.panel.nps")}</span>
                 <span class="metric-score positive">+43</span>
               </div>
             </div>
@@ -122,16 +121,16 @@
 
         <div class="hero-panel secondary">
           <div class="panel-row">
-            <span class="panel-label"><Icon name="badge-check" size={16} strokeWidth={1.6} /> Playbook match</span>
+            <span class="panel-label"><Icon name="badge-check" size={16} strokeWidth={1.6} /> {$t("hero.panel.playbook")}</span>
             <span class="panel-value">97%</span>
           </div>
           <div class="panel-row">
-            <span class="panel-label"><Icon name="bot" size={16} strokeWidth={1.6} /> Automated tasks</span>
-            <span class="panel-value">Calendar · CRM · Follow-up</span>
+            <span class="panel-label"><Icon name="bot" size={16} strokeWidth={1.6} /> {$t("hero.panel.tasks")}</span>
+            <span class="panel-value">{$t("hero.panel.tasksValue")}</span>
           </div>
           <div class="panel-row">
-            <span class="panel-label"><Icon name="book-open" size={16} strokeWidth={1.6} /> Knowledge hits</span>
-            <span class="panel-value">Service handbook · Pricing</span>
+            <span class="panel-label"><Icon name="book-open" size={16} strokeWidth={1.6} /> {$t("hero.panel.knowledge")}</span>
+            <span class="panel-value">{$t("hero.panel.knowledgeValue")}</span>
           </div>
         </div>
       </div>

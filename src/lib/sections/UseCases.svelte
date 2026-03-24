@@ -1,81 +1,95 @@
 <script lang="ts">
   import Icon from '../components/Icon.svelte';
-  
-  const useCases = [
+  import { t } from "../../i18n";
+
+  type UseCase = {
+    title: string;
+    badge: string;
+    headline: string;
+    description: string;
+    icon: string;
+    stats: Array<{ label: string; value: string }>;
+    highlights: string[];
+    quote: { text: string; author: string };
+  };
+
+  let useCases: UseCase[] = [];
+
+  let activeCase = 0;
+
+  $: useCases = [
     {
-      title: 'Support Control Tower',
-      badge: 'Customer Experience',
-      headline: 'Resolve any inbound issue without looping in a human.',
-      description: 'AICOYO listens for intent shifts, updates orders, and closes tickets while keeping empathy and compliance intact.',
-      icon: 'life-buoy',
+      title: $t("useCases.items.support.title"),
+      badge: $t("useCases.items.support.badge"),
+      headline: $t("useCases.items.support.headline"),
+      description: $t("useCases.items.support.description"),
+      icon: "life-buoy",
       stats: [
-        { label: 'Average handle time', value: '-52%' },
-        { label: 'First-contact resolution', value: '92%' },
-        { label: 'Agent escalations', value: '-68%' }
+        { label: $t("useCases.items.support.stats.one"), value: "-52%" },
+        { label: $t("useCases.items.support.stats.two"), value: "92%" },
+        { label: $t("useCases.items.support.stats.three"), value: "-68%" },
       ],
       highlights: [
-        'Sync Zendesk, Freshdesk, or Salesforce Service to auto-log cases',
-        'Offer proactive follow-ups via SMS or email in the same flow',
-        'Live supervisors receive alerts on outlier calls instantly'
+        $t("useCases.items.support.highlights.one"),
+        $t("useCases.items.support.highlights.two"),
+        $t("useCases.items.support.highlights.three"),
       ],
       quote: {
-        text: 'Customers feel like they are speaking to our best rep. The automation saved us from hiring 15 seasonal agents this quarter.',
-        author: 'VP of Support, Orbit Health'
+        text: $t("useCases.items.support.quote"),
+        author: $t("useCases.items.support.author"),
       }
     },
     {
-      title: 'Revenue Desk',
-      badge: 'Revenue Teams',
-      headline: 'Qualify, schedule, and route leads on the first ring.',
-      description: 'Whether inbound phone leads or website call-backs, AICOYO qualifies prospects, captures context, and books meetings in real time.',
-      icon: 'target',
+      title: $t("useCases.items.revenue.title"),
+      badge: $t("useCases.items.revenue.badge"),
+      headline: $t("useCases.items.revenue.headline"),
+      description: $t("useCases.items.revenue.description"),
+      icon: "target",
       stats: [
-        { label: 'Qualified pipeline', value: '+47%' },
-        { label: 'Speed-to-lead', value: '46s' },
-        { label: 'No-show reduction', value: '-33%' }
+        { label: $t("useCases.items.revenue.stats.one"), value: "+47%" },
+        { label: $t("useCases.items.revenue.stats.two"), value: "46s" },
+        { label: $t("useCases.items.revenue.stats.three"), value: "-33%" },
       ],
       highlights: [
-        'Native calendar orchestration with HubSpot & Salesforce',
-        'Push lead notes and call summaries into your CRM automatically',
-        'Answers pricing, features, and integrations with sourced citations'
+        $t("useCases.items.revenue.highlights.one"),
+        $t("useCases.items.revenue.highlights.two"),
+        $t("useCases.items.revenue.highlights.three"),
       ],
       quote: {
-        text: 'We finally cover inbound after-hours. Meetings turn up pre-qualified, and reps stay focused on closing.',
-        author: 'Head of Growth, Nova Commerce'
+        text: $t("useCases.items.revenue.quote"),
+        author: $t("useCases.items.revenue.author"),
       }
     },
     {
-      title: 'Ops Command Center',
-      badge: 'Internal Operations',
-      headline: 'Give every employee a voice concierge for systems, policies, and approvals.',
-      description: 'AICOYO handles IT, HR, and facilities requests by orchestrating knowledge, automations, and approvals in seconds.',
-      icon: 'building-2',
+      title: $t("useCases.items.ops.title"),
+      badge: $t("useCases.items.ops.badge"),
+      headline: $t("useCases.items.ops.headline"),
+      description: $t("useCases.items.ops.description"),
+      icon: "building-2",
       stats: [
-        { label: 'Ticket deflection', value: '78%' },
-        { label: 'Time to resolution', value: '< 2m' },
-        { label: 'Employee CSAT', value: '4.8 / 5' }
+        { label: $t("useCases.items.ops.stats.one"), value: "78%" },
+        { label: $t("useCases.items.ops.stats.two"), value: "< 2m" },
+        { label: $t("useCases.items.ops.stats.three"), value: "4.8 / 5" },
       ],
       highlights: [
-        'Integrates with ServiceNow, Notion, and custom internal APIs',
-        'Understands entitlements, regional policies, and SSO context',
-        'Escalates to the right team with a complete audit trail'
+        $t("useCases.items.ops.highlights.one"),
+        $t("useCases.items.ops.highlights.two"),
+        $t("useCases.items.ops.highlights.three"),
       ],
       quote: {
-        text: 'It’s like giving every team a dedicated operations lead who never sleeps. Approvals, requests, and knowledge are instant.',
-        author: 'COO, Atlas Support'
+        text: $t("useCases.items.ops.quote"),
+        author: $t("useCases.items.ops.author"),
       }
     }
   ];
-
-  let activeCase = 0;
 </script>
 
 <section id="use-cases" class="use-cases">
   <div class="container">
     <div class="section-header">
-      <span class="eyebrow">Where teams deploy AICOYO</span>
-      <h2>A single brain powering every conversational workflow.</h2>
-      <p>Pick a use case to see how the globe above repositions to match your audience and KPIs.</p>
+      <span class="eyebrow">{$t("useCases.eyebrow")}</span>
+      <h2>{$t("useCases.title")}</h2>
+      <p>{$t("useCases.body")}</p>
     </div>
 
     <div class="use-cases-container">

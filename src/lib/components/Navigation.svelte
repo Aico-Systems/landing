@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
+  import { locale, setLocale, t } from "../../i18n";
   import { theme, toggleTheme } from "../../stores/theme";
   import {
     SECTION_IDS,
@@ -9,20 +10,29 @@
   } from "../utils/sectionNavigation";
   import Icon from "./Icon.svelte";
 
-  const sections: Array<{ id: SectionId; label: string }> = [
-    { id: "how-it-works", label: "Launch Plan" },
-    { id: "features", label: "Platform" },
-    { id: "use-cases", label: "Solutions" },
-    { id: "booking", label: "Book Live" },
-    { id: "testimonials", label: "Customers" },
-    { id: "contact", label: "Contact" },
+  const sectionDefinitions: Array<{ id: SectionId; key: string }> = [
+    { id: "how-it-works", key: "nav.sections.howItWorks" },
+    { id: "features", key: "nav.sections.features" },
+    { id: "use-cases", key: "nav.sections.useCases" },
+    { id: "booking", key: "nav.sections.booking" },
   ];
+  const localeOptions = [
+    { value: "en", label: "EN", titleKey: "nav.english" },
+    { value: "de", label: "DE", titleKey: "nav.german" },
+  ] as const;
+
+  let sections: Array<{ id: SectionId; label: string }> = [];
 
   let isScrolled = false;
   let activeSection: SectionId = "hero";
   let sectionObserver: IntersectionObserver | null = null;
   let sectionMutationObserver: MutationObserver | null = null;
   let mobileMenuOpen = false;
+
+  $: sections = sectionDefinitions.map((section) => ({
+    id: section.id,
+    label: $t(section.key),
+  }));
 
   function navigate(sectionId: SectionId) {
     activeSection = sectionId;
@@ -109,6 +119,10 @@
       mobileMenuOpen = false;
     }
   }
+
+  function changeLocale(nextLocale: "en" | "de") {
+    setLocale(nextLocale);
+  }
 </script>
 
 <nav class:scrolled={isScrolled}>
@@ -118,11 +132,11 @@
         type="button"
         class="brand"
         on:click={() => navigate("hero")}
-        aria-label="Go to hero"
+        aria-label={$t("nav.goToHero")}
       >
         <img src="/Logo.svg" alt="AICOYO" class="logo-img" />
         <span class="logo-text">AICOYO</span>
-        <span class="brand-pill">Voice AI</span>
+        <span class="brand-pill">{$t("nav.brandPill")}</span>
       </button>
       <div class="nav-center">
         {#each sections as section}
@@ -142,28 +156,37 @@
           type="button"
           on:click={toggleTheme}
           class="theme-toggle"
-          aria-label="Toggle theme"
+          aria-label={$t("nav.toggleTheme")}
         >
           {#if $theme === "light"}<Icon name="moon" size={18} />{:else}<Icon
               name="sun"
               size={18}
             />{/if}
         </button>
-        <button
-          type="button"
-          class="btn btn-secondary ghost"
-          on:click={() => navigate("use-cases")}>See AICOYO in action</button
-        >
+        <div class="locale-switch" role="group" aria-label={$t("nav.language")}>
+          {#each localeOptions as option}
+            <button
+              type="button"
+              class="locale-button"
+              class:active={$locale === option.value}
+              aria-pressed={$locale === option.value}
+              aria-label={$t(option.titleKey)}
+              on:click={() => changeLocale(option.value)}
+            >
+              {option.label}
+            </button>
+          {/each}
+        </div>
         <button
           type="button"
           class="btn btn-primary nav-cta"
-          on:click={() => navigate("booking")}>Book a pilot</button
+          on:click={() => navigate("booking")}>{$t("nav.bookPilot")}</button
         >
         <button
           type="button"
           class="menu-toggle"
           class:expanded={mobileMenuOpen}
-          aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-label={mobileMenuOpen ? $t("nav.closeMenu") : $t("nav.openMenu")}
           aria-expanded={mobileMenuOpen}
           on:click={toggleMobileMenu}
         >
@@ -187,13 +210,6 @@
             {section.label}
           </button>
         {/each}
-        <button
-          type="button"
-          class="mobile-link mobile-link-secondary"
-          on:click={() => navigate("use-cases")}
-        >
-          See AICOYO in action
-        </button>
       </div>
     </div>
   </div>
@@ -335,6 +351,36 @@
     align-items: center;
     gap: 8px;
   }
+  .locale-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    padding: 2px;
+    border-radius: 10px;
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-elevated);
+  }
+  .locale-button {
+    min-width: 34px;
+    min-height: 32px;
+    padding: 0 8px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: var(--transition-button);
+  }
+  .locale-button:hover {
+    color: var(--text-primary);
+  }
+  .locale-button.active {
+    background: var(--accent-soft);
+    color: var(--text-primary);
+  }
   .theme-toggle {
     display: inline-flex;
     align-items: center;
@@ -412,18 +458,6 @@
     background: var(--surface-muted);
     color: var(--text-primary);
   }
-  .ghost {
-    min-height: var(--control-height-md) !important;
-    padding: 0 12px !important;
-    font-size: 13px !important;
-    background: var(--surface-elevated) !important;
-    color: var(--text-primary) !important;
-    border-color: var(--border-subtle) !important;
-  }
-  .ghost:hover {
-    border-color: var(--accent-border) !important;
-    background: var(--surface-elevated-strong) !important;
-  }
   .nav-cta {
     min-height: var(--control-height-md) !important;
     padding: 0 14px !important;
@@ -499,8 +533,10 @@
     .nav-actions {
       gap: 5px;
     }
-    .ghost {
-      display: none !important;
+    .locale-button {
+      min-width: 32px;
+      min-height: 32px;
+      font-size: 10px;
     }
     .menu-toggle {
       display: inline-flex;
@@ -579,9 +615,6 @@
     .mobile-link.active {
       background: var(--accent-soft);
       border-color: var(--accent-border);
-    }
-    .mobile-link-secondary {
-      color: var(--accent-primary);
     }
   }
 

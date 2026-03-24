@@ -2,6 +2,7 @@
   import Icon from "../components/Icon.svelte";
   import Button from "../components/Button.svelte";
   import Badge from "../components/Badge.svelte";
+  import { t } from "../../i18n";
 
   let email = "";
 
@@ -17,62 +18,59 @@
   <div class="container">
     <div class="cta-shell">
       <div class="cta-copy">
-        <Badge variant="outline">Pilot AICOYO</Badge>
-        <h2>Spin up your voice agent pilot in days, not months.</h2>
+        <Badge variant="outline">{$t("cta.badge")}</Badge>
+        <h2>{$t("cta.title")}</h2>
         <p>
-          Share a work email and our team will schedule a working session. Bring
-          your call flows, tools, and success metrics—we’ll show you how AICOYO
-          maps to them instantly.
+          {$t("cta.body")}
         </p>
 
         <form on:submit={handleSubmit} class="cta-form">
           <input
             type="email"
             bind:value={email}
-            placeholder="Work email"
+            placeholder={$t("cta.emailPlaceholder")}
             required
             class="email-input"
           />
-          <Button type="submit" variant="primary">Request a demo</Button>
+          <Button type="submit" variant="primary">{$t("cta.submit")}</Button>
         </form>
 
         <div class="cta-perks">
           <div>
             <Icon name="clock" size={18} strokeWidth={2} />
-            30-minute discovery with voice specialists
+            {$t("cta.perks.one")}
           </div>
           <div>
             <Icon name="layers" size={18} strokeWidth={2} />
-            Custom blueprint aligned to your call journeys
+            {$t("cta.perks.two")}
           </div>
           <div>
             <Icon name="shield-check" size={18} strokeWidth={2} />
-            Security review and deployment guidance
+            {$t("cta.perks.three")}
           </div>
         </div>
       </div>
 
       <div class="cta-panel">
-        <h3>What’s included</h3>
+        <h3>{$t("cta.panelTitle")}</h3>
         <ul>
           <li>
             <Icon name="sparkles" size={18} strokeWidth={2} />
-            Live demo tailored to your industry playbooks
+            {$t("cta.panelItems.one")}
           </li>
           <li>
             <Icon name="git-branch" size={18} strokeWidth={2} />
-            Integration plan for telephony, CRM, and tooling
+            {$t("cta.panelItems.two")}
           </li>
           <li>
             <Icon name="gauge" size={18} strokeWidth={2} />
-            Automation ROI forecast and roll-out timeline
+            {$t("cta.panelItems.three")}
           </li>
         </ul>
 
         <div class="panel-footnote">
           <Icon name="message-circle" size={18} strokeWidth={2} />
-          Prefer async? <a href="mailto:nikita@aicoflow.com">Email our team</a> with
-          your goals.
+          {$t("cta.footnote.prefix")} <a href="mailto:nikita@aicoflow.com">{$t("cta.footnote.link")}</a> {$t("cta.footnote.suffix")}
         </div>
       </div>
     </div>

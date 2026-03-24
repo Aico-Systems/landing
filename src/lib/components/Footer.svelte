@@ -1,5 +1,11 @@
 <script lang="ts">
 	import Icon from "./Icon.svelte";
+	import { t } from "../../i18n";
+	import {
+		requestAppNavigation,
+		shouldHandleClientNavigation,
+		type AppPath,
+	} from "../utils/appNavigation";
 	import {
 		getSectionIdFromHash,
 		requestSectionNavigation,
@@ -12,6 +18,12 @@
 		event.preventDefault();
 		requestSectionNavigation(sectionId);
 	}
+
+	function handleAppLinkClick(event: MouseEvent, path: AppPath) {
+		if (!shouldHandleClientNavigation(event)) return;
+		event.preventDefault();
+		requestAppNavigation(path);
+	}
 </script>
 
 <footer class="footer">
@@ -22,76 +34,70 @@
 					<img src="/Logo.svg" alt="AICOYO" class="logo-img" />
 					<span class="logo-text">AICOYO</span>
 				</div>
-				<p>The Conversation Infrastructure.</p>
+				<p>{$t("footer.tagline")}</p>
 				<div class="status-pill">
 					<span class="status-dot"></span>
-					Systems operational
+					{$t("footer.status")}
 				</div>
 			</div>
 
 			<div class="footer-right">
-				<div class="footer-links">
+				<div class="footer-link-groups">
 					<div class="footer-column">
-						<h4>Product</h4>
+						<h4>{$t("footer.columns.explore")}</h4>
 						<a href="#hero" on:click={(event) => handleSectionLinkClick(event, "#hero")}
-							>Overview</a
+							>{$t("footer.links.overview")}</a
+						>
+						<a
+							href="#how-it-works"
+							on:click={(event) => handleSectionLinkClick(event, "#how-it-works")}
+							>{$t("footer.links.implementation")}</a
 						>
 						<a
 							href="#features"
 							on:click={(event) => handleSectionLinkClick(event, "#features")}
-							>Platform</a
+							>{$t("footer.links.platform")}</a
 						>
 						<a
 							href="#use-cases"
 							on:click={(event) => handleSectionLinkClick(event, "#use-cases")}
-							>Solutions</a
+							>{$t("footer.links.solutions")}</a
+						>
+						<a
+							href="#booking"
+							on:click={(event) => handleSectionLinkClick(event, "#booking")}
+							>{$t("footer.links.book")}</a
 						>
 					</div>
 
 					<div class="footer-column">
-						<h4>Company</h4>
-						<a
-							href="#contact"
-							on:click={(event) => handleSectionLinkClick(event, "#contact")}
-							>Contact</a
-						>
-						<a
-							href="#testimonials"
-							on:click={(event) => handleSectionLinkClick(event, "#testimonials")}
-							>Customers</a
-						>
-						<a href="mailto:nikita@aicoflow.com">Press</a>
+						<h4>{$t("footer.columns.resources")}</h4>
+						<a href="/docs/" on:click={(event) => handleAppLinkClick(event, "/docs/")}>{$t("footer.links.docs")}</a>
+						<a href="/blog/" on:click={(event) => handleAppLinkClick(event, "/blog/")}>{$t("footer.links.blog")}</a>
+						<a href="/security/" on:click={(event) => handleAppLinkClick(event, "/security/")}>{$t("footer.links.security")}</a>
+						<a href="/status/" on:click={(event) => handleAppLinkClick(event, "/status/")}>{$t("footer.links.status")}</a>
 					</div>
 
 					<div class="footer-column">
-						<h4>Resources</h4>
-						<a
-							href="#how-it-works"
-							on:click={(event) => handleSectionLinkClick(event, "#how-it-works")}
-							>Implementation</a
-						>
-						<a href="#cta" on:click={(event) => handleSectionLinkClick(event, "#cta")}
-							>Security</a
-						>
-						<a
-							href="#use-cases"
-							on:click={(event) => handleSectionLinkClick(event, "#use-cases")}
-							>Customer stories</a
-						>
+						<h4>{$t("footer.columns.legal")}</h4>
+						<a href="/imprint/" on:click={(event) => handleAppLinkClick(event, "/imprint/")}>{$t("footer.links.imprint")}</a>
+						<a href="/privacy/" on:click={(event) => handleAppLinkClick(event, "/privacy/")}>{$t("footer.links.privacy")}</a>
+						<a href="/terms/" on:click={(event) => handleAppLinkClick(event, "/terms/")}>{$t("footer.links.terms")}</a>
+						<a href="/policies/" on:click={(event) => handleAppLinkClick(event, "/policies/")}>{$t("footer.links.policies")}</a>
 					</div>
 				</div>
 
 				<div class="footer-meta">
 					<div class="meta-item">
 						<Icon name="map-pin" size={16} strokeWidth={1.8} />
-						Germany · Remote-first
+						{$t("footer.meta.location")}
 					</div>
 					<div class="meta-item">
 						<Icon name="mail" size={16} strokeWidth={1.8} />
 						<a href="mailto:nikita@aicoflow.com">nikita@aicoflow.com</a>
 					</div>
 					<div class="meta-item socials">
-						<span>Follow</span>
+						<span>{$t("footer.meta.follow")}</span>
 						<a
 							href="https://www.linkedin.com"
 							target="_blank"
@@ -112,11 +118,7 @@
 		</div>
 
 		<div class="footer-bottom">
-			<p>&copy; 2026 AICOYO. All rights reserved.</p>
-			<div class="footer-legal">
-				<a href="#privacy">Privacy Policy</a>
-				<a href="#terms">Terms of Service</a>
-			</div>
+			<p>{$t("footer.legal.copyright")}</p>
 		</div>
 	</div>
 </footer>
@@ -137,9 +139,13 @@
 
 	.footer-content {
 		display: grid;
-		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-		gap: 48px;
+		grid-template-columns: minmax(320px, 0.95fr) minmax(420px, 560px);
+		gap: clamp(40px, 6vw, 96px);
 		margin-bottom: 48px;
+		max-width: 1140px;
+		margin-left: auto;
+		margin-right: auto;
+		align-items: start;
 	}
 
 	.footer-brand .logo {
@@ -196,22 +202,21 @@
 	}
 
 	.footer-right {
-		display: flex;
-		flex-direction: column;
-		gap: 32px;
-		align-items: flex-start;
+		display: grid;
+		gap: 28px;
+		align-items: start;
 	}
 
-		.footer-links {
-			display: flex;
-			gap: 48px;
-			flex-wrap: wrap;
-			width: 100%;
-		}
+	.footer-link-groups {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(150px, 1fr));
+		gap: 28px;
+		width: 100%;
+	}
 
-		.footer-column {
-			min-width: 0;
-		}
+	.footer-column {
+		min-width: 0;
+	}
 
 	.footer-column h4 {
 		color: var(--text-primary);
@@ -232,10 +237,12 @@
 	}
 
 	.footer-meta {
-		display: grid;
-		gap: 14px;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 16px 24px;
 		font-size: 14px;
 		color: rgba(226, 232, 240, 0.85);
+		padding-top: 8px;
 	}
 
 	:global([data-theme="light"]) .footer-meta {
@@ -292,24 +299,13 @@
 
 	.footer-bottom {
 		display: flex;
-		justify-content: space-between;
+		justify-content: center;
 		align-items: center;
 		padding-top: 30px;
 		border-top: 1px solid rgba(20, 91, 122, 0.12);
 		font-size: 14px;
-	}
-
-	.footer-legal {
-		display: flex;
-		gap: 24px;
-	}
-
-	.footer-legal a {
-		color: inherit;
-	}
-
-	.footer-legal a:hover {
-		color: #145B7A;
+		max-width: 1140px;
+		margin: 0 auto;
 	}
 
 	@media (max-width: 968px) {
@@ -318,13 +314,18 @@
 			margin-top: 96px;
 		}
 
-		.footer-content {
-			grid-template-columns: 1fr;
-			gap: 36px;
-		}
+			.footer-content {
+				grid-template-columns: 1fr;
+				gap: 36px;
+			}
 
 		.footer-right {
 			width: 100%;
+			gap: 24px;
+		}
+
+		.footer-link-groups {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
 			gap: 24px;
 		}
 
@@ -336,12 +337,8 @@
 			justify-content: flex-start;
 		}
 
-		.footer-bottom {
-			flex-direction: column;
-			gap: 16px;
-			text-align: center;
+			.footer-bottom { text-align: center; }
 		}
-	}
 
 		@media (max-width: 640px) {
 			.footer {
@@ -387,11 +384,10 @@
 				text-align: center;
 			}
 
-			.footer-links {
-				display: grid;
+			.footer-link-groups {
 				grid-template-columns: 1fr;
 				gap: 20px;
-				width: 100%;
+				justify-items: center;
 			}
 
 			.footer-column {
@@ -412,9 +408,11 @@
 			}
 
 			.footer-meta {
+				display: grid;
 				gap: 10px;
 				font-size: 15px;
 				justify-items: center;
+				padding-top: 4px;
 			}
 
 			.meta-item {
@@ -437,10 +435,6 @@
 				margin-right: 2px;
 			}
 
-			.footer-legal {
-				flex-direction: column;
-				gap: 12px;
-			}
 		}
 
 		@media (max-width: 420px) {
