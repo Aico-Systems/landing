@@ -7,8 +7,13 @@ import {
   _ as t,
 } from "svelte-i18n";
 
-import en from "./locales/en.json";
-import de from "./locales/de.json";
+interface LocaleDictionary {
+  [key: string]: string | null | LocaleDictionary | Array<string | LocaleDictionary>;
+}
+type LocaleMessages = {
+  en?: LocaleDictionary;
+  de?: LocaleDictionary;
+};
 
 let initialized = false;
 
@@ -16,11 +21,11 @@ function normalizeLocale(localeCode: string | null | undefined): string {
   return (localeCode || "en").split("-")[0].toLowerCase();
 }
 
-export function initI18n() {
+export function initI18n(initialMessages: LocaleMessages = {}) {
   if (initialized) return;
 
-  addMessages("en", en);
-  addMessages("de", de);
+  addMessages("en", initialMessages.en || {});
+  addMessages("de", initialMessages.de || {});
 
   const savedLocale =
     typeof window !== "undefined" ? localStorage.getItem("aico-landing-locale") : null;
@@ -28,7 +33,7 @@ export function initI18n() {
   const initialLocale = normalizeLocale(savedLocale || browserLocale || "en");
 
   init({
-    fallbackLocale: "en",
+    fallbackLocale: initialLocale === "de" ? "de" : "en",
     initialLocale: initialLocale === "de" ? "de" : "en",
   });
 

@@ -2,16 +2,13 @@
   import { onMount } from "svelte";
   import { locale, t } from "../../i18n";
   import { theme } from "../../stores/theme";
+  import { landingRuntimeConfig } from "../config";
   import Badge from "../components/Badge.svelte";
   import Icon from "../components/Icon.svelte";
 
   type WidgetWindow = Window & {
     __AICO_BOOKING_WIDGET_READY__?: Promise<void>;
   };
-
-  const LOCAL_WIDGET_URL = "http://localhost:5178";
-  const LOCAL_API_URL = "http://localhost:5006";
-  const LOCAL_DEFAULT_ORG = "aico-global";
 
   let widgetHost: HTMLDivElement | null = null;
   let widgetElement: HTMLElement | null = null;
@@ -21,35 +18,20 @@
 
   let widgetScriptPromise: Promise<void> | null = null;
 
-  function normalizeUrl(value: string | undefined): string {
-    return (value || "").trim().replace(/\/+$/, "");
-  }
-
-  function isLocalHost(hostname: string): boolean {
-    return hostname === "localhost" || hostname === "127.0.0.1";
-  }
-
   function resolveWidgetUrl(): string {
-    const configuredUrl = normalizeUrl(import.meta.env.VITE_BOOKING_WIDGET_URL);
-    if (configuredUrl) return configuredUrl;
-    if (typeof window === "undefined") return "";
-    return isLocalHost(window.location.hostname) ? LOCAL_WIDGET_URL : "";
+    return landingRuntimeConfig.BOOKING_WIDGET_URL || "";
   }
 
   function resolveOrgId(): string {
-    const configuredOrg = (import.meta.env.VITE_BOOKING_WIDGET_ORG || "").trim();
-    if (configuredOrg) return configuredOrg;
-    if (typeof window === "undefined") return "";
-    return isLocalHost(window.location.hostname) ? LOCAL_DEFAULT_ORG : "";
+    return landingRuntimeConfig.BOOKING_WIDGET_ORG || "";
   }
 
   function resolveApiUrl(): string {
-    const configuredUrl = normalizeUrl(
-      import.meta.env.VITE_BOOKING_API_URL || import.meta.env.VITE_DEMO_API_URL,
+    return (
+      landingRuntimeConfig.BOOKING_API_URL ||
+      landingRuntimeConfig.DEMO_API_URL ||
+      ""
     );
-    if (configuredUrl) return configuredUrl;
-    if (typeof window === "undefined") return "";
-    return isLocalHost(window.location.hostname) ? LOCAL_API_URL : "";
   }
 
   const widgetUrl = resolveWidgetUrl();

@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import { t } from "../../i18n";
   import { theme } from "../../stores/theme";
+  import { landingRuntimeConfig } from "../config";
   import {
     prefersReducedMotion,
     getConnectionQuality,
@@ -31,7 +32,7 @@
   async function initiateCall() {
     if (!phoneNumber.trim() || isSubmitting) return;
 
-    const flowSlug = import.meta.env.VITE_DEMO_FLOW_SLUG;
+    const flowSlug = landingRuntimeConfig.DEMO_FLOW_SLUG;
     if (!flowSlug) {
       callStatus = "error";
       statusMessage = $t("waveform.status.unavailable");
@@ -47,22 +48,21 @@
     statusMessage = "";
 
     try {
-      const apiKey = import.meta.env.VITE_DEMO_API_KEY;
-      const apiUrl = import.meta.env.VITE_DEMO_API_URL;
-      const isDev = !apiUrl || apiUrl.includes("localhost");
-      const baseUrl = isDev ? "http://localhost:5005" : apiUrl;
-      const triggerPath = isDev
-        ? `/dev/api/flows/${flowSlug}/trigger`
-        : `/api/flows/${flowSlug}/trigger`;
+      const apiKey = landingRuntimeConfig.DEMO_API_KEY;
+      const apiUrl = landingRuntimeConfig.DEMO_API_URL;
+      if (!apiUrl) {
+        throw new Error("Demo API URL is not configured.");
+      }
+      const triggerPath = `/api/flows/${flowSlug}/trigger`;
 
       const headers: Record<string, string> = {
         "Content-Type": "application/json",
       };
-      if (!isDev && apiKey) {
+      if (apiKey) {
         headers["Authorization"] = `Bearer ${apiKey}`;
       }
 
-      const response = await fetch(`${baseUrl}${triggerPath}`, {
+      const response = await fetch(`${apiUrl}${triggerPath}`, {
         method: "POST",
         headers,
         body: JSON.stringify({ destination: phoneNumber.trim() }),

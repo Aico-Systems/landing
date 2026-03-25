@@ -35,6 +35,7 @@
 
   let WebGLBackground: any = null;
   let currentPageComponent: any = null;
+  let currentPageProps: Record<string, unknown> | null = null;
   let currentPath: AppPath = "/";
   let loadAllSections = false;
   let pendingNavigation: { sectionId: SectionId; behavior: ScrollBehavior } | null =
@@ -116,10 +117,30 @@
     }, 0);
   }
 
+  function getBlogSlug(pathname: string): string | null {
+    const match = pathname.match(/^\/blog\/([^/]+)\/?$/);
+    if (!match) return null;
+    return decodeURIComponent(match[1]);
+  }
+
   async function loadCurrentPage(pathname: string) {
+    const blogSlug = getBlogSlug(pathname);
+    if (blogSlug) {
+      currentPath = "/blog/";
+      pendingNavigation = null;
+      const token = ++routeLoadToken;
+      const module = await import("./lib/pages/BlogPostPage.svelte");
+      if (routeLoadToken === token) {
+        currentPageComponent = module.default;
+        currentPageProps = { slug: blogSlug };
+      }
+      return;
+    }
+
     const normalizedPath = normalizeAppPath(pathname) || "/";
     currentPath = normalizedPath;
     pendingNavigation = null;
+    currentPageProps = null;
 
     if (normalizedPath === "/") {
       currentPageComponent = null;
@@ -247,7 +268,7 @@
     <Footer />
   </main>
 {:else if currentPageComponent}
-  <svelte:component this={currentPageComponent} />
+  <svelte:component this={currentPageComponent} {...(currentPageProps || {})} />
 {/if}
 
 <style>
