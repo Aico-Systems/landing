@@ -27,11 +27,7 @@
   }
 
   function resolveApiUrl(): string {
-    return (
-      landingRuntimeConfig.BOOKING_API_URL ||
-      landingRuntimeConfig.DEMO_API_URL ||
-      ""
-    );
+    return landingRuntimeConfig.BOOKING_API_URL || "";
   }
 
   const widgetUrl = resolveWidgetUrl();

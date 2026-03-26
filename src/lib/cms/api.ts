@@ -27,11 +27,7 @@ export interface CmsBlogPost {
 }
 
 export function resolveCmsApiUrl(): string {
-  return (
-    landingRuntimeConfig.BOOKING_API_URL ||
-    landingRuntimeConfig.DEMO_API_URL ||
-    ""
-  );
+  return landingRuntimeConfig.BOOKING_API_URL || "";
 }
 
 async function cmsCall<T>(path: string): Promise<T> {
