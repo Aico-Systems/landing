@@ -300,7 +300,7 @@
 
   main {
     width: 100%;
-    overflow-x: hidden;
+    overflow-x: clip;
     position: relative;
     z-index: 2;
   }

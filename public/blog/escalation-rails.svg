@@ -1,0 +1,28 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="900" fill="#08111E"/>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="232" cy="732" r="274" fill="#F59E0B" fill-opacity="0.14"/>
+  <circle cx="1318" cy="196" r="240" fill="#5EEAD4" fill-opacity="0.16"/>
+  <g opacity="0.95">
+    <rect x="160" y="170" width="1280" height="560" rx="34" fill="#0F1A2A" stroke="#274159"/>
+    <path d="M272 306H1328" stroke="#28445C" stroke-width="2"/>
+    <path d="M272 450H1328" stroke="#28445C" stroke-width="2"/>
+    <path d="M272 594H1328" stroke="#28445C" stroke-width="2"/>
+    <rect x="272" y="262" width="214" height="88" rx="24" fill="#12233A" stroke="#2F587A"/>
+    <rect x="272" y="406" width="276" height="88" rx="24" fill="#13243A" stroke="#2F587A"/>
+    <rect x="272" y="550" width="248" height="88" rx="24" fill="#13243A" stroke="#2F587A"/>
+    <rect x="678" y="238" width="598" height="136" rx="28" fill="#101D2F"/>
+    <rect x="678" y="382" width="526" height="136" rx="28" fill="#101D2F"/>
+    <rect x="678" y="526" width="640" height="136" rx="28" fill="#101D2F"/>
+    <rect x="120" y="114" width="264" height="44" rx="22" fill="#102236" stroke="#27576B"/>
+  </g>
+  <text x="178" y="143" fill="#8BF3E3" font-family="Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="0.16em">AICOYO JOURNAL</text>
+  <text x="292" y="320" fill="#EDF3FF" font-family="Arial, sans-serif" font-size="40" font-weight="700">Escalation Rails</text>
+  <text x="292" y="366" fill="#A1B7D2" font-family="Arial, sans-serif" font-size="24">Confidence, policy, and handoff rules need visible paths.</text>
+  <defs>
+    <radialGradient id="bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(800 450) rotate(90) scale(560 980)">
+      <stop stop-color="#101C2B"/>
+      <stop offset="1" stop-color="#08111E"/>
+    </radialGradient>
+  </defs>
+</svg>

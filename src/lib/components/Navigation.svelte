@@ -2,6 +2,7 @@
   import { onDestroy, onMount } from "svelte";
   import { locale, setLocale, t } from "../../i18n";
   import { theme, toggleTheme } from "../../stores/theme";
+  import { requestAppNavigation, type AppPath } from "../utils/appNavigation";
   import {
     SECTION_IDS,
     isSectionId,
@@ -21,7 +22,10 @@
     { value: "de", label: "DE", titleKey: "nav.german" },
   ] as const;
 
+  export let currentPath: AppPath = "/";
+
   let sections: Array<{ id: SectionId; label: string }> = [];
+  let appLinks: Array<{ path: AppPath; label: string }> = [];
 
   let isScrolled = false;
   let activeSection: SectionId = "hero";
@@ -34,16 +38,38 @@
     label: $t(section.key),
   }));
 
+  $: appLinks = [
+    { path: "/", label: $locale?.startsWith("de") ? "Start" : "Home" },
+    { path: "/blog/", label: "Blog" },
+    { path: "/docs/", label: "Docs" },
+  ];
+
   function navigate(sectionId: SectionId) {
     activeSection = sectionId;
     mobileMenuOpen = false;
     requestSectionNavigation(sectionId);
   }
 
+  function navigateToPath(path: AppPath) {
+    mobileMenuOpen = false;
+    requestAppNavigation(path);
+  }
+
+  function navigateToBooking() {
+    if (currentPath === "/") {
+      navigate("booking");
+      return;
+    }
+
+    requestAppNavigation("/");
+    requestSectionNavigation("booking");
+    mobileMenuOpen = false;
+  }
+
   function updateScrolledState() {
     if (typeof window === "undefined") return;
     isScrolled = window.scrollY > 8;
-    if (window.scrollY <= 8) {
+    if (currentPath === "/" && window.scrollY <= 8) {
       activeSection = "hero";
     }
   }
@@ -87,19 +113,23 @@
 
   onMount(() => {
     updateScrolledState();
-    observeSections();
-
-    sectionMutationObserver = new MutationObserver(() => {
-      observeSections();
-    });
-    sectionMutationObserver.observe(document.body, {
-      childList: true,
-      subtree: true,
-    });
 
     window.addEventListener("scroll", updateScrolledState, { passive: true });
-    window.addEventListener("resize", observeSections, { passive: true });
     window.addEventListener("resize", closeMobileMenuOnDesktop, { passive: true });
+
+    if (currentPath === "/") {
+      observeSections();
+
+      sectionMutationObserver = new MutationObserver(() => {
+        observeSections();
+      });
+      sectionMutationObserver.observe(document.body, {
+        childList: true,
+        subtree: true,
+      });
+
+      window.addEventListener("resize", observeSections, { passive: true });
+    }
   });
 
   onDestroy(() => {
@@ -123,6 +153,16 @@
   function changeLocale(nextLocale: "en" | "de") {
     setLocale(nextLocale);
   }
+
+  $: if (currentPath !== "/") {
+    activeSection = "hero";
+  }
+
+  $: updateScrolledState();
+
+  $: if ($locale) {
+    document.documentElement.lang = $locale.split("-")[0];
+  }
 </script>
 
 <nav class:scrolled={isScrolled}>
@@ -131,7 +171,8 @@
       <button
         type="button"
         class="brand"
-        on:click={() => navigate("hero")}
+        on:click={() =>
+          currentPath === "/" ? navigate("hero") : navigateToPath("/")}
         aria-label={$t("nav.goToHero")}
       >
         <img src="/Logo.svg" alt="AICOYO" class="logo-img" />
@@ -139,17 +180,31 @@
         <span class="brand-pill">{$t("nav.brandPill")}</span>
       </button>
       <div class="nav-center">
-        {#each sections as section}
-          <button
-            type="button"
-            class="nav-link"
-            class:active={activeSection === section.id}
-            on:click={() => navigate(section.id)}
-          >
-            <span>{section.label}</span>
-            <span class="indicator"></span>
-          </button>
-        {/each}
+        {#if currentPath === "/"}
+          {#each sections as section}
+            <button
+              type="button"
+              class="nav-link"
+              class:active={activeSection === section.id}
+              on:click={() => navigate(section.id)}
+            >
+              <span>{section.label}</span>
+              <span class="indicator"></span>
+            </button>
+          {/each}
+        {:else}
+          {#each appLinks as link}
+            <button
+              type="button"
+              class="nav-link"
+              class:active={currentPath === link.path}
+              on:click={() => navigateToPath(link.path)}
+            >
+              <span>{link.label}</span>
+              <span class="indicator"></span>
+            </button>
+          {/each}
+        {/if}
       </div>
       <div class="nav-actions">
         <button
@@ -180,7 +235,7 @@
         <button
           type="button"
           class="btn btn-primary nav-cta"
-          on:click={() => navigate("booking")}>{$t("nav.bookPilot")}</button
+          on:click={navigateToBooking}>{$t("nav.bookPilot")}</button
         >
         <button
           type="button"
@@ -200,16 +255,29 @@
     </div>
     <div class="mobile-panel" class:open={mobileMenuOpen}>
       <div class="mobile-links">
-        {#each sections as section}
-          <button
-            type="button"
-            class="mobile-link"
-            class:active={activeSection === section.id}
-            on:click={() => navigate(section.id)}
-          >
-            {section.label}
-          </button>
-        {/each}
+        {#if currentPath === "/"}
+          {#each sections as section}
+            <button
+              type="button"
+              class="mobile-link"
+              class:active={activeSection === section.id}
+              on:click={() => navigate(section.id)}
+            >
+              {section.label}
+            </button>
+          {/each}
+        {:else}
+          {#each appLinks as link}
+            <button
+              type="button"
+              class="mobile-link"
+              class:active={currentPath === link.path}
+              on:click={() => navigateToPath(link.path)}
+            >
+              {link.label}
+            </button>
+          {/each}
+        {/if}
       </div>
     </div>
   </div>

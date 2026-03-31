@@ -2,28 +2,62 @@
 	import Icon from "./Icon.svelte";
 	import { t } from "../../i18n";
 	import {
+		normalizeAppPath,
 		requestAppNavigation,
 		shouldHandleClientNavigation,
-		type AppPath,
 	} from "../utils/appNavigation";
 	import {
 		getSectionIdFromHash,
 		requestSectionNavigation,
 	} from "../utils/sectionNavigation";
 
-	function handleSectionLinkClick(event: MouseEvent, href: string) {
+	type FooterLink = {
+		label: string;
+		href: string;
+	};
+
+	function handleLinkClick(event: MouseEvent, href: string) {
 		const sectionId = getSectionIdFromHash(href);
-		if (!sectionId) return;
+		if (sectionId) {
+			event.preventDefault();
+			requestSectionNavigation(sectionId);
+			return;
+		}
 
-		event.preventDefault();
-		requestSectionNavigation(sectionId);
-	}
-
-	function handleAppLinkClick(event: MouseEvent, path: AppPath) {
 		if (!shouldHandleClientNavigation(event)) return;
-		event.preventDefault();
-		requestAppNavigation(path);
+
+		const appPath = normalizeAppPath(href);
+		if (appPath) {
+			event.preventDefault();
+			requestAppNavigation(appPath);
+		}
 	}
+
+	function isExternalHttpLink(href: string): boolean {
+		return /^https?:\/\//i.test(href);
+	}
+
+	$: exploreLinks = [
+		{ label: $t("footer.links.overview"), href: $t("footer.hrefs.overview") },
+		{ label: $t("footer.links.implementation"), href: $t("footer.hrefs.implementation") },
+		{ label: $t("footer.links.platform"), href: $t("footer.hrefs.platform") },
+		{ label: $t("footer.links.solutions"), href: $t("footer.hrefs.solutions") },
+		{ label: $t("footer.links.book"), href: $t("footer.hrefs.book") },
+	] satisfies FooterLink[];
+
+	$: resourceLinks = [
+		{ label: $t("footer.links.docs"), href: $t("footer.hrefs.docs") },
+		{ label: $t("footer.links.blog"), href: $t("footer.hrefs.blog") },
+		{ label: $t("footer.links.security"), href: $t("footer.hrefs.security") },
+		{ label: $t("footer.links.status"), href: $t("footer.hrefs.status") },
+	] satisfies FooterLink[];
+
+	$: legalLinks = [
+		{ label: $t("footer.links.imprint"), href: $t("footer.hrefs.imprint") },
+		{ label: $t("footer.links.privacy"), href: $t("footer.hrefs.privacy") },
+		{ label: $t("footer.links.terms"), href: $t("footer.hrefs.terms") },
+		{ label: $t("footer.links.policies"), href: $t("footer.hrefs.policies") },
+	] satisfies FooterLink[];
 </script>
 
 <footer class="footer">
@@ -45,45 +79,25 @@
 				<div class="footer-link-groups">
 					<div class="footer-column">
 						<h4>{$t("footer.columns.explore")}</h4>
-						<a href="#hero" on:click={(event) => handleSectionLinkClick(event, "#hero")}
-							>{$t("footer.links.overview")}</a
-						>
-						<a
-							href="#how-it-works"
-							on:click={(event) => handleSectionLinkClick(event, "#how-it-works")}
-							>{$t("footer.links.implementation")}</a
-						>
-						<a
-							href="#features"
-							on:click={(event) => handleSectionLinkClick(event, "#features")}
-							>{$t("footer.links.platform")}</a
-						>
-						<a
-							href="#use-cases"
-							on:click={(event) => handleSectionLinkClick(event, "#use-cases")}
-							>{$t("footer.links.solutions")}</a
-						>
-						<a
-							href="#booking"
-							on:click={(event) => handleSectionLinkClick(event, "#booking")}
-							>{$t("footer.links.book")}</a
-						>
+						{#each exploreLinks as link}
+							<a href={link.href} on:click={(event) => handleLinkClick(event, link.href)}
+								>{link.label}</a
+							>
+						{/each}
 					</div>
 
 					<div class="footer-column">
 						<h4>{$t("footer.columns.resources")}</h4>
-						<a href="/docs/" on:click={(event) => handleAppLinkClick(event, "/docs/")}>{$t("footer.links.docs")}</a>
-						<a href="/blog/" on:click={(event) => handleAppLinkClick(event, "/blog/")}>{$t("footer.links.blog")}</a>
-						<a href="/security/" on:click={(event) => handleAppLinkClick(event, "/security/")}>{$t("footer.links.security")}</a>
-						<a href="/status/" on:click={(event) => handleAppLinkClick(event, "/status/")}>{$t("footer.links.status")}</a>
+						{#each resourceLinks as link}
+							<a href={link.href} on:click={(event) => handleLinkClick(event, link.href)}>{link.label}</a>
+						{/each}
 					</div>
 
 					<div class="footer-column">
 						<h4>{$t("footer.columns.legal")}</h4>
-						<a href="/imprint/" on:click={(event) => handleAppLinkClick(event, "/imprint/")}>{$t("footer.links.imprint")}</a>
-						<a href="/privacy/" on:click={(event) => handleAppLinkClick(event, "/privacy/")}>{$t("footer.links.privacy")}</a>
-						<a href="/terms/" on:click={(event) => handleAppLinkClick(event, "/terms/")}>{$t("footer.links.terms")}</a>
-						<a href="/policies/" on:click={(event) => handleAppLinkClick(event, "/policies/")}>{$t("footer.links.policies")}</a>
+						{#each legalLinks as link}
+							<a href={link.href} on:click={(event) => handleLinkClick(event, link.href)}>{link.label}</a>
+						{/each}
 					</div>
 				</div>
 
@@ -94,20 +108,20 @@
 					</div>
 					<div class="meta-item">
 						<Icon name="mail" size={16} strokeWidth={1.8} />
-						<a href="mailto:nikita@aicoflow.com">nikita@aicoflow.com</a>
+						<a href={$t("footer.meta.emailHref")}>{$t("footer.meta.email")}</a>
 					</div>
 					<div class="meta-item socials">
 						<span>{$t("footer.meta.follow")}</span>
 						<a
-							href="https://www.linkedin.com"
-							target="_blank"
+							href={$t("footer.meta.linkedinHref")}
+							target={isExternalHttpLink($t("footer.meta.linkedinHref")) ? "_blank" : undefined}
 							rel="noreferrer noopener"
 						>
 							<Icon name="linkedin" size={18} strokeWidth={1.6} />
 						</a>
 						<a
-							href="https://twitter.com"
-							target="_blank"
+							href={$t("footer.meta.twitterHref")}
+							target={isExternalHttpLink($t("footer.meta.twitterHref")) ? "_blank" : undefined}
 							rel="noreferrer noopener"
 						>
 							<Icon name="twitter" size={18} strokeWidth={1.6} />

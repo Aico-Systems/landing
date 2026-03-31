@@ -4,6 +4,10 @@
   import Badge from "../components/Badge.svelte";
   import { t } from "../../i18n";
 
+  function isExternalHttpLink(href: string): boolean {
+    return /^https?:\/\//i.test(href);
+  }
+
   let email = "";
 
   function handleSubmit(e: Event) {
@@ -70,7 +74,7 @@
 
         <div class="panel-footnote">
           <Icon name="message-circle" size={18} strokeWidth={2} />
-          {$t("cta.footnote.prefix")} <a href="mailto:nikita@aicoflow.com">{$t("cta.footnote.link")}</a> {$t("cta.footnote.suffix")}
+          {$t("cta.footnote.prefix")} <a href={$t("cta.footnote.href")} target={isExternalHttpLink($t("cta.footnote.href")) ? "_blank" : undefined} rel="noreferrer noopener">{$t("cta.footnote.link")}</a> {$t("cta.footnote.suffix")}
         </div>
       </div>
     </div>

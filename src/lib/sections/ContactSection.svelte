@@ -2,6 +2,11 @@
   import Icon from '../components/Icon.svelte';
   import { t } from "../../i18n";
   import {
+    normalizeAppPath,
+    requestAppNavigation,
+    shouldHandleClientNavigation,
+  } from "../utils/appNavigation";
+  import {
     getSectionIdFromHash,
     requestSectionNavigation,
   } from "../utils/sectionNavigation";
@@ -23,8 +28,8 @@
       description: $t("contact.channels.sales.description"),
       icon: "calendar",
       actions: [
-        { label: $t("contact.channels.sales.actionOne"), href: "mailto:nikita@aicoflow.com" },
-        { label: $t("contact.channels.sales.actionTwo"), href: "#cta" }
+        { label: $t("contact.channels.sales.actionOne"), href: $t("contact.channels.sales.actionOneHref") },
+        { label: $t("contact.channels.sales.actionTwo"), href: $t("contact.channels.sales.actionTwoHref") }
       ]
     },
     {
@@ -33,8 +38,8 @@
       description: $t("contact.channels.support.description"),
       icon: "lifebuoy",
       actions: [
-        { label: $t("contact.channels.support.actionOne"), href: "mailto:support@aicoflow.com" },
-        { label: $t("contact.channels.support.actionTwo"), href: "https://aicoflow.com" }
+        { label: $t("contact.channels.support.actionOne"), href: $t("contact.channels.support.actionOneHref") },
+        { label: $t("contact.channels.support.actionTwo"), href: $t("contact.channels.support.actionTwoHref") }
       ]
     },
     {
@@ -43,18 +48,31 @@
       description: $t("contact.channels.partnerships.description"),
       icon: "handshake",
       actions: [
-        { label: $t("contact.channels.partnerships.actionOne"), href: "mailto:nikita@aicoflow.com" },
-        { label: $t("contact.channels.partnerships.actionTwo"), href: "#use-cases" }
+        { label: $t("contact.channels.partnerships.actionOne"), href: $t("contact.channels.partnerships.actionOneHref") },
+        { label: $t("contact.channels.partnerships.actionTwo"), href: $t("contact.channels.partnerships.actionTwoHref") }
       ]
     }
   ];
 
   function handleActionClick(event: MouseEvent, href: string) {
     const sectionId = getSectionIdFromHash(href);
-    if (!sectionId) return;
+    if (sectionId) {
+      event.preventDefault();
+      requestSectionNavigation(sectionId);
+      return;
+    }
 
-    event.preventDefault();
-    requestSectionNavigation(sectionId);
+    if (!shouldHandleClientNavigation(event)) return;
+
+    const appPath = normalizeAppPath(href);
+    if (appPath) {
+      event.preventDefault();
+      requestAppNavigation(appPath);
+    }
+  }
+
+  function isExternalHttpLink(href: string): boolean {
+    return /^https?:\/\//i.test(href);
   }
 </script>
 
@@ -109,6 +127,8 @@
                 <a
                   href={action.href}
                   class="card-link"
+                  target={isExternalHttpLink(action.href) ? "_blank" : undefined}
+                  rel={isExternalHttpLink(action.href) ? "noreferrer noopener" : undefined}
                   on:click={(event) => handleActionClick(event, action.href)}
                 >
                   {action.label}

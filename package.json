@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "bash ./scripts/with-env.sh vite --mode dev",
+    "generate-seo": "bun scripts/generate-seo.ts",
     "build": "vite build",
     "preview": "bash ./scripts/with-env.sh vite preview --mode dev",
     "check": "svelte-check --tsconfig ./tsconfig.app.json && tsc -p tsconfig.node.json"
