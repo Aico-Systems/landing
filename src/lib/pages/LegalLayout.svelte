@@ -63,8 +63,8 @@
 <style>
   :global(body) {
     background:
-      radial-gradient(circle at 65% -10%, rgba(94, 234, 212, 0.18), transparent 34%),
-      linear-gradient(180deg, #050b16 0%, #09101d 100%);
+      radial-gradient(circle at 65% -10%, var(--accent-soft-strong), transparent 34%),
+      linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
   }
 
   .legal-main {
@@ -80,9 +80,9 @@
     min-height: 30px;
     padding: 0 12px;
     border-radius: 999px;
-    border: 1px solid rgba(94, 234, 212, 0.2);
-    background: rgba(94, 234, 212, 0.08);
-    color: #5eead4;
+    border: 1px solid var(--accent-border);
+    background: var(--accent-soft);
+    color: var(--accent-primary);
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.14em;
@@ -111,16 +111,16 @@
     min-height: 40px;
     padding: 0 14px;
     border-radius: 12px;
-    border: 1px solid rgba(86, 141, 171, 0.18);
-    background: rgba(86, 141, 171, 0.08);
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-muted);
     color: var(--text-primary);
     text-decoration: none;
     transition: var(--transition-button);
   }
 
   .back-home:hover {
-    border-color: rgba(86, 141, 171, 0.3);
-    background: rgba(86, 141, 171, 0.14);
+    border-color: var(--border-strong);
+    background: var(--accent-soft-strong);
   }
 
   @media (max-width: 640px) {
