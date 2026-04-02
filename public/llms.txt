@@ -1,0 +1,24 @@
+# AICOYO
+
+> AI-powered voice agent infrastructure. Design, deploy, and monitor voice agents with enterprise telephony, RAG, and live tooling.
+
+AICOYO provides a platform for building production-grade AI voice agents. The Journal publishes essays, rollout notes, and field reports from teams shipping voice AI.
+
+## Blog — AICOYO Journal
+
+### Operations
+- [Launching Voice Ops Without Creating Another Ops Team](http://localhost:5173/blog/launching-voice-ops-without-chaos/): The first production risk in voice AI is not model quality. It is operational sprawl across telephony, prompts, tools, e...
+
+### Architecture
+- [From Scripted Bots to Tool-Driven Agents](http://localhost:5173/blog/from-scripted-bots-to-tool-driven-agents/): The jump from IVR logic to real call agents happens when the system can safely read context, trigger actions and recover...
+
+### Launch
+- [Designing Escalation Rails Before Launch](http://localhost:5173/blog/designing-escalation-rails-before-launch/): Escalation should not be the emergency plan you remember after the first failed call. It should be designed before the f...
+
+## Pages
+- [Blog](http://localhost:5173/blog/): Essays and field reports
+- [Docs](http://localhost:5173/docs/): Documentation
+- [Security](http://localhost:5173/security/): Security disclosures
+- [Privacy](http://localhost:5173/privacy/): Privacy policy
+- [Terms](http://localhost:5173/terms/): Terms of service
+- [Imprint](http://localhost:5173/imprint/): Legal imprint

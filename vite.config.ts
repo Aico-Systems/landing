@@ -89,6 +89,10 @@ export default defineConfig({
         './src/lib/sections/Hero.svelte',
         './src/lib/components/Navigation.svelte'
       ]
-    }
+    },
+    watch: {
+      usePolling: true,
+      interval: 100,
+    },
   }
 })

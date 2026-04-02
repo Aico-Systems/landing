@@ -1,0 +1,8 @@
+# All bots welcome — crawl, index, train, cite
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: http://localhost:5173/sitemap.xml
+
+# LLM context — see /llms.txt for a structured overview of this site

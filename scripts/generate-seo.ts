@@ -3,16 +3,19 @@
  * Fetches blog posts from CMS and generates static SEO files.
  *
  * Usage: bun scripts/generate-seo.ts
- * Requires VITE_BOOKING_API_URL and LANDING_SITE_URL in environment.
+ * Requires LANDING_BOOKING_API_URL and LANDING_SITE_URL in environment.
  */
 
-const SITE_URL = (
-  process.env.LANDING_SITE_URL ||
-  process.env.VITE_LANDING_SITE_URL ||
-  "https://aicoyo.com"
-).replace(/\/+$/, "");
+function requireEnv(name: string): string {
+  const value = process.env[name]?.trim();
+  if (!value) {
+    throw new Error(`Missing required env var: ${name}`);
+  }
+  return value;
+}
 
-const API_URL = process.env.VITE_BOOKING_API_URL?.replace(/\/+$/, "");
+const SITE_URL = requireEnv("LANDING_SITE_URL").replace(/\/+$/, "");
+const API_URL = requireEnv("LANDING_BOOKING_API_URL").replace(/\/+$/, "");
 
 interface CmsBlogPost {
   slug: string;
@@ -27,11 +30,6 @@ interface CmsBlogPost {
 }
 
 async function fetchPosts(locale: string): Promise<CmsBlogPost[]> {
-  if (!API_URL) {
-    console.warn("[generate-seo] VITE_BOOKING_API_URL not set, skipping CMS fetch.");
-    return [];
-  }
-
   const res = await fetch(
     `${API_URL}/api/public/cms/posts?locale=${encodeURIComponent(locale)}`,
   );
