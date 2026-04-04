@@ -114,6 +114,22 @@
 		<!-- Detect JS availability -->
 		<script>
 			document.documentElement.classList.add("js-enabled");
+			// Polyfill requestIdleCallback for Safari/iOS
+			if (!window.requestIdleCallback) {
+				window.requestIdleCallback = function (cb, opts) {
+					var timeout = opts && opts.timeout ? opts.timeout : 1;
+					return setTimeout(function () {
+						var start = Date.now();
+						cb({
+							didTimeout: false,
+							timeRemaining: function () {
+								return Math.max(0, 50 - (Date.now() - start));
+							},
+						});
+					}, timeout);
+				};
+				window.cancelIdleCallback = function (id) { clearTimeout(id); };
+			}
 		</script>
 
 		<!-- Non-blocking async script loading -->
