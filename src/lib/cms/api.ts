@@ -5,6 +5,23 @@ export interface CmsSiteContent {
   de: Record<string, any>;
 }
 
+export type CmsLegalPageKey = "imprint" | "privacy" | "terms";
+
+export interface CmsLegalPage {
+  id: string;
+  pageKey: CmsLegalPageKey;
+  locale: string;
+  title: string;
+  description: string;
+  eyebrow: string;
+  lede: string;
+  body: string;
+  status: "draft" | "published";
+  createdAt: string | null;
+  updatedAt: string | null;
+  publishedAt: string | null;
+}
+
 export interface CmsBlogPost {
   id: string;
   slug: string;
@@ -62,5 +79,14 @@ export function fetchBlogPost(
 ): Promise<CmsBlogPost> {
   return cmsCall<CmsBlogPost>(
     `/api/public/cms/posts/${encodeURIComponent(slug)}?locale=${encodeURIComponent(locale)}`,
+  );
+}
+
+export function fetchLegalPage(
+  pageKey: CmsLegalPageKey,
+  locale: string,
+): Promise<CmsLegalPage> {
+  return cmsCall<CmsLegalPage>(
+    `/api/public/cms/legal-pages/${encodeURIComponent(pageKey)}?locale=${encodeURIComponent(locale)}`,
   );
 }
