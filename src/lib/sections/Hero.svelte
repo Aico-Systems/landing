@@ -1,27 +1,10 @@
 <script lang="ts">
-  import { onMount } from "svelte";
   import { t } from "../../i18n";
   import Icon from "../components/Icon.svelte";
   import Button from "../components/Button.svelte";
   import Badge from "../components/Badge.svelte";
+  import HeroOrb from "../components/HeroOrb.svelte";
   import { requestSectionNavigation } from "../utils/sectionNavigation";
-
-  let WaveformCanvas: any = null;
-  let showWaveform = false;
-
-  onMount(() => {
-    const loadWaveform = async () => {
-      try {
-        const module = await import("../components/WaveformCanvas.svelte");
-        WaveformCanvas = module.default;
-        showWaveform = true;
-      } catch (error) {
-        console.error("Failed to load WaveformCanvas:", error);
-      }
-    };
-
-    requestIdleCallback(() => { loadWaveform(); }, { timeout: 800 });
-  });
 </script>
 
 <section id="hero" class="hero">
@@ -88,13 +71,7 @@
 
       <div class="hero-visual">
         <div class="visual-glow"></div>
-        <div class="hero-waveform">
-          {#if showWaveform && WaveformCanvas}
-            <svelte:component this={WaveformCanvas} />
-          {:else}
-            <div class="waveform-placeholder" aria-label={$t("hero.panel.loadingVisualization")}></div>
-          {/if}
-        </div>
+        <HeroOrb />
 
         <div class="hero-panel primary">
           <div class="panel-header">
@@ -265,17 +242,6 @@
     opacity: 0.22;
   }
 
-  .hero-waveform { position: relative; min-height: 360px; }
-
-  .waveform-placeholder {
-    width: 100%; height: 360px;
-    border-radius: 20px;
-    background: linear-gradient(135deg, rgba(20, 91, 122, 0.04) 0%, rgba(167, 243, 208, 0.04) 100%);
-    animation: pulse 2s ease-in-out infinite;
-  }
-
-  @keyframes pulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 0.8; } }
-
   .hero-panel {
     position: relative;
     z-index: 2;
@@ -359,12 +325,6 @@
       margin-top: 8px;
       gap: 14px;
     }
-    .hero-waveform {
-      min-height: 300px;
-    }
-    .waveform-placeholder {
-      height: 300px;
-    }
     .hero-panel.primary, .hero-panel.secondary {
       margin: 0;
       max-width: 100%;
@@ -419,13 +379,6 @@
     }
     .metric-value {
       font-size: 26px;
-    }
-    .hero-waveform {
-      min-height: 248px;
-    }
-    .waveform-placeholder {
-      height: 248px;
-      border-radius: 18px;
     }
     .hero-panel {
       padding: 16px;

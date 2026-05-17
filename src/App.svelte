@@ -3,6 +3,7 @@
   import Navigation from "./lib/components/Navigation.svelte";
   import Footer from "./lib/components/Footer.svelte";
   import LazyComponent from "./lib/components/LazyComponent.svelte";
+  import AicoFlowWidget from "./lib/components/AicoFlowWidget.svelte";
   import Hero from "./lib/sections/Hero.svelte";
   import {
     APP_NAVIGATION_EVENT,
@@ -270,6 +271,13 @@
 {:else if currentPageComponent}
   <svelte:component this={currentPageComponent} {...(currentPageProps || {})} />
 {/if}
+
+<!--
+  Site-wide AICO chat panel — bottom-right launcher across every route.
+  Text-only here; the voice CTA is a standalone `<aico-orb>` in the
+  hero (see HeroOrb) with its own LiveKit session.
+-->
+<AicoFlowWidget />
 
 <style>
   :global(*) {

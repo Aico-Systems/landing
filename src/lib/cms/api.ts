@@ -63,7 +63,14 @@ async function cmsCall<T>(path: string): Promise<T> {
   return payload.data as T;
 }
 
-export function fetchSiteContent(): Promise<CmsSiteContent> {
+export async function fetchSiteContent(): Promise<CmsSiteContent> {
+  // CMS unconfigured → return empty bundles so the app still mounts.
+  // Strings will fall back to their dot-keys (or the `default:` overrides
+  // in `$t("…", { default: "…" })` call sites), the visual layer renders,
+  // and the developer can iterate without standing up the CMS.
+  if (!resolveCmsApiUrl()) {
+    return { en: {}, de: {} };
+  }
   return cmsCall<CmsSiteContent>("/api/public/cms/site-content");
 }
 
