@@ -30,6 +30,7 @@
     "/policies/": () => import("./lib/pages/PoliciesPage.svelte"),
     "/docs/": () => import("./lib/pages/DocsPage.svelte"),
     "/blog/": () => import("./lib/pages/BlogPage.svelte"),
+    "/pricing/": () => import("./lib/pages/PricingPage.svelte"),
     "/security/": () => import("./lib/pages/SecurityPage.svelte"),
     "/status/": () => import("./lib/pages/StatusPage.svelte"),
   };

@@ -40,6 +40,7 @@
 
   $: appLinks = [
     { path: "/", label: $locale?.startsWith("de") ? "Start" : "Home" },
+    { path: "/pricing/", label: $locale?.startsWith("de") ? "Preise" : "Pricing" },
     { path: "/blog/", label: "Blog" },
     { path: "/docs/", label: "Docs" },
   ];

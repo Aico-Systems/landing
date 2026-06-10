@@ -15,7 +15,17 @@
      */
     "allowJs": true,
     "checkJs": true,
-    "moduleDetection": "force"
+    "moduleDetection": "force",
+    "moduleResolution": "bundler",
+    "baseUrl": ".",
+    "paths": {
+      "@aico/blueprint": ["../blueprint/src"],
+      "@aico/blueprint/*": ["../blueprint/src/*"],
+      "@aico/model-catalog": ["../backend/model-catalog/src"],
+      "@aico/model-catalog/*": ["../backend/model-catalog/src/*"],
+      "@aico/entity-schema": ["../backend/entity-schema/src"],
+      "@aico/entity-schema/*": ["../backend/entity-schema/src/*"]
+    }
   },
   "include": ["src/**/*.ts", "src/**/*.js", "src/**/*.svelte"]
 }

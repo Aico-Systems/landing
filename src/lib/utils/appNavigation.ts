@@ -6,6 +6,7 @@ export const APP_PATHS = [
   "/policies/",
   "/docs/",
   "/blog/",
+  "/pricing/",
   "/security/",
   "/status/",
 ] as const;

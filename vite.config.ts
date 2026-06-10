@@ -1,9 +1,16 @@
 import { defineConfig } from 'vite'
 import { svelte } from '@sveltejs/vite-plugin-svelte'
+import path from 'node:path'
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [svelte()],
+
+  resolve: {
+    alias: {
+      '@aico/blueprint': path.resolve(__dirname, '../blueprint/src'),
+    },
+  },
 
   build: {
     // Disable minification for rolldown-vite (it has its own minification)
