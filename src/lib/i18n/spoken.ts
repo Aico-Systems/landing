@@ -23,8 +23,12 @@ export const SPOKEN: Record<VerticalId, Spoken> = {
 	aviation: { lang: "es", text: "¿Qué par de apriete lleva el cierre del capó del motor?" },
 };
 
-/** The message the card about Mandy follows round, and the reply it brings back. */
+/** The message the card about Mandy follows round: said in Ukrainian, read
+ *  by the team lead in German, answered with one tap, heard back in
+ *  Ukrainian. The same on every page: the point is the languages. */
 export const FLOW_SPOKEN = {
 	ask: { lang: "uk", text: "Палета 4 пошкоджена, дві коробки розчавлені." },
+	read: { lang: "de", text: "Palette 4 beschädigt, zwei Kartons eingedrückt." },
+	tap: { lang: "de", text: "Ich komme." },
 	reply: { lang: "uk", text: "Вже йду." },
 } satisfies Record<string, Spoken>;

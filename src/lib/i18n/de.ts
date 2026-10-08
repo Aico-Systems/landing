@@ -34,9 +34,9 @@ export const de: Messages = {
 			flow: {
 				heading: "Welche Sprachen spricht Mandy?",
 				steps: [
-					{ who: "Mitarbeiter", text: "Sagt es auf Ukrainisch, die H\u00e4nde noch an der Palette." },
-					{ who: "Mandy", text: "\u00dcbersetzt und h\u00e4ngt Scan, Station und Foto an." },
-					{ who: "Teamleitung", text: "Liest es auf Deutsch in Teams und antwortet mit einem Tipp." },
+					{ who: "Mitarbeiter", text: "Sagt es auf Ukrainisch, die H\u00e4nde an der Palette." },
+					{ who: "Mandy", text: "\u00dcbersetzt und h\u00e4ngt Scan, Ort und Foto an." },
+					{ who: "Teamleitung", text: "Liest es auf Deutsch in Teams und tippt eine Antwort." },
 					{ who: "Mitarbeiter", text: "H\u00f6rt die Antwort auf Ukrainisch." },
 				],
 			},

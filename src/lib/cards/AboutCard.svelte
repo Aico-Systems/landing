@@ -21,7 +21,7 @@
 
 	<section>
 		<h3>{a.flow.heading}</h3>
-		<Flow steps={a.flow.steps} ask={FLOW_SPOKEN.ask} reply={FLOW_SPOKEN.reply} />
+		<Flow steps={a.flow.steps} spoken={FLOW_SPOKEN} />
 	</section>
 
 	<section>

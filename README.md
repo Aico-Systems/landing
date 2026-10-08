@@ -22,7 +22,7 @@ bun run check
 | `src/routes/` | `/` (everyone's address: sends a visitor on to their language, and tells crawlers what Mandy is), `/[lang]/` (home), `/[lang]/[slug]/` (a vertical: `/en/parcel/`, `/de/paket/`), and the generated `sitemap.xml`, `robots.txt`, `llms.txt`, `llms-full.txt` |
 | `src/lib/Home.svelte` | The page: the stage, the speech bubbles, the vertical's words, the cards; keeps the address in step with the scroll |
 | `src/lib/Card.svelte`, `Head.svelte` | A card of longer text (in the HTML even when closed); a page's title, description, canonical, hreflang, share card and JSON-LD |
-| `src/lib/cards/` | What the cards are made of: `AboutCard` and `VerticalCard`; `Replay` and `Flow` (the part of each card that plays, edged in floor tape), `Bento` with `VerbVisual` (each verb drawn where it happens, carrying a worker's real line), `Connect` (Mandy as a chip, wired to your documents, systems and team), `Pilot` |
+| `src/lib/cards/` | What the cards are made of: `AboutCard` and `VerticalCard`; `Replay` and `Flow` (the part of each card that plays, on a dot-grid board like the tiles), `Bento` with `VerbVisual` (each verb drawn where it happens, carrying a worker's real line), `Connect` (Mandy as a chip, wired to your documents, systems and team), `Pilot` |
 | `src/lib/seo.ts`, `llms.ts` | Addresses, alternates and structured data; the Markdown for language models. All from the words in `src/lib/i18n` |
 | `src/lib/site.ts` | The site's address (`SITE_URL`), its parent company (structured data only), the date of its facts (`UPDATED`), the demo link |
 | `src/hooks.server.ts` | Fills `src/app.html`'s blanks at build time: the page's language, and the list of languages |

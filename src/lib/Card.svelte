@@ -10,7 +10,8 @@
 	 *
 	 * One part of each card plays when it opens (the replayed exchange, the
 	 * message on its way round), keyed to the card's "open" class; the rest
-	 * is set to be read, and stays still.
+	 * is set to be read, and stays still. Drawn parts sit on a "board": a
+	 * dot grid in a hairline frame, the cards' one visual language.
 	 */
 	let {
 		id,
@@ -145,21 +146,6 @@
 		max-width: 36em;
 		color: color-mix(in srgb, var(--ink) 78%, var(--paper));
 		text-wrap: pretty;
-	}
-	/* floor tape: the diagonal hatching that marks lanes and hazards on a
-	   warehouse floor, down the edge of the live moment in each card */
-	:global(.card-text .tape) {
-		position: relative;
-		padding-left: 1.6rem;
-	}
-	:global(.card-text .tape::before) {
-		content: "";
-		position: absolute;
-		left: 0;
-		top: 0;
-		bottom: 0;
-		width: 6px;
-		background: repeating-linear-gradient(-45deg, var(--accent) 0 7px, var(--ink) 7px 14px);
 	}
 	:global(.card-text .updated) {
 		margin-top: 3rem;

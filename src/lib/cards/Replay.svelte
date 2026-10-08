@@ -19,7 +19,7 @@
 	let take = $state(0);
 </script>
 
-<figure class="replay tape">
+<figure class="replay">
 	{#key take}
 		<div class="take">
 			<blockquote class="said" lang={said.lang}><Wave live />{said.text}</blockquote>
@@ -32,8 +32,15 @@
 </figure>
 
 <style>
+	/* the exchange on a board, like every drawn part of the cards */
 	.replay {
 		margin: 0;
+		padding: 1.5rem 1.5rem 1.1rem;
+		border: 1px solid color-mix(in srgb, var(--ink) 13%, transparent);
+		border-radius: 0.9rem;
+		background:
+			radial-gradient(color-mix(in srgb, var(--ink) 14%, transparent) 1px, transparent 1.2px) 0 0 / 14px 14px,
+			linear-gradient(color-mix(in srgb, var(--ink) 4%, transparent), transparent 70%);
 	}
 	.take {
 		display: grid;
@@ -42,11 +49,15 @@
 	/* the worker's own words are the display type of the card */
 	.said {
 		margin: 0;
-		font-size: clamp(1.5rem, 2.3vw, 2rem);
-		font-weight: 600;
-		font-stretch: 100%;
-		line-height: 1.2;
-		letter-spacing: -0.015em;
+		max-width: 26em;
+		padding: 0.7rem 0.95rem;
+		border-radius: 1rem 1rem 1rem 0.3rem;
+		background: var(--paper);
+		border: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
+		font-size: 1.2rem;
+		font-weight: 500;
+		line-height: 1.3;
+		letter-spacing: -0.01em;
 		color: var(--ink);
 		text-wrap: balance;
 	}
@@ -54,12 +65,13 @@
 		color: var(--accent);
 	}
 	.meaning {
-		margin: 0.6rem 0 1.5rem;
+		margin: 0.5rem 0 1.25rem 0.95rem;
 		font-size: 0.95rem;
 		color: var(--ink-soft);
 	}
 	.mandy {
-		max-width: 30em;
+		justify-self: end;
+		max-width: 26em;
 		padding: 0.7rem 1rem;
 		border-radius: 1rem 1rem 1rem 0.3rem;
 		background: var(--accent);
@@ -68,6 +80,7 @@
 		line-height: 1.4;
 	}
 	.lands {
+		justify-self: end;
 		display: inline-flex;
 		align-items: center;
 		gap: 0.45rem;
