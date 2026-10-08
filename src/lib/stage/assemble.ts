@@ -4,10 +4,12 @@ import * as THREE from "three";
  * A scene building itself, and taking itself apart, after the Mandy film's
  * opening shot (A1_shot01).
  *
- * Building: the floor rises from below and lands first, so everything has
- * something to land on; the two far walls glide in from off screen across
- * the whole build; the racking drops onto the floor in one wave down the
- * aisle, each carton just after its own bay.
+ * Building: the floor rises from below while the racking already drops onto
+ * it in one wave down the aisle, each carton just after its own bay; the
+ * two far walls glide in from off screen across the whole build. Everything
+ * rides the floor (its height is added to every other piece), so nothing
+ * lands in the air above a floor still on its way, or hangs there while it
+ * sinks.
  *
  * Leaving is the build played backwards, a little faster: the cartons lift
  * off, the racking rises away bay by bay, the walls glide out, and last the
@@ -18,6 +20,8 @@ import * as THREE from "three";
  */
 interface Piece {
 	object: THREE.Object3D;
+	/** The floor itself: the others ride its height. */
+	floor: boolean;
 	home: THREE.Vector3;
 	start: number;
 	duration: number;
@@ -25,9 +29,9 @@ interface Piece {
 	from: THREE.Vector3;
 }
 
-/** Building: the floor, then the wave of racking down the aisle. */
-const FLOOR_S = 0.4;
-const RACKS_AT = 0.32;
+/** Building: the floor, and with it the wave of racking down the aisle. */
+const FLOOR_S = 0.5;
+const RACKS_AT = 0.12;
 const WAVE_S = 0.8;
 const CARTON_LAG = 0.12;
 /** Seconds the whole build takes, played backwards, when the page moves on. */
@@ -57,6 +61,7 @@ export class Assembly {
 			list.forEach((object) =>
 				this.pieces.push({
 					object,
+					floor: list === slab,
 					// home is where the scene file put it, remembered once
 					home: (object.userData.home ??= object.position.clone()),
 					start: start(object),
@@ -68,8 +73,8 @@ export class Assembly {
 		const buildEnd = RACKS_AT + WAVE_S + CARTON_LAG + 0.28;
 		add(slab, () => 0, FLOOR_S, 0, -16, 0);
 		// the walls take the whole build to come in, so they are seen arriving
-		add(wallX, () => 0.15, buildEnd - 0.15, -50, 0, 0);
-		add(wallY, () => 0.2, buildEnd - 0.2, 0, 0, -50);
+		add(wallX, () => 0.05, buildEnd - 0.05, -50, 0, 0);
+		add(wallY, () => 0.1, buildEnd - 0.1, 0, 0, -50);
 		const frames = rest.filter((p) => !p.name.includes("_load_"));
 		const loads = rest.filter((p) => p.name.includes("_load_"));
 		add(frames, (p) => RACKS_AT + along(p) * WAVE_S, 0.28, 0, 13, 0);
@@ -97,12 +102,17 @@ export class Assembly {
 
 	private seek(t: number): void {
 		this.t = t;
-		for (const p of this.pieces) {
+		// what falls lands hard; the floor rising and the walls gliding settle
+		const offset = (p: Piece) => {
 			const k = clamp01((t - p.start) / p.duration);
+			return p.from.y > 0 ? 1 - k * k * k : (1 - k) ** 3;
+		};
+		const slab = this.pieces.find((p) => p.floor);
+		const floorY = slab ? slab.from.y * offset(slab) : 0;
+		for (const p of this.pieces) {
 			p.object.visible = t > p.start;
-			// what falls lands hard; the floor rising and the walls gliding settle
-			const e = p.from.y > 0 ? 1 - k * k * k : (1 - k) ** 3;
-			p.object.position.copy(p.home).addScaledVector(p.from, e);
+			p.object.position.copy(p.home).addScaledVector(p.from, offset(p));
+			if (!p.floor) p.object.position.y += floorY;
 		}
 	}
 }
