@@ -6,11 +6,16 @@ screen of scroll each, with the people in it asking Mandy as they work. A static
 site, prerendered; Three.js for the scene, blueprint's tokens for every colour.
 
 ```bash
-bun install
-bun run dev        # http://localhost:5173
-bun run build      # static site in build/
-bun run check
+just dev           # http://localhost:5175, hot reload
+just build         # static site in build/
+just preview       # the built site, as deployed (http://localhost:4173)
+just check
+just deploy        # build, sync to the sandbox box, live at mandy.insight-proglove.com
 ```
+
+`just deploy` copies `build/` into the box's Caddy drop-in folder
+(`/opt/aico/caddy-conf.d/landing/`); Caddy serves the files as they are, no
+restart.
 
 ## Layout
 

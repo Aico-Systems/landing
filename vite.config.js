@@ -12,6 +12,8 @@ export default defineConfig({
     alias: { "@aico/blueprint": blueprint },
   },
   server: {
+    // clear of the host plane's frontend (5173) and widget (5174)
+    port: 5175,
     fs: { allow: [blueprint, ".."] },
   },
 });
