@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from "svelte";
-	import { VERTICALS, type Exchange, type Vertical } from "$lib/verticals";
+	import { VERTICALS, type Vertical } from "$lib/verticals";
+	import { i18n, languageName, m, type Exchange } from "$lib/i18n/index.svelte";
 	import { DEMO_URL } from "$lib/site";
 	import type { Stage } from "$lib/stage/stage";
 
@@ -16,6 +17,8 @@
 	/** Who is speaking right now, the worker or Mandy: their bubble's wave moves. */
 	let voice = $state<"ask" | "answer" | null>(null);
 	const vertical = $derived(VERTICALS[active]);
+	const site = $derived(m().site);
+	const words = $derived(m().home);
 	/** The vertical whose words are up: they leave with its scene and the
 	 *  next one's arrive as its scene starts to build. */
 	let shown = $state<Vertical | null>(null);
@@ -43,7 +46,8 @@
 		speaker?.talk(false);
 		speaker = undefined;
 		voice = null;
-		const talkers = stage?.movers.filter((m) => m.actor.asks?.length) ?? [];
+		const voices = words.verticals[VERTICALS[active].id].voices;
+		const talkers = stage?.movers.filter((mover) => mover.actor.voice && voices[mover.actor.voice]?.length) ?? [];
 		if (!talkers.length) return;
 		let turn = 0;
 		const next = () => {
@@ -60,7 +64,7 @@
 					voice = null;
 				}, ANSWER_MS + TALK_AFTER_MS),
 			);
-			const asks = speaker.actor.asks!;
+			const asks = voices[speaker.actor.voice!];
 			exchange = asks[Math.floor(turn / talkers.length) % asks.length];
 			answered = false;
 			turn++;
@@ -183,14 +187,10 @@
 	let lastX: number | null = null;
 </script>
 
-<svelte:head>
-	<title>Mandy</title>
-</svelte:head>
-
 <canvas
 	bind:this={canvas}
 	class="stage"
-	aria-label="{vertical.name}: people at work, asking Mandy as they go"
+	aria-label={words.stage(words.verticals[vertical.id].name)}
 	onpointerdown={(e) => {
 		lastX = e.clientX;
 		(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
@@ -220,7 +220,9 @@
 			{#if answered}<p class="answer">{@render wave(voice === "answer")}{exchange.answer}</p>{/if}
 			<p class="ask">
 				{@render wave(voice === "ask")}{exchange.ask}
-				{#if exchange.lang}<span class="lang">Asked in {exchange.lang}</span>{/if}
+				{#if exchange.lang && exchange.lang !== i18n.locale}
+					<span class="lang">{words.askedIn(languageName(exchange.lang))}</span>
+				{/if}
 			</p>
 			</div>
 		{/key}
@@ -229,44 +231,45 @@
 
 <header>
 	<div class="brand">
-		<span class="mark">Mandy</span>
-		<span class="tagline">One press. Any language. Any system.</span>
+		<span class="mark">{site.brand}</span>
+		<span class="tagline">{site.tagline}</span>
 	</div>
-	{#if DEMO_URL}<a class="demo" href={DEMO_URL}>Book a demo</a>{/if}
+	{#if DEMO_URL}<a class="demo" href={DEMO_URL}>{site.demo}</a>{/if}
 </header>
 
 <div class="paper" aria-hidden="true"></div>
 
 {#if shown}
 	{#key shown.id}
+		{@const w = words.verticals[shown.id]}
 		<!-- the name lands letter by letter as the scene builds, then the rest -->
-		<section class="vertical" aria-live="polite" style="--n: {shown.name.length}" out:lift|global>
-			<h1 aria-label={shown.name}>
-				{#each Array.from(shown.name) as ch, c (c)}<span class="ch" aria-hidden="true" style="--c: {c}">{ch}</span>{/each}
+		<section class="vertical" aria-live="polite" style="--n: {w.name.length}" out:lift|global>
+			<h1 aria-label={w.name}>
+				{#each Array.from(w.name) as ch, c (c)}<span class="ch" aria-hidden="true" style="--c: {c}">{ch}</span>{/each}
 			</h1>
 			<p class="headline" style="--i: 0">
-				{#each shown.headline as line (line)}<span>{line}</span>{/each}
+				{#each w.headline as line (line)}<span>{line}</span>{/each}
 			</p>
 			<ul>
-				{#each shown.does as d, n (d.text)}
-					<li style="--i: {n + 1}"><span class="verb">{d.verb}</span>{d.text}</li>
+				{#each w.does as d, n (d.text)}
+					<li style="--i: {n + 1}"><span class="verb">{words.verbs[d.verb]}</span>{d.text}</li>
 				{/each}
 			</ul>
-			<p class="gain" style="--i: 4">{shown.gain}</p>
+			<p class="gain" style="--i: 4">{w.gain}</p>
 		</section>
 	{/key}
 {/if}
 
-<nav aria-label="Industries" style="--active: {active}">
+<nav aria-label={words.industries} style="--active: {active}">
 	{#each VERTICALS as v, i (v.id)}
-		<button class:on={i === active} aria-current={i === active} onclick={() => go(i)}>{v.name}</button>
+		<button class:on={i === active} aria-current={i === active} onclick={() => go(i)}>{words.verticals[v.id].name}</button>
 	{/each}
 </nav>
 
 <!-- one screen of scroll per vertical; the stage above shows the one in view -->
 <main>
 	{#each VERTICALS as v, i (v.id)}
-		<section class="stop" bind:this={sections[i]} aria-label={v.name}></section>
+		<section class="stop" bind:this={sections[i]} aria-label={words.verticals[v.id].name}></section>
 	{/each}
 </main>
 
@@ -420,12 +423,15 @@
 		margin: 1.75rem 0 0;
 		padding: 0;
 		display: grid;
-		gap: 0.85rem;
+		/* the verbs' column as wide as the longest verb, in any language */
+		grid-template-columns: max-content 1fr;
+		gap: 0.85rem 1.1rem;
 	}
 	/* the verb in accent, what it means here in one quiet line */
 	li {
+		grid-column: 1 / -1;
 		display: grid;
-		grid-template-columns: 4.5rem 1fr;
+		grid-template-columns: subgrid;
 		font-size: 0.98rem;
 		line-height: 1.45;
 		color: var(--ink-soft);
@@ -435,7 +441,6 @@
 		color: var(--accent);
 		font-weight: 700;
 		font-stretch: 112%;
-		text-transform: capitalize;
 	}
 	/* the result, the line the eye ends on: in ink, under a short rule */
 	.gain {
@@ -629,7 +634,7 @@
 		}
 		ul {
 			margin-top: 1rem;
-			gap: 0.5rem;
+			gap: 0.5rem 1.1rem;
 		}
 		.gain {
 			display: none;

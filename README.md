@@ -16,9 +16,31 @@ bun run check
 
 | Path | What |
 | --- | --- |
-| `src/lib/verticals.ts` | The verticals: scene file, people and machines with their routes, what they ask Mandy, one sentence. A new vertical is a new entry here plus its scene |
+| `src/lib/verticals.ts` | The verticals as data: scene file, size, people and machines with their routes and voices. No text |
+| `src/lib/i18n/` | Every word on the site, one file per language (`en.ts`, `de.ts`), all typed by `types.ts`, the list of languages in `locales.ts` |
 | `src/lib/stage/` | The 3D stage: `stage.ts` (renderer, isometric camera, drag to turn, switching scenes), `scene.ts` (loads a scene, restyles it, draws the outlines), `assemble.ts` (a scene building itself, and taking itself apart), `actors.ts` (the workers and forklifts, built in code: walk cycle, the press-the-glove gesture), `palette.ts` + `colours.json` (film material roles to blueprint tokens, shared with the Blender preview) |
 | `src/routes/+page.svelte` | The page: the stage, the speech bubbles, the vertical's name and line |
+| `src/hooks.server.ts` | Hands the list of languages to the detection script in `src/app.html` at build time |
+
+## Languages
+
+The site has no language switch. A script in the head of `src/app.html`
+reads the browser's own language list (`navigator.languages`, which the
+visitor sets in the browser or the system, region included) and takes the
+first the site has, matching `de-AT` to `de`; otherwise English. The page
+is built in English and stays hidden for the one frame the app takes to
+switch to another language.
+
+All text lives in `src/lib/i18n/`. `types.ts` defines one shape for every
+language, so a missing or extra word in any language is a type error.
+
+- A new language: add its code to `LOCALES` in `locales.ts`, copy `en.ts`
+  to `<code>.ts` and translate it, and register it in `MESSAGES` in
+  `index.svelte.ts`.
+- A new page: add a group for it to `Messages` in `types.ts` (next to
+  `home`) and fill it in every language.
+- Names of other languages ("Asked in Romanian") come from
+  `Intl.DisplayNames`, so they need no translating.
 | `tools/blender/` | The scenes' source: Blender scripts that build, preview, render and export them (below) |
 | `res/` | Confidential reference material (partner strategy decks): gitignored, never committed |
 | `static/models/` | The exported scenes (`<vertical>.glb`) and nothing else |
@@ -44,7 +66,8 @@ A new vertical: a script in `tools/blender/scenes/` (copy one; the page lands
 `hall_floor` and `lane_*` first, slides `hall_wall_x*` in from −x and
 `hall_wall_y*` from behind, drops the rest in a wave along x, and anything
 named `_load_` last), exported with `export.py`, plus its entry in
-`src/lib/verticals.ts` (routes in the same metres, z = −Blender y).
+`src/lib/verticals.ts` (routes in the same metres, z = −Blender y) and its
+words in each language in `src/lib/i18n/`.
 
 - `tools/blender/scenes/<vertical>.py` builds one vertical into the `SCENE`
   collection, exported to `static/models/<vertical>.glb`. The people are not
