@@ -7,6 +7,10 @@
 	 * screen, from the bottom on a narrow one. Closed, it stays in the page
 	 * (inert and out of view), so the text is there for search and answer
 	 * engines, which read the HTML as built.
+	 *
+	 * Its parts come in as they scroll into view: anything marked
+	 * data-reveal gets the class "in" (its own delay in --d), and loses it
+	 * when the card closes, so the card plays again next time.
 	 */
 	let {
 		id,
@@ -15,10 +19,27 @@
 		onclose,
 		children,
 	}: { id: string; title: string; open: boolean; onclose: () => void; children: Snippet } = $props();
+
+	let card: HTMLElement;
+
+	$effect(() => {
+		const parts = card.querySelectorAll("[data-reveal]");
+		if (!open) {
+			parts.forEach((p) => p.classList.remove("in"));
+			card.scrollTop = 0;
+			return;
+		}
+		const seen = new IntersectionObserver(
+			(entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add("in")),
+			{ root: card, threshold: 0.2 },
+		);
+		parts.forEach((p) => seen.observe(p));
+		return () => seen.disconnect();
+	});
 </script>
 
 <button class="veil" class:open tabindex="-1" aria-hidden="true" onclick={onclose}></button>
-<article {id} class="card" class:open inert={!open} aria-labelledby="{id}-title">
+<article {id} bind:this={card} class="card" class:open inert={!open} aria-labelledby="{id}-title">
 	<button class="close" onclick={onclose} aria-label={m().home.close}>×</button>
 	<div class="text">
 		<h2 id="{id}-title">{title}</h2>
@@ -48,7 +69,7 @@
 		top: 0;
 		right: 0;
 		bottom: 0;
-		width: min(36rem, 46vw);
+		width: min(46rem, 58vw);
 		overflow-y: auto;
 		overscroll-behavior: contain;
 		background: var(--paper);
@@ -89,7 +110,7 @@
 
 	/* the card's type: the page's, set for reading at length */
 	.text {
-		max-width: 34rem;
+		max-width: 42rem;
 		color: var(--ink);
 		font-size: 1rem;
 		line-height: 1.6;
@@ -122,45 +143,33 @@
 		font-size: 1.1rem;
 		line-height: 1.55;
 	}
-	.text :global(ul) {
-		margin: 0 0 0.9rem;
-		padding-left: 1.1rem;
-	}
-	.text :global(li) {
-		margin-bottom: 0.4rem;
-	}
-	.text :global(li::marker) {
-		color: var(--accent);
-	}
-	/* what workers say, as quotes */
-	.text :global(.asks) {
-		list-style: none;
-		padding: 0;
-	}
-	.text :global(.asks li) {
-		padding-left: 0.9rem;
-		border-left: 2px solid var(--accent);
-		color: var(--ink);
-		font-style: italic;
-	}
-	.text :global(.verbs) {
-		display: grid;
-		grid-template-columns: max-content 1fr;
-		gap: 0.6rem 1.1rem;
-		margin: 0;
-	}
-	.text :global(dt) {
-		color: var(--accent);
-		font-weight: 700;
-		font-stretch: 112%;
-	}
-	.text :global(dd) {
-		margin: 0;
-		color: var(--ink-soft);
-	}
 	.text :global(.updated) {
 		margin-top: 2.5rem;
 		font-size: 0.85rem;
+		color: var(--ink-soft);
+	}
+
+	/* a part coming into view */
+	.card :global([data-reveal]) {
+		opacity: 0;
+		translate: 0 1.25rem;
+		transition:
+			opacity 0.6s cubic-bezier(0.2, 0.8, 0.2, 1),
+			translate 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+		transition-delay: var(--d, 0s);
+	}
+	.card :global([data-reveal].in) {
+		opacity: 1;
+		translate: none;
+	}
+	/* a part's heading, the eyebrow over it */
+	.text :global(.eyebrow) {
+		margin: 3rem 0 1rem;
+		font-size: 0.8rem;
+		font-weight: 700;
+		font-stretch: 112%;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
 		color: var(--ink-soft);
 	}
 
@@ -176,6 +185,10 @@
 		}
 	}
 	@media (prefers-reduced-motion: reduce) {
+		.card :global([data-reveal]) {
+			translate: none;
+			transition: none;
+		}
 		.card,
 		.card.open,
 		.veil {

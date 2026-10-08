@@ -24,7 +24,8 @@ export const en: Messages = {
 		askedIn: (language) => `Asked in ${language}`,
 		about: "What is Mandy?",
 		close: "Close",
-		cardHeadings: { asks: "What workers ask", helps: "What Mandy does", result: "What changes" },
+		cardHeadings: { story: "Watch one exchange", asks: "What workers ask", helps: "What Mandy does", result: "What changes" },
+		heardIn: (language) => `Said in ${language}`,
 		verbs: { know: "Know", act: "Act", talk: "Talk", record: "Record", learn: "Learn" },
 		mandy: {
 			question: "What is Mandy?",
@@ -32,42 +33,24 @@ export const en: Messages = {
 				"Mandy is a voice assistant for people who work on warehouse and factory floors. It runs on the ProGlove MAI glove, on an Android phone or on a watch. A worker presses once, asks in their own language, and Mandy answers from the site's own documents and systems.",
 				"It can also act on what it hears: Mandy books a refill in SAP, messages the team or opens a maintenance ticket, and logs who asked, where and when.",
 			],
-			sections: [
-				{
-					heading: "Why do exceptions cost so much?",
-					text: [
-						"A missing part, a damaged carton or an unclear step stops a worker for 3 to 15 minutes, three to five times per shift. Their hands are full, so they walk off to find someone who knows. The answer is often in an SOP that nobody had time to read, least of all the new hire.",
-						"Supervisors cover several areas at once, and half the crew may not speak the site language. None of these questions show up in any system, so management never sees what the floor struggles with.",
-					],
-				},
-				{
-					heading: "Which languages does Mandy speak?",
-					text: [
-						"Mandy hears and answers in the worker's own language and translates every message on the way. A worker can ask in Ukrainian while the supervisor reads German and the SOP stays in German. A supervisor's broadcast reaches each worker in their language.",
-					],
-				},
-				{
-					heading: "Which systems does it connect to?",
-					text: ["Mandy works with the systems a site already runs. Nothing new to buy:"],
-					list: [
-						"SAP and other ERP, WMS and labour systems, for lookups and bookings",
-						"ServiceNow, Jira and Zendesk for tickets",
-						"SharePoint and your own SOPs as the source of answers",
-						"Teams, Slack, SMS and WhatsApp for messages, and a phone call when a message is not enough",
-					],
-				},
-				{
-					heading: "Where does it run?",
-					text: [
-						"In the cloud with EU data residency, on premises, or air-gapped for plants that stay offline. Mandy is built for GDPR and enterprise security reviews. Where the Wi-Fi drops out, it buffers what workers say and syncs once they are back in range.",
-					],
-				},
-				{
-					heading: "How does a pilot work?",
-					text: [
-						"A pilot covers one site, one use case and 5 to 12 workers over 14 weeks. In week 1 we load your SOPs, connect your systems and set the crew's languages. From week 2 the workers use Mandy every day, and requests that keep coming back become one-tap buttons. In week 14 you get the time saved, measured against the target you set.",
-					],
-				},
+			figures: [
+				{ value: "3\u201315", unit: "min", label: "lost every time a worker hits an exception" },
+				{ value: "3\u20135", unit: "\u00d7", label: "exceptions per worker, per shift" },
+				{ value: "40", unit: "%", label: "of the day can be indirect work no WMS sees" },
+				{ value: "14", unit: "weeks", label: "from first call to a measured result" },
+			],
+			whyHeading: "Why do exceptions cost so much?",
+			why: [
+				"A missing part, a damaged carton or an unclear step stops a worker mid-task. Their hands are full, so they walk off to find someone who knows. The answer is often in an SOP that nobody had time to read, least of all the new hire.",
+				"Supervisors cover several areas at once, and half the crew may not speak the site language. None of these questions show up in any system, so management never sees what the floor struggles with.",
+			],
+			flowHeading: "Which languages does Mandy speak?",
+			flowText: "Whichever the worker speaks. Mandy translates every message on the way, so the supervisor reads German, the SOP stays in German, and nobody has to switch.",
+			flow: [
+				{ who: "Worker", text: "Says it into the glove in Ukrainian, hands still on the pallet." },
+				{ who: "Mandy", text: "Transcribes and translates it, and adds the scan, the station and a photo." },
+				{ who: "Team lead", text: "Reads a clean report in German in Teams and answers with one tap." },
+				{ who: "Worker", text: "Hears the answer in Ukrainian, on the glove." },
 			],
 			verbsHeading: "What can Mandy do?",
 			verbs: {
@@ -77,21 +60,28 @@ export const en: Messages = {
 				record: "Logs tasks, photos, checklists and near misses with time, place and name.",
 				learn: "Coaches new and agency staff in their language and shows management the questions of the week and how long escalations wait.",
 			},
+			systemsHeading: "Which systems does it connect to?",
+			systemsText: "The ones the site already runs: ERP, WMS and labour systems for lookups and bookings, ticketing for faults, your SOPs as the source of answers, and the team's messengers. Nothing new to buy.",
+			runsHeading: "Where does it run?",
+			runs: [
+				{ name: "Cloud", text: "EU data residency, built for GDPR and security reviews." },
+				{ name: "On premises", text: "On your own servers, inside your network." },
+				{ name: "Air-gapped", text: "For plants that stay offline. Dead Wi-Fi zones are buffered and synced later." },
+			],
+			pilotHeading: "How does a pilot work?",
+			pilotText: "One site, one use case, 5 to 12 workers. You set the target, and we report against it.",
+			pilot: [
+				{ when: "Week 0", what: "Pick the use case, the crew and a supervisor who wants it solved." },
+				{ when: "Week 1", what: "We load your SOPs, connect your systems and set the crew's languages." },
+				{ when: "Weeks 2\u201313", what: "Workers use Mandy every day. Requests that keep coming back become one-tap buttons." },
+				{ when: "Week 14", what: "Time saved, measured, and the next use case scoped." },
+			],
 			faqHeading: "Questions we often get",
 			faq: [
 				{ q: "Does Mandy work without internet?", a: "Yes. It runs on premises or air-gapped as well as in the cloud." },
-				{
-					q: "Is voice always the right interface?",
-					a: "No. Requests that keep coming back become one-tap buttons on the glove, and voice is there for everything else.",
-				},
-				{
-					q: "How is Mandy different from pick-by-voice or a knowledge app?",
-					a: "Pick-by-voice follows a fixed script, and a knowledge app can answer questions but cannot book anything. Mandy answers open questions and writes back to your systems.",
-				},
-				{
-					q: "What happens when Mandy doesn't know the answer?",
-					a: "It says so. When the standard procedure doesn't cover a case, Mandy brings in a person.",
-				},
+				{ q: "Is voice always the right interface?", a: "No. Requests that keep coming back become one-tap buttons on the glove, and voice is there for everything else." },
+				{ q: "How is Mandy different from pick-by-voice or a knowledge app?", a: "Pick-by-voice follows a fixed script, and a knowledge app can answer questions but cannot book anything. Mandy answers open questions and writes back to your systems." },
+				{ q: "What happens when Mandy doesn't know the answer?", a: "It says so. When the standard procedure doesn't cover a case, Mandy brings in a person." },
 			],
 		},
 		verticals: {
@@ -115,6 +105,11 @@ export const en: Messages = {
 						"In a contract logistics warehouse every client has its own packing, labelling and returns rules, and much of the crew is agency staff who are new to the site and its language. Mandy answers their questions at the rack, in their language, from each client's own instructions.",
 						"Workers also book refills and stock moves by voice. Mandy reads every booking back before it posts it, and logs who booked it, where and when.",
 					],
+					story: {
+						meaning: "How does client B want this pallet labelled?",
+						answer: "Two labels on opposite sides, max height 1.8 m.",
+						lands: "Answered from client B's SOP",
+					},
 					asks: [
 						"How does client B want this pallet labelled?",
 						"When does the refill for B14 arrive?",
@@ -158,6 +153,11 @@ export const en: Messages = {
 						"On an assembly line a missing part or a fault code stops a station, and the supervisor is often covering four areas at once. Mandy takes the last scanned barcode and what the worker says, and sends logistics a complete request with part number, station and the quantity left.",
 						"Fault codes, changeover steps and settings for each line are one question away, and the shift handover is spoken once and translated for the next crew.",
 					],
+					story: {
+						meaning: "Kitting is down to three cable harnesses.",
+						answer: "Logistics has the part number and your station. Tugger due in 8 min.",
+						lands: "Message to logistics, in Teams",
+					},
 					asks: [
 						"Kitting is down to three cable harnesses.",
 						"What does error E-47 on the nutrunner mean?",
@@ -200,6 +200,11 @@ export const en: Messages = {
 						"A sorter runs fast until a parcel has no label, arrives damaged or is too big for the belt. Mandy tells the worker what to do with it and logs the scan and a photo.",
 						"Sorting, packing and loading teams talk on one channel. When the loading team asks by voice whether parcels are left for the 8 p.m. route, packing gets the question in Teams and answers with one tap, so trucks stop leaving half empty.",
 					],
+					story: {
+						meaning: "This parcel has no label.",
+						answer: "Take it to the exceptions bench. Scan and photo are logged.",
+						lands: "Exception logged with scan and photo",
+					},
 					asks: [
 						"This parcel has no label.",
 						"Are there still parcels for the 8 p.m. route?",
@@ -241,6 +246,11 @@ export const en: Messages = {
 						"Peak season brings in hundreds of pickers and packers who have never seen the site. Mandy lets them ask, in their own language, what they would otherwise guess: which carton, how to pack glass, what to do with a short pick.",
 						"The answers come from your packaging rules for each product, so orders leave in the right box with the right padding.",
 					],
+					story: {
+						meaning: "First day here. How do I pack glass?",
+						answer: "Wrap it twice, use carton M and a fragile label.",
+						lands: "Answered from the packaging rules",
+					},
 					asks: [
 						"First day here. How do I pack glass?",
 						"Which carton for order 8840?",
@@ -283,6 +293,11 @@ export const en: Messages = {
 						"In a store or a dark store, the person who sees an empty shelf should be the one who orders the refill. With Mandy they say so and the order is placed, without a trip to a terminal.",
 						"Staff picking online orders get substitutions and order status while they pick, and fridge temperatures and fresh-food checks are logged by voice with a time stamp.",
 					],
+					story: {
+						meaning: "The oat drink shelf is almost empty.",
+						answer: "Two cases ordered. They're in the backroom.",
+						lands: "Refill order in the store system",
+					},
 					asks: [
 						"The oat drink shelf is almost empty.",
 						"Pasta 500 g is out of stock. What do I substitute?",
@@ -324,6 +339,11 @@ export const en: Messages = {
 						"Returns grading depends on who does it: one person resells a jacket with a split seam, the next sends it to repair. Mandy gives every grader the same rules for each brand and material.",
 						"A double press on the glove takes a photo, and Mandy describes the damage and files it with the return. Because every defect is recorded, buying and quality can see which ones keep coming back.",
 					],
+					story: {
+						meaning: "Seam is split. Resell or repair?",
+						answer: "Repair. It costs less than two euros.",
+						lands: "Grade logged with the return",
+					},
 					asks: [
 						"Seam is split. Resell or repair?",
 						"How do I check this label is genuine?",
@@ -365,6 +385,11 @@ export const en: Messages = {
 						"Under GMP every step needs a record of who did it, when and where, and a wrong pick can harm a patient. Mandy guides workers through checklists by voice and logs each step as it happens.",
 						"Lot status, storage conditions and SOPs come straight from your systems, and deviations go to QA on the spot, with the time and place.",
 					],
+					story: {
+						meaning: "The cold room door was open for five minutes.",
+						answer: "Deviation logged with the time. QA has it.",
+						lands: "Deviation report to QA",
+					},
 					asks: [
 						"Is lot 24-117 released?",
 						"Start the cold-chain checklist.",
@@ -406,6 +431,11 @@ export const en: Messages = {
 						"Technicians and ground staff spend much of their shift on documentation instead of the aircraft. Mandy reads out task cards and torque values and records defects with photo and position while their hands stay on the job.",
 						"Ramp, catering, baggage and maintenance coordinate the turnaround on one channel, each in their own language.",
 					],
+					story: {
+						meaning: "Torque value for the fan cowl latch?",
+						answer: "12 Nm, per the task card.",
+						lands: "Step signed off on the task card",
+					},
 					asks: [
 						"Torque value for the fan cowl latch?",
 						"Hydraulic leak at the left main gear.",

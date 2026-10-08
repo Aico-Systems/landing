@@ -40,7 +40,10 @@ export interface Messages {
 		about: string;
 		close: string;
 		/** Headings of the parts of every vertical's card. */
-		cardHeadings: { asks: string; helps: string; result: string };
+		cardHeadings: { story: string; asks: string; helps: string; result: string };
+		/** Under a worker's words in their language: what they mean ([language]
+		 *  already named in the page's language). */
+		heardIn: (language: string) => string;
 		verbs: Record<Verb, string>;
 		/** The card about Mandy as a whole: the home page's long text. */
 		mandy: AboutWords;
@@ -83,6 +86,10 @@ export interface VerticalCard {
 	question: string;
 	/** The answer, first sentence first: it has to stand on its own. */
 	answer: string[];
+	/** One exchange the card replays: what the worker said (in their own
+	 *  language, src/lib/i18n/spoken.ts) means this, Mandy answers, and the
+	 *  result lands somewhere. */
+	story: { meaning: string; answer: string; lands: string };
 	/** What workers here say to Mandy, as they would say it. */
 	asks: string[];
 	helps: Doing[];
@@ -92,11 +99,25 @@ export interface VerticalCard {
 export interface AboutWords {
 	question: string;
 	answer: string[];
-	/** Parts of the card, each under a heading phrased as a question. */
-	sections: { heading: string; text: string[]; list?: string[] }[];
+	/** The numbers that frame the problem and the pilot, each a figure, a
+	 *  unit and what it counts. */
+	figures: { value: string; unit: string; label: string }[];
+	whyHeading: string;
+	why: string[];
+	/** One message on its way round, the pitch deck's four steps. */
+	flowHeading: string;
+	flowText: string;
+	flow: { who: string; text: string }[];
 	verbsHeading: string;
 	/** What each of the five verbs covers. */
 	verbs: Record<Verb, string>;
+	systemsHeading: string;
+	systemsText: string;
+	runsHeading: string;
+	runs: { name: string; text: string }[];
+	pilotHeading: string;
+	pilotText: string;
+	pilot: { when: string; what: string }[];
 	faqHeading: string;
 	faq: { q: string; a: string }[];
 }

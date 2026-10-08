@@ -3,10 +3,12 @@
 	import { replaceState } from "$app/navigation";
 	import { VERTICALS, type Vertical, type VerticalId } from "$lib/verticals";
 	import { i18n, languageName, m, type Exchange } from "$lib/i18n/index.svelte";
-	import { DEMO_URL, UPDATED } from "$lib/site";
-	import { longDate, pagePath } from "$lib/seo";
+	import { DEMO_URL } from "$lib/site";
+	import { pagePath } from "$lib/seo";
 	import Head from "$lib/Head.svelte";
-	import Card from "$lib/Card.svelte";
+	import AboutCard from "$lib/cards/AboutCard.svelte";
+	import VerticalCard from "$lib/cards/VerticalCard.svelte";
+	import Wave from "$lib/Wave.svelte";
 	import type { Stage } from "$lib/stage/stage";
 
 	/**
@@ -254,20 +256,13 @@
 	}}
 ></canvas>
 
-<!-- a voice: four bars that move while it speaks and lie flat once it is done -->
-{#snippet wave(live: boolean)}
-	<span class="wave" class:live aria-hidden="true">
-		{#each [0.9, 1.15, 0.75, 1] as d, b (b)}<i style="--d: {d}s; --b: {b}"></i>{/each}
-	</span>
-{/snippet}
-
 <div class="bubble" bind:this={bubble} aria-live="polite">
 	{#if exchange}
 		{#key exchange}
 			<div class="talk">
-			{#if answered}<p class="answer">{@render wave(voice === "answer")}{exchange.answer}</p>{/if}
+			{#if answered}<p class="answer"><Wave live={voice === "answer"} />{exchange.answer}</p>{/if}
 			<p class="ask">
-				{@render wave(voice === "ask")}{exchange.ask}
+				<Wave live={voice === "ask"} />{exchange.ask}
 				{#if exchange.lang && exchange.lang !== i18n.locale}
 					<span class="lang">{words.askedIn(languageName(exchange.lang))}</span>
 				{/if}
@@ -347,12 +342,15 @@
 	<!-- the cards are in the page as built, closed: what search and answer
 	     engines read, and what a reader opens. The page's own topic first. -->
 	{#if home}
-		{@render aboutCard()}
-		{@render verticalCard()}
+		{@render about()}
+		{@render details()}
 	{:else}
-		{@render verticalCard()}
-		{@render aboutCard()}
+		{@render details()}
+		{@render about()}
 	{/if}
+
+	{#snippet about()}<AboutCard open={card === "mandy"} onclose={() => open(null)} />{/snippet}
+	{#snippet details()}<VerticalCard vertical={vertical.id} open={card === "details"} onclose={() => open(null)} />{/snippet}
 
 	<!-- one screen of scroll per vertical; the stage above shows the one in view -->
 	{#each VERTICALS as v, i (v.id)}
@@ -360,468 +358,382 @@
 	{/each}
 </main>
 
-{#snippet aboutCard()}
-	<Card open={card === "mandy"} id="mandy" title={words.mandy.question} onclose={() => open(null)}>
-		{@const about = words.mandy}
-		{#each about.answer as p (p)}<p class="lead">{p}</p>{/each}
-		<h3>{about.verbsHeading}</h3>
-		<dl class="verbs">
-			{#each Object.entries(about.verbs) as [verb, text] (verb)}
-				<dt>{words.verbs[verb as keyof typeof about.verbs]}</dt>
-				<dd>{text}</dd>
-			{/each}
-		</dl>
-		{#each about.sections as part (part.heading)}
-			<h3>{part.heading}</h3>
-			{#each part.text as p (p)}<p>{p}</p>{/each}
-			{#if part.list}<ul>{#each part.list as item (item)}<li>{item}</li>{/each}</ul>{/if}
-		{/each}
-		<h3 id="faq">{about.faqHeading}</h3>
-		{#each about.faq as f (f.q)}
-			<h4>{f.q}</h4>
-			<p>{f.a}</p>
-		{/each}
-		<p class="updated">{site.updated(longDate(i18n.locale, UPDATED))}</p>
-	</Card>
-{/snippet}
+<style>
+	:global(html) {
+		scroll-snap-type: y mandatory;
+	}
+	.stop {
+		height: 100svh;
+		scroll-snap-align: start;
+	}
 
-{#snippet verticalCard()}
-	<Card
-		open={card === "details"}
-		id="details"
-		title={words.verticals[vertical.id].card.question}
-		onclose={() => open(null)}
-	>
-		{@const v = words.verticals[vertical.id]}
-		{#each v.card.answer as p (p)}<p class="lead">{p}</p>{/each}
-		<h3>{words.cardHeadings.asks}</h3>
-		<ul class="asks">{#each v.card.asks as a (a)}<li>{a}</li>{/each}</ul>
-		<h3>{words.cardHeadings.helps}</h3>
-		<dl class="verbs">
-			{#each v.card.helps as d (d.text)}
-				<dt>{words.verbs[d.verb]}</dt>
-				<dd>{d.text}</dd>
-			{/each}
-		</dl>
-		<h3>{words.cardHeadings.result}</h3>
-		<p>{v.card.result}</p>
-		<p class="updated">{site.updated(longDate(i18n.locale, UPDATED))}</p>
-	</Card>
+	.stage {
+		position: fixed;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		cursor: grab;
+		touch-action: pan-y;
+	}
+	.stage:active {
+		cursor: grabbing;
+	}
 
-	<style>
-		:global(html) {
-			scroll-snap-type: y mandatory;
-		}
-		.stop {
-			height: 100svh;
-			scroll-snap-align: start;
-		}
+	/* above the paper fade: the page's chrome and words */
+	header,
+	nav,
+	.vertical,
+	.bubble {
+		z-index: 1;
+	}
+	header {
+		position: fixed;
+		inset: 0 0 auto 0;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 1.5rem clamp(1.25rem, 4vw, 3rem);
+		pointer-events: none;
+	}
+	header > * {
+		pointer-events: auto;
+	}
+	header a {
+		color: inherit;
+		text-decoration: none;
+	}
+	.mark {
+		font-size: 1.5rem;
+		font-weight: 800;
+		font-stretch: 125%;
+		letter-spacing: -0.02em;
+	}
+	.actions {
+		display: flex;
+		align-items: center;
+		gap: 1.5rem;
+	}
+	.about {
+		font-size: 0.95rem;
+		font-weight: 600;
+		font-stretch: 90%;
+	}
+	.about:hover {
+		color: var(--accent);
+	}
+	.demo {
+		color: var(--paper);
+		background: var(--ink);
+		text-decoration: none;
+		font-weight: 600;
+		padding: 0.7rem 1.2rem;
+		border-radius: 999px;
+	}
 
-		.stage {
-			position: fixed;
-			inset: 0;
-			width: 100%;
-			height: 100%;
-			cursor: grab;
-			touch-action: pan-y;
-		}
-		.stage:active {
-			cursor: grabbing;
-		}
+	.brand {
+		display: flex;
+		align-items: baseline;
+		gap: 1rem;
+	}
+	.tagline {
+		font-size: 0.95rem;
+		font-stretch: 87%;
+		letter-spacing: 0.01em;
+		color: var(--ink-soft);
+	}
 
-		/* above the paper fade: the page's chrome and words */
-		header,
-		nav,
-		.vertical,
-		.bubble {
-			z-index: 1;
-		}
-		header {
-			position: fixed;
-			inset: 0 0 auto 0;
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			padding: 1.5rem clamp(1.25rem, 4vw, 3rem);
-			pointer-events: none;
-		}
-		header > * {
-			pointer-events: auto;
-		}
-		header a {
-			color: inherit;
-			text-decoration: none;
-		}
-		.mark {
-			font-size: 1.5rem;
-			font-weight: 800;
-			font-stretch: 125%;
-			letter-spacing: -0.02em;
-		}
-		.actions {
-			display: flex;
-			align-items: center;
-			gap: 1.5rem;
-		}
-		.about {
-			font-size: 0.95rem;
-			font-weight: 600;
-			font-stretch: 90%;
-		}
-		.about:hover {
-			color: var(--accent);
-		}
-		.demo {
-			color: var(--paper);
-			background: var(--ink);
-			text-decoration: none;
-			font-weight: 600;
-			padding: 0.7rem 1.2rem;
-			border-radius: 999px;
-		}
+	/* the paper the text sits on: the page's own colour, fading out toward
+	   the diorama, so the words never compete with a rack behind them */
+	.paper {
+		position: fixed;
+		inset: 0;
+		z-index: 0;
+		pointer-events: none;
+		background: linear-gradient(
+			90deg,
+			var(--paper) 0%,
+			color-mix(in srgb, var(--paper) 85%, transparent) 28%,
+			transparent 46%
+		);
+	}
 
-		.brand {
-			display: flex;
-			align-items: baseline;
-			gap: 1rem;
+	/* what Mandy does in this vertical, and what it is worth: left, on paper */
+	.vertical {
+		position: fixed;
+		left: clamp(1.25rem, 5vw, 4.5rem);
+		top: 50%;
+		transform: translateY(-50%);
+		--room: min(30rem, 38vw);
+	width: var(--room);
+		pointer-events: none;
+	}
+	/* timed with the scene: the letters drop as the floor lands, a wave like
+	   the racking's; the lines follow once the name stands */
+	.ch {
+		display: inline-block;
+		transform-origin: 50% 100%;
+		animation: land 0.5s cubic-bezier(0.3, 0, 0.3, 1) both;
+		animation-delay: calc(0.3s + var(--c) * 40ms);
+	}
+	@keyframes land {
+		from {
+			opacity: 0;
+			transform: translateY(-0.7em);
 		}
-		.tagline {
-			font-size: 0.95rem;
-			font-stretch: 87%;
-			letter-spacing: 0.01em;
-			color: var(--ink-soft);
+		50% {
+			opacity: 1;
+			transform: translateY(0.04em) scaleY(0.88);
 		}
+		75% {
+			transform: translateY(-0.05em);
+		}
+		to {
+			transform: none;
+		}
+	}
+	.headline,
+	.vertical li,
+	.gain {
+		animation: arrive 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+		animation-delay: calc(0.55s + var(--n) * 40ms + var(--i) * 90ms);
+	}
+	.vertical h1 {
+		margin: 0;
+		/* as large as the column takes the name: a long one ("Lebensmittel")
+	   comes smaller, at about 0.72em a letter in this cut */
+	font-size: min(clamp(2.75rem, 5.4vw, 5rem), calc(var(--room) / (var(--n) * 0.72)));
+		font-weight: 800;
+		font-stretch: 125%;
+		line-height: 0.92;
+		letter-spacing: -0.035em;
+		/* one word of single letters: never broken between them */
+		white-space: nowrap;
+	}
+	/* two lines, broken where the thought breaks (verticals.ts); on a
+	   narrow screen a line may wrap, evenly */
+	.headline {
+		margin: 1.1rem 0 0;
+		font-size: clamp(1.2rem, 1.6vw, 1.5rem);
+		font-weight: 500;
+		line-height: 1.25;
+		letter-spacing: -0.01em;
+		color: var(--ink);
+	}
+	.headline span {
+		display: block;
+		text-wrap: balance;
+	}
+	ul {
+		list-style: none;
+		margin: 1.75rem 0 0;
+		padding: 0;
+		display: grid;
+		/* the verbs' column as wide as the longest verb, in any language */
+		grid-template-columns: max-content 1fr;
+		gap: 0.85rem 1.1rem;
+	}
+	/* the verb in accent, what it means here in one quiet line */
+	li {
+		grid-column: 1 / -1;
+		display: grid;
+		grid-template-columns: subgrid;
+		font-size: 0.98rem;
+		line-height: 1.45;
+		color: var(--ink-soft);
+		text-wrap: pretty;
+	}
+	.verb {
+		color: var(--accent);
+		font-weight: 700;
+		font-stretch: 112%;
+	}
+	/* the result, the line the eye ends on: in ink, under a short rule */
+	.gain {
+		margin: 1.75rem 0 0;
+		font-size: 1.05rem;
+		font-weight: 600;
+		line-height: 1.35;
+		color: var(--ink);
+	}
+	.gain::before {
+		content: "";
+		display: block;
+		width: 1.5rem;
+		height: 2px;
+		margin-bottom: 0.9rem;
+		background: var(--accent);
+	}
+	/* the way on to the vertical's card: one quiet line under the result */
+	.more {
+		display: inline-block;
+		margin-top: 1.1rem;
+		font-size: 0.95rem;
+		font-weight: 600;
+		color: var(--accent);
+		text-decoration: underline;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.25em;
+		pointer-events: auto;
+		animation: arrive 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+		animation-delay: calc(0.55s + var(--n) * 40ms + var(--i) * 90ms);
+	}
+	.more:hover {
+		text-decoration-thickness: 2px;
+	}
+	@keyframes arrive {
+		from {
+			opacity: 0;
+			transform: translateY(0.6rem);
+		}
+	}
 
-		/* the paper the text sits on: the page's own colour, fading out toward
-		   the diorama, so the words never compete with a rack behind them */
-		.paper {
-			position: fixed;
-			inset: 0;
-			z-index: 0;
-			pointer-events: none;
-			background: linear-gradient(
-				90deg,
-				var(--paper) 0%,
-				color-mix(in srgb, var(--paper) 85%, transparent) 28%,
-				transparent 46%
-			);
-		}
+	/* the industries: a row along the bottom, the active one in ink with a
+	   bar that slides under it, so the row is both the way and the place */
+	nav {
+		position: fixed;
+		left: clamp(1.25rem, 5vw, 4.5rem);
+		right: clamp(1.25rem, 5vw, 4.5rem);
+		bottom: clamp(1rem, 3vh, 2rem);
+		display: grid;
+		grid-template-columns: repeat(8, minmax(0, max-content));
+		gap: 0 clamp(1rem, 2.2vw, 2rem);
+	}
+	nav a {
+		position: relative;
+		font-size: 0.95rem;
+		font-weight: 600;
+		font-stretch: 90%;
+		color: var(--ink-soft);
+		text-decoration: none;
+		padding: 0.75rem 0 0.9rem;
+		transition: color 0.25s;
+	}
+	nav a::after {
+		content: "";
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0.35rem;
+		height: 2px;
+		border-radius: 1px;
+		background: var(--accent);
+		transform: scaleX(0);
+		transform-origin: left;
+		transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+	}
+	nav a:hover,
+	nav a.on {
+		color: var(--ink);
+	}
+	nav a.on::after {
+		transform: scaleX(1);
+	}
+	nav a:focus-visible,
+	header a:focus-visible,
+	.more:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: 3px;
+	}
 
-		/* what Mandy does in this vertical, and what it is worth: left, on paper */
-		.vertical {
-			position: fixed;
-			left: clamp(1.25rem, 5vw, 4.5rem);
-			top: 50%;
-			transform: translateY(-50%);
-			--room: min(30rem, 38vw);
-		width: var(--room);
-			pointer-events: none;
+	.bubble {
+		position: fixed;
+		left: 0;
+		top: 0;
+		pointer-events: none;
+		will-change: transform;
+	}
+	/* question at the bottom, over the speaker's head; the answer stacks above */
+	.talk {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.4rem;
+		transform: translate(-50%, -0.6rem);
+	}
+	.bubble p {
+		margin: 0;
+		width: max-content;
+		max-width: 16rem;
+		padding: 0.55rem 0.85rem;
+		border-radius: 1rem;
+		font-size: 0.9rem;
+		line-height: 1.3;
+		animation: pop 0.35s cubic-bezier(0.2, 1.4, 0.4, 1) both;
+	}
+	.ask {
+		background: var(--glass-fill-strong);
+		backdrop-filter: blur(8px);
+		color: var(--ink);
+		border: 1px solid var(--glass-edge);
+	}
+	.ask :global(.wave) {
+		color: var(--accent);
+	}
+	.lang {
+		display: block;
+		margin-top: 0.2rem;
+		font-size: 0.75rem;
+		color: var(--ink-soft);
+	}
+	.answer {
+		background: var(--accent);
+		color: white;
+	}
+	@keyframes pop {
+		from {
+			opacity: 0;
+			scale: 0.85;
 		}
-		/* timed with the scene: the letters drop as the floor lands, a wave like
-		   the racking's; the lines follow once the name stands */
-		.ch {
-			display: inline-block;
-			transform-origin: 50% 100%;
-			animation: land 0.5s cubic-bezier(0.3, 0, 0.3, 1) both;
-			animation-delay: calc(0.3s + var(--c) * 40ms);
-		}
-		@keyframes land {
-			from {
-				opacity: 0;
-				transform: translateY(-0.7em);
-			}
-			50% {
-				opacity: 1;
-				transform: translateY(0.04em) scaleY(0.88);
-			}
-			75% {
-				transform: translateY(-0.05em);
-			}
-			to {
-				transform: none;
-			}
-		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.bubble p,
+		.ch,
 		.headline,
 		.vertical li,
-		.gain {
-			animation: arrive 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
-			animation-delay: calc(0.55s + var(--n) * 40ms + var(--i) * 90ms);
-		}
-		.vertical h1 {
-			margin: 0;
-			/* as large as the column takes the name: a long one ("Lebensmittel")
-		   comes smaller, at about 0.72em a letter in this cut */
-		font-size: min(clamp(2.75rem, 5.4vw, 5rem), calc(var(--room) / (var(--n) * 0.72)));
-			font-weight: 800;
-			font-stretch: 125%;
-			line-height: 0.92;
-			letter-spacing: -0.035em;
-			/* one word of single letters: never broken between them */
-			white-space: nowrap;
-		}
-		/* two lines, broken where the thought breaks (verticals.ts); on a
-		   narrow screen a line may wrap, evenly */
-		.headline {
-			margin: 1.1rem 0 0;
-			font-size: clamp(1.2rem, 1.6vw, 1.5rem);
-			font-weight: 500;
-			line-height: 1.25;
-			letter-spacing: -0.01em;
-			color: var(--ink);
-		}
-		.headline span {
-			display: block;
-			text-wrap: balance;
-		}
-		ul {
-			list-style: none;
-			margin: 1.75rem 0 0;
-			padding: 0;
-			display: grid;
-			/* the verbs' column as wide as the longest verb, in any language */
-			grid-template-columns: max-content 1fr;
-			gap: 0.85rem 1.1rem;
-		}
-		/* the verb in accent, what it means here in one quiet line */
-		li {
-			grid-column: 1 / -1;
-			display: grid;
-			grid-template-columns: subgrid;
-			font-size: 0.98rem;
-			line-height: 1.45;
-			color: var(--ink-soft);
-			text-wrap: pretty;
-		}
-		.verb {
-			color: var(--accent);
-			font-weight: 700;
-			font-stretch: 112%;
-		}
-		/* the result, the line the eye ends on: in ink, under a short rule */
-		.gain {
-			margin: 1.75rem 0 0;
-			font-size: 1.05rem;
-			font-weight: 600;
-			line-height: 1.35;
-			color: var(--ink);
-		}
-		.gain::before {
-			content: "";
-			display: block;
-			width: 1.5rem;
-			height: 2px;
-			margin-bottom: 0.9rem;
-			background: var(--accent);
-		}
-		/* the way on to the vertical's card: one quiet line under the result */
+		.gain,
 		.more {
-			display: inline-block;
-			margin-top: 1.1rem;
-			font-size: 0.95rem;
-			font-weight: 600;
-			color: var(--accent);
-			text-decoration: underline;
-			text-decoration-thickness: 1px;
-			text-underline-offset: 0.25em;
-			pointer-events: auto;
-			animation: arrive 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
-			animation-delay: calc(0.55s + var(--n) * 40ms + var(--i) * 90ms);
-		}
-		.more:hover {
-			text-decoration-thickness: 2px;
-		}
-		@keyframes arrive {
-			from {
-				opacity: 0;
-				transform: translateY(0.6rem);
-			}
-		}
-
-		/* the industries: a row along the bottom, the active one in ink with a
-		   bar that slides under it, so the row is both the way and the place */
-		nav {
-			position: fixed;
-			left: clamp(1.25rem, 5vw, 4.5rem);
-			right: clamp(1.25rem, 5vw, 4.5rem);
-			bottom: clamp(1rem, 3vh, 2rem);
-			display: grid;
-			grid-template-columns: repeat(8, minmax(0, max-content));
-			gap: 0 clamp(1rem, 2.2vw, 2rem);
-		}
-		nav a {
-			position: relative;
-			font-size: 0.95rem;
-			font-weight: 600;
-			font-stretch: 90%;
-			color: var(--ink-soft);
-			text-decoration: none;
-			padding: 0.75rem 0 0.9rem;
-			transition: color 0.25s;
+			animation: none;
 		}
 		nav a::after {
-			content: "";
-			position: absolute;
-			left: 0;
-			right: 0;
-			bottom: 0.35rem;
-			height: 2px;
-			border-radius: 1px;
-			background: var(--accent);
-			transform: scaleX(0);
-			transform-origin: left;
-			transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+			transition: none;
 		}
-		nav a:hover,
-		nav a.on {
-			color: var(--ink);
+		:global(html) {
+			scroll-behavior: auto;
 		}
-		nav a.on::after {
-			transform: scaleX(1);
+	}
+	@media (max-width: 899px), (orientation: portrait) {
+		.tagline {
+			display: none;
 		}
-		nav a:focus-visible,
-		header a:focus-visible,
-		.more:focus-visible {
-			outline: 2px solid var(--accent);
-			outline-offset: 3px;
+		.paper {
+			background: linear-gradient(0deg, var(--paper) 0%, var(--paper) 38%, transparent 62%);
 		}
-
-		.bubble {
-			position: fixed;
-			left: 0;
-			top: 0;
-			pointer-events: none;
-			will-change: transform;
+		.vertical {
+			top: auto;
+			bottom: 4.5rem;
+			transform: none;
+			width: auto;
+			right: clamp(1.25rem, 5vw, 4.5rem);
 		}
-		/* question at the bottom, over the speaker's head; the answer stacks above */
-		.talk {
-			position: absolute;
-			bottom: 0;
-			left: 0;
+		ul {
+			margin-top: 1rem;
+			gap: 0.5rem 1.1rem;
+		}
+		.gain {
+			display: none;
+		}
+		nav {
 			display: flex;
-			flex-direction: column;
-			align-items: center;
-			gap: 0.4rem;
-			transform: translate(-50%, -0.6rem);
+			overflow-x: auto;
+			gap: 1.25rem;
+			right: 0;
+			padding-right: 1.25rem;
 		}
-		.bubble p {
-			margin: 0;
-			width: max-content;
-			max-width: 16rem;
-			padding: 0.55rem 0.85rem;
-			border-radius: 1rem;
-			font-size: 0.9rem;
-			line-height: 1.3;
-			animation: pop 0.35s cubic-bezier(0.2, 1.4, 0.4, 1) both;
+		nav a {
+			flex: none;
 		}
-		.ask {
-			background: var(--glass-fill-strong);
-			backdrop-filter: blur(8px);
-			color: var(--ink);
-			border: 1px solid var(--glass-edge);
-		}
-		/* as tall as one line and set at its top, so the bars grow from the
-		   middle of the first line of text */
-		.wave {
-			display: inline-flex;
-			align-items: center;
-			gap: 2px;
-			height: 1.3em; /* the bubble's line-height, where lh is unknown */
-			height: 1lh;
-			margin-right: 0.5em;
-			vertical-align: top;
-		}
-		.wave i {
-			width: 2px;
-			height: 2px;
-			border-radius: 1px;
-			background: currentColor;
-			opacity: 0.55;
-			transition:
-				height 0.3s,
-				opacity 0.3s;
-		}
-		.wave.live i {
-			opacity: 1;
-			animation: voice var(--d) ease-in-out infinite alternate;
-			animation-delay: calc(var(--b) * -0.21s);
-		}
-		@keyframes voice {
-			from {
-				height: 0.2em;
-			}
-			to {
-				height: 0.8em;
-			}
-		}
-		.ask .wave {
-			color: var(--accent);
-		}
-		.lang {
-			display: block;
-			margin-top: 0.2rem;
-			font-size: 0.75rem;
-			color: var(--ink-soft);
-		}
-		.answer {
-			background: var(--accent);
-			color: white;
-		}
-		@keyframes pop {
-			from {
-				opacity: 0;
-				scale: 0.85;
-			}
-		}
-		@media (prefers-reduced-motion: reduce) {
-			.bubble p,
-			.wave.live i,
-			.ch,
-			.headline,
-			.vertical li,
-			.gain,
-			.more {
-				animation: none;
-			}
-			nav a::after {
-				transition: none;
-			}
-			:global(html) {
-				scroll-behavior: auto;
-			}
-		}
-		@media (max-width: 899px), (orientation: portrait) {
-			.tagline {
-				display: none;
-			}
-			.paper {
-				background: linear-gradient(0deg, var(--paper) 0%, var(--paper) 38%, transparent 62%);
-			}
-			.vertical {
-				top: auto;
-				bottom: 4.5rem;
-				transform: none;
-				width: auto;
-				right: clamp(1.25rem, 5vw, 4.5rem);
-			}
-			ul {
-				margin-top: 1rem;
-				gap: 0.5rem 1.1rem;
-			}
-			.gain {
-				display: none;
-			}
-			nav {
-				display: flex;
-				overflow-x: auto;
-				gap: 1.25rem;
-				right: 0;
-				padding-right: 1.25rem;
-			}
-			nav a {
-				flex: none;
-			}
-		}
-	</style>
-{/snippet}
-
-
+	}
+</style>
