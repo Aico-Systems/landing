@@ -2,9 +2,10 @@
 the self-check for a scene script when no Blender window is at hand (the
 interactive twin is preview.py).
 
-blender -b --factory-startup --python tools/blender/render.py -- <scene> <out.png> [span] [x y]
+blender -b --factory-startup --python tools/blender/render.py -- <scene> <out.png> [span] [x y] [w h]
   span   metres of floor across the image (default 50); smaller zooms in
   x y    the point to look at (default the middle of the hall)
+  w h    pixels (default 1400 900)
 
 Workbench, flat studio light, the page's colours (src/lib/stage/colours.json,
 blueprint.css, light theme), orthographic, 30° down, turned 22°.
@@ -51,7 +52,7 @@ sc.world = sc.world or bpy.data.worlds.new("paper")
 sc.render.film_transparent = False
 sc.display.shading.background_type = "VIEWPORT"
 sc.display.shading.background_color = token(theme["paper"])[:3]
-sc.render.resolution_x, sc.render.resolution_y = 1400, 900
+sc.render.resolution_x, sc.render.resolution_y = (int(args[5]), int(args[6])) if len(args) > 6 else (1400, 900)
 sc.view_settings.view_transform = "Standard"
 
 cam_data = bpy.data.cameras.new("page")

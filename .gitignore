@@ -4,3 +4,4 @@ build/
 
 # confidential reference material (customer and partner documents): never committed
 res/
+tools/og/.cache/

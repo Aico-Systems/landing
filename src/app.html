@@ -1,32 +1,23 @@
 <!doctype html>
-<html lang="en">
+<html lang="%aico.lang%">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" href="%sveltekit.assets%/favicon.svg" />
 		<script>
-			// The page speaks the visitor's language: the first of the browser's
-			// languages (the user's own setting, region included) that the site
-			// has, matched whole ("de-AT") or by its language ("de"); else the
-			// site's first. The page is built in that first one, so another is
-			// kept hidden until the app has switched to it (one frame), and
-			// shown at once if the app never runs.
-			(() => {
+			// "/" is everyone's address: send the visitor on to their language,
+			// the first of the browser's languages (the visitor's own setting,
+			// region included) that the site has, matched whole ("de-AT") or by
+			// language ("de"), else the site's first. Every other address is a
+			// language already and stays as it is: links and search results lead
+			// where they say.
+			if (location.pathname === "/") {
 				const site = %aico.locales%;
 				const asked = (navigator.languages?.length ? navigator.languages : [navigator.language]).map((l) => l.toLowerCase());
 				const lang = asked.flatMap((l) => [l, l.split("-")[0]]).find((l) => site.includes(l)) ?? site[0];
-				const root = document.documentElement;
-				root.lang = lang;
-				if (lang === site[0]) return;
-				root.dataset.i18nPending = "";
-				setTimeout(() => delete root.dataset.i18nPending, 3000);
-			})();
-		</script>
-		<style>
-			[data-i18n-pending] body {
-				visibility: hidden;
+				location.replace(`/${lang}/${location.search}${location.hash}`);
 			}
-		</style>
+		</script>
 		<script>
 			// blueprint's dark theme is a class; follow the system's before first paint
 			const dark = matchMedia("(prefers-color-scheme: dark)");

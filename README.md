@@ -19,17 +19,47 @@ bun run check
 | `src/lib/verticals.ts` | The verticals as data: scene file, size, people and machines with their routes and voices. No text |
 | `src/lib/i18n/` | Every word on the site, one file per language (`en.ts`, `de.ts`), all typed by `types.ts`, the list of languages in `locales.ts` |
 | `src/lib/stage/` | The 3D stage: `stage.ts` (renderer, isometric camera, drag to turn, switching scenes), `scene.ts` (loads a scene, restyles it, draws the outlines), `assemble.ts` (a scene building itself, and taking itself apart), `actors.ts` (the workers and forklifts, built in code: walk cycle, the press-the-glove gesture), `palette.ts` + `colours.json` (film material roles to blueprint tokens, shared with the Blender preview) |
-| `src/routes/+page.svelte` | The page: the stage, the speech bubbles, the vertical's name and line |
-| `src/hooks.server.ts` | Hands the list of languages to the detection script in `src/app.html` at build time |
+| `src/routes/` | `/` (everyone's address: sends a visitor on to their language, and tells crawlers what Mandy is), `/[lang]/` (home), `/[lang]/[slug]/` (a vertical: `/en/parcel/`, `/de/paket/`), and the generated `sitemap.xml`, `robots.txt`, `llms.txt`, `llms-full.txt` |
+| `src/lib/Home.svelte` | The page: the stage, the speech bubbles, the vertical's words, the cards; keeps the address in step with the scroll |
+| `src/lib/Card.svelte`, `Head.svelte` | A card of longer text (in the HTML even when closed); a page's title, description, canonical, hreflang, share card and JSON-LD |
+| `src/lib/seo.ts`, `llms.ts` | Addresses, alternates and structured data; the Markdown for language models. All from the words in `src/lib/i18n` |
+| `src/lib/site.ts` | The site's address (`SITE_URL`), its parent company (structured data only), the date of its facts (`UPDATED`), the demo link |
+| `src/hooks.server.ts` | Fills `src/app.html`'s blanks at build time: the page's language, and the list of languages |
+| `tools/og/` | `og.py` draws the share images (`static/og/`) from the scenes and the words |
 
-## Languages
+## Addresses and languages
 
-The site has no language switch. A script in the head of `src/app.html`
-reads the browser's own language list (`navigator.languages`, which the
-visitor sets in the browser or the system, region included) and takes the
-first the site has, matching `de-AT` to `de`; otherwise English. The page
-is built in English and stays hidden for the one frame the app takes to
-switch to another language.
+Every page has an address of its own, in every language: `/en/` is the
+home page, `/en/warehouse/` a vertical, `/de/lager/` the same in German
+(the slugs are in the words, so they translate). Scrolling keeps the
+address in step; `#details` opens the vertical's card, `#mandy` the card
+about Mandy.
+
+The site has no language switch. Only `/` chooses: a script in the head of
+`src/app.html` reads the browser's own language list (`navigator.languages`,
+which the visitor sets in the browser or the system, region included),
+takes the first the site has (`de-AT` counts as `de`, else English) and
+goes there. Every other address stays what it says, as search engines
+expect; the languages point at each other with hreflang.
+
+## Search and answer engines
+
+All text is in the prerendered HTML, cards included (closed), because the
+crawlers of ChatGPT, Claude and Perplexity read HTML and run no scripts.
+Each page carries its title, description, canonical address, hreflang
+alternates, share card and schema.org data (`Organization`, `Product`,
+`WebSite`, `WebPage`, and on the home page the FAQ), all built from the
+words. `robots.txt` lets every crawler in; `sitemap.xml`, `llms.txt` and
+`llms-full.txt` are generated with the site.
+
+Writing for them: a card answers its question in its first sentence, a
+heading is the question a reader would ask, numbers are ones we can stand
+behind (the pitch deck's), and the prose is checked against the humanizer
+and stop-slop skills. Change `UPDATED` in `site.ts` when the facts change,
+and run `python3 tools/og/og.py` when a vertical's name or line does.
+
+Before launch: verify the domain in Google Search Console and Bing
+Webmaster Tools and submit the sitemap; a German imprint is required.
 
 All text lives in `src/lib/i18n/`. `types.ts` defines one shape for every
 language, so a missing or extra word in any language is a type error.
