@@ -163,4 +163,12 @@
 			animation: none;
 		}
 	}
+	@media (max-width: 480px) {
+		.replay {
+			padding: 1rem 0.9rem 0.9rem;
+		}
+		.said {
+			font-size: 1.05rem;
+		}
+	}
 </style>

@@ -305,7 +305,7 @@
 		animation-iteration-count: 3;
 		animation-delay: 4.5s;
 	}
-	@media (max-width: 620px) {
+	@container (max-width: 570px) {
 		.chat {
 			grid-template-columns: 1fr;
 			gap: 0.75rem;

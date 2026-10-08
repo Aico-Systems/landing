@@ -55,8 +55,11 @@ export class Stage {
 	/** No assembling, no taking apart: scenes are simply there (reduced motion). */
 	reduced = false;
 	/** Where the diorama sits on screen: a shift of its centre, in fractions
-	 *  of the viewport (x right, y down), so text can have the paper beside it. */
-	frame = { x: 0, y: 0 };
+	 *  of the viewport (x right, y down), and its size (1 as the scene's span
+	 *  fills the view), so text can have the paper beside or under it. The
+	 *  view glides to a new frame rather than jumping. */
+	frame = { x: 0, y: 0, scale: 1 };
+	private framed?: { x: number; y: number; scale: number };
 
 	private current?: Staged;
 	private outgoing: Staged[] = [];
@@ -137,7 +140,8 @@ export class Stage {
 		out.y = (-v.y * 0.5 + 0.5) * this.canvas.clientHeight;
 	}
 
-	/** A drag across the canvas turns the view; dx in pixels, null on release. */
+	/** A drag across the canvas turns the hall with it, as if held: drag
+	 *  right and its near side follows right. dx in pixels, null on release. */
 	drag(dx: number | null): void {
 		if (dx === null) {
 			this.dragging = false;
@@ -145,7 +149,7 @@ export class Stage {
 			return;
 		}
 		this.dragging = true;
-		this.turnGoal = THREE.MathUtils.clamp(this.turnGoal + dx * 0.004, -TURN_MAX, TURN_MAX);
+		this.turnGoal = THREE.MathUtils.clamp(this.turnGoal - dx * 0.004, -TURN_MAX, TURN_MAX);
 	}
 
 	resize(): void {
@@ -228,14 +232,19 @@ export class Stage {
 		// verticals glides rather than jumps
 		this.turn += (this.turnGoal - this.turn) * (1 - Math.exp(-dt * (this.dragging ? 12 : 2.5)));
 		this.span += (this.spanGoal - this.span) * (1 - Math.exp(-dt * 4));
+		const f = (this.framed ??= { ...this.frame });
+		const ease = 1 - Math.exp(-dt * 4);
+		f.x += (this.frame.x - f.x) * ease;
+		f.y += (this.frame.y - f.y) * ease;
+		f.scale += (this.frame.scale - f.scale) * ease;
 		const w = this.canvas.clientWidth || 1;
 		const h = this.canvas.clientHeight || 1;
-		const half = this.span / 2;
+		const half = this.span / 2 / f.scale;
 		const aspect = w / h;
 		const [hw, hh] = aspect >= 1 ? [half * aspect, half] : [half, half / aspect];
 		// the frustum moves against the shift, so the diorama moves with it
-		const dx = this.frame.x * 2 * hw;
-		const dy = this.frame.y * 2 * hh;
+		const dx = f.x * 2 * hw;
+		const dy = f.y * 2 * hh;
 		Object.assign(this.camera, { left: -hw - dx, right: hw - dx, top: hh + dy, bottom: -hh + dy });
 		const az = AZIMUTH + this.turn;
 		const { target } = this;
@@ -246,6 +255,9 @@ export class Stage {
 		);
 		this.camera.lookAt(target);
 		this.camera.updateProjectionMatrix();
+		// now, not at render: overlays project through this frame's camera,
+		// or they trail a frame behind every turn
+		this.camera.updateMatrixWorld();
 	}
 
 	start(): void {

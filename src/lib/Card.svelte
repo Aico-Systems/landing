@@ -105,7 +105,10 @@
 	   own (scoped) styles win over them. */
 	/* the column fills the panel: boards and tiles take its full width,
 	   running text keeps its own measure (p, .answer) */
+	/* the column's own width, not the screen's, lays out what it holds: the
+	   panel beside a wide screen is narrower than a phone turned sideways */
 	.card-text {
+		container-type: inline-size;
 		color: var(--ink);
 		font-size: 1.0625rem;
 		line-height: 1.6;
@@ -163,6 +166,19 @@
 			border-radius: 1.25rem 1.25rem 0 0;
 			box-shadow: 0 -1px 0 color-mix(in srgb, var(--ink) 10%, transparent);
 			transform: translateY(102%);
+		}
+	}
+	/* a phone: the column takes more of the width, the answer comes smaller */
+	@media (max-width: 480px) {
+		.card {
+			padding-inline: 1.1rem;
+		}
+		.close {
+			top: 0.5rem;
+			right: 0.5rem;
+		}
+		:global(.card-text .answer) {
+			font-size: 1.15rem;
 		}
 	}
 	@media (prefers-reduced-motion: reduce) {

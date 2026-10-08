@@ -165,7 +165,7 @@
 	details p {
 		padding-bottom: 1rem;
 	}
-	@media (max-width: 620px) {
+	@container (max-width: 570px) {
 		.faq,
 		.runs {
 			grid-template-columns: 1fr;

@@ -75,7 +75,7 @@
 		font-size: 0.85rem;
 		color: var(--ink-soft);
 	}
-	@media (max-width: 720px) {
+	@container (max-width: 680px) {
 		.apps {
 			grid-template-columns: repeat(2, minmax(0, 1fr));
 		}

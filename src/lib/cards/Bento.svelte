@@ -62,7 +62,7 @@
 		line-height: 1.45;
 		color: var(--ink-soft);
 	}
-	@media (max-width: 560px) {
+	@container (max-width: 510px) {
 		.bento,
 		li:first-child {
 			grid-template-columns: 1fr;

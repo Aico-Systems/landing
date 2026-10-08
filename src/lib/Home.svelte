@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount, untrack } from "svelte";
+	import { onMount, tick, untrack } from "svelte";
 	import { replaceState } from "$app/navigation";
 	import { VERTICALS, type Vertical, type VerticalId } from "$lib/verticals";
 	import { i18n, languageName, m, type Exchange } from "$lib/i18n/index.svelte";
@@ -24,6 +24,9 @@
 
 	let canvas: HTMLCanvasElement;
 	let bubble: HTMLDivElement;
+	let header: HTMLElement;
+	let main: HTMLElement;
+	let nav: HTMLElement;
 	let sections = $state<HTMLElement[]>([]);
 	let stage: Stage | undefined;
 
@@ -55,6 +58,8 @@
 	const TALK_AFTER_MS = 1400;
 	/** After a scene stands, the beat before the first question. */
 	const FIRST_ASK_MS = 1000;
+	/** How long the camera takes to come in on a phone, near enough. */
+	const CLOSE_IN_MS = 900;
 	/** How long the scroll rests on a section before its vertical takes the stage. */
 	const SETTLE_MS = 140;
 
@@ -76,6 +81,19 @@
 		let turn = 0;
 		const next = () => {
 			speaker?.talk(false);
+			// close in (a phone), someone may be off screen or behind the
+			// words: the turn passes to the next in view, or waits a round
+			let k = 0;
+			while (k < talkers.length && !inView(talkers[turn % talkers.length])) {
+				turn++;
+				k++;
+			}
+			if (k === talkers.length) {
+				speaker = undefined;
+				exchange = null;
+				timers.push(setTimeout(next, EXCHANGE_MS));
+				return;
+			}
 			speaker = talkers[turn % talkers.length];
 			// the glove comes up and the floor ripples round them while they
 			// ask and hear the answer
@@ -103,13 +121,93 @@
 		timers.push(setTimeout(next, FIRST_ASK_MS));
 	}
 
-	/** Wide: the diorama moves right and the text has the paper on the left.
-	 *  Narrow: it moves up, and the text sits under it. */
+	/** Text beside the diorama: any landscape screen wide enough, and a phone
+	 *  turned sideways, too short to stack them. Elsewhere the text sits under
+	 *  it. The styles below hold the same rule, inverted. */
+	const SIDE = "(orientation: landscape) and (min-width: 900px), (orientation: landscape) and (max-height: 559px)";
+	/** The diorama at full size, as a share of the screen: its width beside
+	 *  the text (times the screen's aspect), its height over it (times the
+	 *  screen's width). */
+	const WIDE = 1.3;
+	const TALL = 0.62;
+	/** The header's bottom: nobody above it gets a turn to speak. */
+	let ceiling = 0;
+	/** The top of the words: nobody under it gets a turn to speak. */
+	let floor = 0;
+	/** A phone held upright: too narrow to show the hall whole with room
+	 *  beside it. The scene turns backdrop: it builds whole, in view, then
+	 *  the camera comes in close on the floor, the words over it, and the
+	 *  people in view talk. */
+	let backdrop = false;
+	/** Whether the backdrop has come in: out while a scene builds, in once
+	 *  it stands. */
+	let closeIn = false;
+	const BACKDROP_BELOW = 600;
+	/** How close the backdrop comes in, and where its centre sits (a share
+	 *  of the screen's height, up from the middle). */
+	const BACKDROP_ZOOM = 1.9;
+	const BACKDROP_Y = -0.12;
+	/** Pulled back, the whole floor with a margin round it. */
+	const BACKDROP_OUT = 0.88;
+	/** Stacked, the diorama's corners reach past its span: a margin keeps
+	 *  them on screen. */
+	const EDGE = 0.8;
+
+	/** Side by side: the diorama centred in the room right of the text,
+	 *  smaller where it would not fit. Stacked: centred between the header
+	 *  and the text, smaller where the text leaves it little height. */
 	function place() {
 		if (!stage) return;
-		const wide = innerWidth >= 900 && innerWidth > innerHeight;
-		stage.frame = wide ? { x: 0.16, y: 0 } : { x: 0, y: -0.17 };
+		const w = innerWidth;
+		const h = innerHeight;
+		ceiling = header.getBoundingClientRect().bottom;
+		const text = Array.from(main.querySelectorAll(".vertical")).at(-1)?.getBoundingClientRect();
+		floor = text && !matchMedia(SIDE).matches ? text.top : h;
+		if (matchMedia(SIDE).matches) {
+			const edge = (text ? text.right : w * 0.4) / w;
+			const room = 1 - edge;
+			stage.frame = { x: edge + room / 2 - 0.5, y: 0, scale: Math.min(1, room / (WIDE / (w / h))) };
+			backdrop = false;
+		} else {
+			backdrop = w < BACKDROP_BELOW;
+			if (backdrop && closeIn) {
+				stage.frame = { x: 0, y: BACKDROP_Y, scale: BACKDROP_ZOOM };
+				return;
+			}
+			const bottom = text ? text.top : h * 0.55;
+			const room = bottom - ceiling;
+			const fit = Math.min(EDGE, room / (w * TALL));
+			stage.frame = { x: 0, y: (ceiling + bottom) / 2 / h - 0.5, scale: backdrop ? fit * BACKDROP_OUT : fit };
+		}
 	}
+
+	const head = { x: 0, y: 0 };
+	/** On screen, between the header and the words, with room for a bubble. */
+	function inView(mover: Stage["movers"][number]): boolean {
+		if (!stage) return false;
+		stage.project(mover, head);
+		return head.x > 40 && head.x < innerWidth - 40 && head.y > ceiling + 90 && head.y < floor - 10;
+	}
+
+	// the language changes under a running scene (the dev bar): its people
+	// start over in it, rather than finish the round in the last
+	$effect(() => {
+		void i18n.locale;
+		untrack(() => (exchange || speaker) && converse());
+	});
+
+	// every vertical's words stand differently tall: the diorama makes room
+	$effect(() => {
+		void shown;
+		void tick().then(place);
+	});
+
+	// a row too long for a phone keeps the active industry in view
+	$effect(() => {
+		const a = nav?.children[active] as HTMLElement | undefined;
+		if (!a || nav.scrollWidth <= nav.clientWidth) return;
+		nav.scrollTo({ left: a.offsetLeft - (nav.clientWidth - a.offsetWidth) / 2, behavior: reducedMotion() ? "instant" : "smooth" });
+	});
 
 	function go(i: number) {
 		sections[i]?.scrollIntoView({ behavior: "smooth" });
@@ -144,12 +242,20 @@
 			const { Stage } = await import("$lib/stage/stage");
 			stage = new Stage(canvas);
 			stage.reduced = reduced;
-			stage.onBuild = (v) => (shown = v);
+			stage.onBuild = (v) => {
+				shown = v;
+				closeIn = false;
+				place();
+			};
 			// once the first scene stands, the rest are prepared in idle time,
 			// one at a time, so any jump between verticals is instant
 			let warmed = false;
 			stage.onBuilt = () => {
-				converse();
+				closeIn = true;
+				place();
+				// the people talk once the camera has come in on them
+				if (backdrop) timers.push(setTimeout(converse, CLOSE_IN_MS));
+				else converse();
 				if (warmed) return;
 				warmed = true;
 				const idle = (fn: () => void) =>
@@ -194,6 +300,9 @@
 						speaker = undefined;
 						voice = null;
 						shown = null;
+						// a phone pulls back as the scene takes itself apart
+						closeIn = false;
+						place();
 						stage?.show(VERTICALS[i]);
 					}, SETTLE_MS);
 				}
@@ -272,12 +381,23 @@
 	{/if}
 </div>
 
-<header>
+<header bind:this={header}>
 	<div class="brand">
 		<a class="mark" href={pagePath(i18n.locale)}>{site.brand}</a>
 		<span class="tagline">{site.tagline}</span>
 	</div>
 	<div class="actions">
+		<!-- import.meta.env.DEV is written in as false for the build, and the
+		     bar is imported only here, so its code leaves the bundle with it -->
+		{#if import.meta.env.DEV}
+			{#await import("$lib/DevBar.svelte") then { default: DevBar }}
+				<DevBar
+					vertical={home ? undefined : vertical.id}
+					{card}
+					onrepaint={() => requestAnimationFrame(() => stage?.repaint())}
+				/>
+			{/await}
+		{/if}
 		<a
 			class="about"
 			href="#mandy"
@@ -294,7 +414,7 @@
 
 
 
-<nav aria-label={words.industries} style="--active: {active}">
+<nav bind:this={nav} aria-label={words.industries} style="--active: {active}">
 	{#each VERTICALS as v, i (v.id)}
 		<a
 			href={pagePath(i18n.locale, v.id)}
@@ -308,7 +428,7 @@
 	{/each}
 </nav>
 
-<main>
+<main bind:this={main}>
 	{#if shown}
 		{#key shown.id}
 			{@const w = words.verticals[shown.id]}
@@ -668,9 +788,12 @@
 		line-height: 1.3;
 		animation: pop 0.35s cubic-bezier(0.2, 1.4, 0.4, 1) both;
 	}
+	/* frosted paper, not blueprint's glass: that is a faint tint for chips
+	   on a plain surface (black at 7% in light), and over the busy scene the
+	   words drowned in the racks behind them */
 	.ask {
-		background: var(--glass-fill-strong);
-		backdrop-filter: blur(8px);
+		background: color-mix(in srgb, var(--paper) 82%, transparent);
+		backdrop-filter: blur(10px) saturate(0.6);
 		color: var(--ink);
 		border: 1px solid var(--glass-edge);
 	}
@@ -693,6 +816,16 @@
 			scale: 0.85;
 		}
 	}
+
+	/* a phone: paper at the top too, so the header reads over the walls (the
+	   width BACKDROP_BELOW gives the script) */
+	@media (orientation: portrait) and (max-width: 599px) {
+		.paper {
+			background:
+				linear-gradient(180deg, var(--paper) 3%, color-mix(in srgb, var(--paper) 80%, transparent) 9%, transparent 20%),
+				linear-gradient(0deg, var(--paper) 0%, var(--paper) 38%, transparent 62%);
+		}
+	}
 	@media (prefers-reduced-motion: reduce) {
 		.bubble p,
 		.ch,
@@ -709,7 +842,9 @@
 			scroll-behavior: auto;
 		}
 	}
-	@media (max-width: 899px), (orientation: portrait) {
+	/* stacked (the inverse of SIDE above): the text under the diorama, on
+	   paper rising from the bottom */
+	@media (orientation: portrait), (max-width: 899px) and (min-height: 560px) {
 		.tagline {
 			display: none;
 		}
@@ -718,27 +853,138 @@
 		}
 		.vertical {
 			top: auto;
-			bottom: 4.5rem;
+			bottom: calc(4.25rem + env(safe-area-inset-bottom));
 			transform: none;
 			width: auto;
 			right: clamp(1.25rem, 5vw, 4.5rem);
+			--room: min(36rem, calc(100vw - 2 * clamp(1.25rem, 5vw, 4.5rem)));
+			max-width: 36rem;
+		}
+		.vertical h1 {
+			font-size: min(clamp(2.4rem, 9vw, 4.5rem), calc(var(--room) / (var(--n) * 0.72)));
+		}
+		.headline {
+			margin-top: 0.75rem;
+			font-size: clamp(1.1rem, 4.2vw, 1.35rem);
 		}
 		ul {
 			margin-top: 1rem;
-			gap: 0.5rem 1.1rem;
+			gap: 0.5rem 1rem;
+		}
+		li {
+			font-size: 0.93rem;
+			line-height: 1.4;
 		}
 		.gain {
 			display: none;
+		}
+		.more {
+			margin-top: 0.9rem;
+			/* a thumb's worth of target */
+			padding-block: 0.35rem;
 		}
 		nav {
 			display: flex;
 			overflow-x: auto;
 			gap: 1.25rem;
 			right: 0;
+			bottom: calc(0.5rem + env(safe-area-inset-bottom));
 			padding-right: 1.25rem;
+			scroll-padding-inline: 1.25rem;
+			/* the row runs on past the edge: it fades there, so it reads as more */
+			mask-image: linear-gradient(90deg, black calc(100% - 3rem), transparent);
 		}
 		nav a {
 			flex: none;
+		}
+	}
+	/* a small phone: the words take less of the height, the scene the rest */
+	@media (orientation: portrait) and (max-height: 700px), (orientation: portrait) and (max-width: 360px) {
+		header {
+			padding-block: 1rem;
+		}
+		.mark {
+			font-size: 1.3rem;
+		}
+		.headline {
+			font-size: 1.05rem;
+		}
+		ul {
+			margin-top: 0.75rem;
+			gap: 0.35rem 0.85rem;
+		}
+		li {
+			font-size: 0.86rem;
+			line-height: 1.35;
+		}
+		.more {
+			font-size: 0.88rem;
+		}
+	}
+	/* a phone turned sideways: side by side, everything tighter to fit the
+	   little height */
+	@media (orientation: landscape) and (max-height: 559px) {
+		header {
+			padding-block: 0.75rem;
+		}
+		.mark {
+			font-size: 1.2rem;
+		}
+		.tagline {
+			display: none;
+		}
+		.vertical {
+			top: calc(50% - 1rem);
+			--room: min(26rem, 42vw);
+		}
+		.vertical h1 {
+			font-size: min(clamp(1.9rem, 6vh, 3rem), calc(var(--room) / (var(--n) * 0.72)));
+		}
+		.headline {
+			margin-top: 0.5rem;
+			font-size: 1rem;
+		}
+		ul {
+			margin-top: 0.75rem;
+			gap: 0.3rem 0.85rem;
+		}
+		li {
+			font-size: 0.82rem;
+			line-height: 1.35;
+		}
+		.gain {
+			display: none;
+		}
+		.more {
+			margin-top: 0.6rem;
+			font-size: 0.85rem;
+		}
+		nav {
+			display: flex;
+			overflow-x: auto;
+			right: 0;
+			padding-right: 1.25rem;
+			bottom: 0.25rem;
+			gap: 0 1.1rem;
+			mask-image: linear-gradient(90deg, black calc(100% - 3rem), transparent);
+		}
+		nav a {
+			flex: none;
+		}
+		nav a {
+			font-size: 0.82rem;
+			padding-block: 0.5rem 0.7rem;
+		}
+		nav a::after {
+			bottom: 0.25rem;
+		}
+	}
+	/* bubbles sized to a phone: never wider than most of the screen */
+	@media (max-width: 599px), (max-height: 559px) {
+		.bubble p {
+			max-width: min(16rem, 64vw);
+			padding: 0.45rem 0.7rem;
+			font-size: 0.8rem;
 		}
 	}
 </style>

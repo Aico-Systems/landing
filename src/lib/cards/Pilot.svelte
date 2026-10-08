@@ -116,7 +116,7 @@
 		overflow: hidden;
 		clip-path: inset(50%);
 	}
-	@media (max-width: 620px) {
+	@container (max-width: 570px) {
 		.plan {
 			--label: 5rem;
 		}
