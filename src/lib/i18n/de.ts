@@ -50,7 +50,15 @@ export const de: Messages = {
 					learn: { text: "Arbeitet neue Leute ein und zeigt, wo es auf der Fl\u00e4che hakt.", says: "Erster Tag. Wohin kommen die leeren Beh\u00e4lter?" },
 				},
 			},
-			systems: { heading: "Mit welchen Systemen arbeitet Mandy?", text: "SAP und andere ERP- und WMS-Systeme, ServiceNow, Jira und Zendesk, SharePoint, Teams, Slack, WhatsApp und SMS. Neu kaufen m\u00fcssen Sie nichts." },
+			systems: {
+				heading: "Mit welchen Systemen arbeitet Mandy?",
+				text: "Mandy liest aus dem, was Sie schon haben, und schreibt dorthin zur\u00fcck. Neu kaufen m\u00fcssen Sie nichts.",
+				groups: [
+					{ name: "Ihre Dokumente", items: "SharePoint, SOPs, Handb\u00fccher, Packvorgaben" },
+					{ name: "Ihre Systeme", items: "SAP, WMS, ServiceNow, Jira, Zendesk" },
+					{ name: "Ihr Team", items: "Teams, Slack, WhatsApp, SMS, ein Anruf" },
+				],
+			},
 			runs: { heading: "Wo l\u00e4uft Mandy?", text: "In der EU-Cloud, auf Ihren eigenen Servern oder komplett offline f\u00fcr Werke ohne Internet. Ausgelegt f\u00fcr DSGVO und IT-Sicherheitspr\u00fcfungen." },
 			pilot: {
 				heading: "Wie fangen wir an?",

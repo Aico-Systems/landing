@@ -5,7 +5,8 @@
 	import { UPDATED } from "$lib/site";
 	import { longDate } from "$lib/seo";
 	import Flow from "./Flow.svelte";
-	import Verbs from "./Verbs.svelte";
+	import Bento from "./Bento.svelte";
+	import Connect from "./Connect.svelte";
 	import Pilot from "./Pilot.svelte";
 
 	/** The card about Mandy itself: what it is, one message on its way round
@@ -25,7 +26,7 @@
 
 	<section>
 		<h3>{a.verbs.heading}</h3>
-		<Verbs items={a.verbs.items} />
+		<Bento items={a.verbs.items} />
 	</section>
 
 	<section>
@@ -33,15 +34,15 @@
 		<p>{a.why.text}</p>
 	</section>
 
-	<section class="pair">
-		<div>
-			<h3>{a.systems.heading}</h3>
-			<p>{a.systems.text}</p>
-		</div>
-		<div>
-			<h3>{a.runs.heading}</h3>
-			<p>{a.runs.text}</p>
-		</div>
+	<section>
+		<h3>{a.systems.heading}</h3>
+		<p>{a.systems.text}</p>
+		<Connect groups={a.systems.groups} />
+	</section>
+
+	<section>
+		<h3>{a.runs.heading}</h3>
+		<p>{a.runs.text}</p>
 	</section>
 
 	<section>
@@ -63,15 +64,6 @@
 </Card>
 
 <style>
-	/* two short answers side by side */
-	.pair {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: 2rem;
-	}
-	.pair p {
-		font-size: 0.98rem;
-	}
 	details {
 		border-bottom: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
 	}
@@ -100,10 +92,5 @@
 	}
 	details p {
 		padding-bottom: 1rem;
-	}
-	@media (max-width: 620px) {
-		.pair {
-			grid-template-columns: 1fr;
-		}
 	}
 </style>

@@ -105,7 +105,8 @@ export interface AboutWords {
 	flow: { heading: string; steps: { who: string; text: string }[] };
 	/** The five verbs: what each covers, and something a worker says. */
 	verbs: { heading: string; items: Record<Verb, { text: string; says: string }> };
-	systems: { heading: string; text: string };
+	/** What Mandy reads and writes, as the diagram's three boxes. */
+	systems: { heading: string; text: string; groups: { name: string; items: string }[] };
 	runs: { heading: string; text: string };
 	pilot: { heading: string; steps: { when: string; what: string }[] };
 	faq: { heading: string; items: { q: string; a: string }[] };

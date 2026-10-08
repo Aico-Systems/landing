@@ -50,7 +50,15 @@ export const en: Messages = {
 					learn: { text: "Coaches new staff and shows where the floor gets stuck.", says: "First day here. Where do the empty totes go?" },
 				},
 			},
-			systems: { heading: "What does it connect to?", text: "SAP and other ERP and WMS systems, ServiceNow, Jira and Zendesk, SharePoint, Teams, Slack, WhatsApp and SMS. There is nothing new to buy." },
+			systems: {
+				heading: "What does it connect to?",
+				text: "Mandy reads from what you already have and writes back to it. There is nothing new to buy.",
+				groups: [
+					{ name: "Your documents", items: "SharePoint, SOPs, manuals, packing rules" },
+					{ name: "Your systems", items: "SAP, WMS, ServiceNow, Jira, Zendesk" },
+					{ name: "Your team", items: "Teams, Slack, WhatsApp, SMS, a phone call" },
+				],
+			},
 			runs: { heading: "Where does it run?", text: "In the EU cloud, on your own servers, or fully offline for plants without internet. It is built for GDPR and security reviews." },
 			pilot: {
 				heading: "How do we start?",

@@ -46,7 +46,8 @@ function full(locale: Locale): string {
 	out.push(`## ${a.flow.heading}`, "", ...a.flow.steps.map((f, i) => `${i + 1}. ${f.who}: ${f.text}`), "");
 	out.push(`## ${a.verbs.heading}`, "");
 	for (const [verb, v] of Object.entries(a.verbs.items)) out.push(`- ${m.home.verbs[verb as Verb]}: ${v.text} ("${v.says}")`);
-	out.push("", `## ${a.systems.heading}`, "", a.systems.text, "", `## ${a.runs.heading}`, "", a.runs.text, "");
+	out.push("", `## ${a.systems.heading}`, "", a.systems.text, "", ...a.systems.groups.map((g) => `- ${g.name}: ${g.items}`), "");
+	out.push(`## ${a.runs.heading}`, "", a.runs.text, "");
 	out.push(`## ${a.pilot.heading}`, "", ...a.pilot.steps.map((p) => `- ${p.when}: ${p.what}`), "");
 	out.push(`## ${a.faq.heading}`, "");
 	for (const f of a.faq.items) out.push(`### ${f.q}`, "", f.a, "");

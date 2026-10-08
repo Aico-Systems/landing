@@ -59,7 +59,7 @@
 		top: 0;
 		right: 0;
 		bottom: 0;
-		width: min(46rem, 58vw);
+		width: min(50rem, 62vw);
 		overflow-y: auto;
 		overscroll-behavior: contain;
 		background: var(--paper);
@@ -103,7 +103,7 @@
 	   whatever a card holds, kept at one class and one element so a part's
 	   own (scoped) styles win over them. */
 	.card-text {
-		max-width: 40rem;
+		max-width: 44rem;
 		color: var(--ink);
 		font-size: 1.0625rem;
 		line-height: 1.6;
