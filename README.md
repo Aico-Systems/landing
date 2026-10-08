@@ -14,8 +14,10 @@ just deploy        # build, sync to the sandbox box, live at mandy.insight-progl
 ```
 
 `just deploy` copies `build/` into the box's Caddy drop-in folder
-(`/opt/aico/caddy-conf.d/landing/`); Caddy serves the files as they are, no
-restart.
+(`/opt/aico/caddy-conf.d/landing/`), syncs the drop-in itself
+(`deploy/landing.caddy`: caching headers, precompressed files) and reloads
+Caddy. The build writes a `.br`, `.zst` and `.gz` beside every text file and
+scene (`tools/compress.ts`), which Caddy serves as they are.
 
 ## Layout
 

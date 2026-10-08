@@ -5,13 +5,14 @@
 # its own. Its Vite port (vite.config.js) stays clear of the host plane's
 # frontend (5173) and widget (5174).
 #
-# Deployed as files: a Caddy drop-in on the sandbox box serves
-# caddy-conf.d/landing/ at mandy.insight-proglove.com; `just deploy` builds
-# and syncs it there. Caddy reads the files as they are, no restart.
+# Deployed as files: a Caddy drop-in on the sandbox box (deploy/landing.caddy)
+# serves caddy-conf.d/landing/ at mandy.insight-proglove.com; `just deploy`
+# builds, syncs both there and reloads Caddy.
 # =============================================================================
 
 BOX := "aico-box"
-BOX_DIR := "/opt/aico/caddy-conf.d/landing"
+CONF_DIR := "/opt/aico/caddy-conf.d"
+BOX_DIR := CONF_DIR + "/landing"
 SITE := "https://mandy.insight-proglove.com"
 
 [private]
@@ -35,12 +36,15 @@ build:
 preview: build
     bun run preview
 
-# Build and sync to the sandbox box, then check the live page answers
+# Build, sync the site and its Caddy drop-in to the sandbox box, reload Caddy, check the live page
 deploy: build
     #!/usr/bin/env bash
     set -euo pipefail
     echo "==> rsync build/ → {{BOX}}:{{BOX_DIR}}/"
     rsync -az --delete build/ "{{BOX}}:{{BOX_DIR}}/"
+    echo "==> deploy/landing.caddy → {{BOX}}:{{CONF_DIR}}/, reload Caddy"
+    rsync -a deploy/landing.caddy "{{BOX}}:{{CONF_DIR}}/landing.caddy"
+    ssh {{BOX}} docker exec aico-caddy caddy reload --config /etc/caddy/Caddyfile --adapter caddyfile
     code=$(curl -s -o /dev/null -w '%{http_code}' "{{SITE}}/en/")
     echo "==> {{SITE}}/en/ → $code"
     [[ "$code" == 200 ]]

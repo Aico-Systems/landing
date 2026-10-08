@@ -12,5 +12,9 @@ export const handle: Handle = ({ event, resolve }) => {
 	return resolve(event, {
 		transformPageChunk: ({ html }) =>
 			html.replace("%aico.lang%", lang).replace("%aico.locales%", JSON.stringify(LOCALES)),
+		// the default (js, css) and the one face every page sets its words
+		// in: fetched with the page, not once the CSS asks, so the type
+		// doesn't swap in late
+		preload: ({ type, path }) => type === "js" || type === "css" || (type === "font" && path.includes("archivo-latin-standard")),
 	});
 };

@@ -258,6 +258,8 @@
 				else converse();
 				if (warmed) return;
 				warmed = true;
+				// a visitor saving data gets each scene when it is shown
+				if ((navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData) return;
 				const idle = (fn: () => void) =>
 					"requestIdleCallback" in window ? requestIdleCallback(fn) : setTimeout(fn, 200);
 				const queue = VERTICALS.filter((_, n) => n !== active);

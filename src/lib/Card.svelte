@@ -22,15 +22,19 @@
 	}: { id: string; title: string; open: boolean; onclose: () => void; children: Snippet } = $props();
 
 	let card: HTMLElement;
+	/** Opened at least once: until then its images (the logos) wait, so a
+	 *  visit that never opens a card never fetches them. */
+	let seen = $state(false);
 
 	// a card opens at its top
 	$effect(() => {
 		if (!open) card.scrollTop = 0;
+		else seen = true;
 	});
 </script>
 
 <button class="veil" class:open tabindex="-1" aria-hidden="true" onclick={onclose}></button>
-<article {id} bind:this={card} class="card" class:open inert={!open} aria-labelledby="{id}-title">
+<article {id} bind:this={card} class="card" class:open class:seen inert={!open} aria-labelledby="{id}-title">
 	<button class="close" onclick={onclose} aria-label={m().home.close}>×</button>
 	<div class="card-text">
 		<h2 id="{id}-title">{title}</h2>
@@ -71,6 +75,11 @@
 		transition:
 			transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
 			visibility 0s 0.45s;
+	}
+	/* lazy images don't load while not displayed; the closed card's sit just
+	   off screen, near enough that lazy alone would fetch them */
+	.card:not(.seen) :global(img[loading="lazy"]) {
+		display: none;
 	}
 	.card.open {
 		transform: none;
