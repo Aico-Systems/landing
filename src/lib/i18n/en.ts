@@ -30,15 +30,18 @@ export const en: Messages = {
 		mandy: {
 			question: "What is Mandy?",
 			answer: "Mandy is a voice assistant for warehouse and factory workers. Press the glove once, ask in any language, and get the answer from your own SOPs and systems.",
-			why: { heading: "Why do exceptions cost so much?", text: "A missing part or an unclear step costs a worker 3 to 15 minutes, three to five times a shift. The answer is often written down somewhere. Nobody on the floor has time to look it up." },
+			why: {
+				heading: "Why do exceptions cost so much?",
+				figure: "3–15",
+				unit: "min",
+				text: "That is what a missing part or an unclear step costs a worker, three to five times a shift. The answer is often written down somewhere. Nobody on the floor has time to look it up.",
+			},
 			flow: {
 				heading: "Which languages does Mandy speak?",
-				steps: [
-					{ who: "Worker", text: "Says it in Ukrainian, hands on the pallet." },
-					{ who: "Mandy", text: "Translates it and adds the scan, place and photo." },
-					{ who: "Team lead", text: "Reads it in German in Teams and taps a reply." },
-					{ who: "Worker", text: "Hears the reply in Ukrainian." },
-				],
+				glove: "On the glove",
+				teams: "In Teams",
+				bridge: "Translated, with scan, place and photo",
+				caption: "The worker speaks Ukrainian, the team lead reads German, and neither has to switch.",
 			},
 			verbs: {
 				heading: "What can Mandy do?",
@@ -59,14 +62,34 @@ export const en: Messages = {
 					{ name: "Your team", items: "Teams, Slack, WhatsApp, SMS, a phone call" },
 				],
 			},
-			runs: { heading: "Where does it run?", text: "In the EU cloud, on your own servers, or fully offline for plants without internet. It is built for GDPR and security reviews." },
+			integrations: {
+				heading: "What else can it work with?",
+				text: (count) => `Mandy connects through Activepieces, an open catalog of ${count} apps, and to any system with a REST API or a webhook.`,
+				groups: {
+					erp: "ERP and planning",
+					service: "Tickets and service",
+					messaging: "Messages",
+					documents: "Documents",
+					data: "Data",
+				},
+				more: "and hundreds more",
+			},
+			runs: {
+				heading: "Where does it run?",
+				options: [
+					{ name: "EU cloud", text: "Hosted in the EU, built for GDPR and security reviews." },
+					{ name: "Your servers", text: "On premises, inside your own network." },
+					{ name: "Offline", text: "For plants without internet. Dead spots sync later." },
+				],
+			},
 			pilot: {
 				heading: "How do we start?",
-				steps: [
-					{ when: "Week 0", what: "Pick one use case and 5 to 12 workers." },
-					{ when: "Week 1", what: "We load your SOPs and connect your systems." },
-					{ when: "Weeks 2\u201313", what: "Your team uses Mandy every day." },
-					{ when: "Week 14", what: "You get the time saved, measured." },
+				week: "Week",
+				phases: [
+					{ name: "Scope", from: 0, to: 0, what: "One use case, 5 to 12 workers" },
+					{ name: "Setup", from: 1, to: 1, what: "Your SOPs loaded, systems connected" },
+					{ name: "Live", from: 2, to: 13, what: "Your team uses Mandy every day" },
+					{ name: "Decide", from: 14, to: 14, what: "Time saved, measured" },
 				],
 			},
 			faq: {

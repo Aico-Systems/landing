@@ -1,4 +1,5 @@
 import type { VerticalId } from "$lib/verticals";
+import type { AppGroup } from "$lib/integrations";
 
 /**
  * Every word on the site, one shape for every language: a locale file that
@@ -100,15 +101,24 @@ export interface AboutWords {
 	/** What Mandy is, in two sentences. */
 	answer: string;
 	/** Each part under a heading phrased as the question a reader has. */
-	why: { heading: string; text: string };
-	/** One message on its way round, in the pitch deck's four steps. */
-	flow: { heading: string; steps: { who: string; text: string }[] };
+	why: { heading: string; figure: string; unit: string; text: string };
+	/** One message on its way round: the worker's thread on the glove, the
+	 *  team lead's in Teams, Mandy between them. */
+	flow: { heading: string; glove: string; teams: string; bridge: string; caption: string };
 	/** The five verbs: what each covers, and something a worker says. */
 	verbs: { heading: string; items: Record<Verb, { text: string; says: string }> };
 	/** What Mandy reads and writes, as the diagram's three boxes. */
 	systems: { heading: string; text: string; groups: { name: string; items: string }[] };
-	runs: { heading: string; text: string };
-	pilot: { heading: string; steps: { when: string; what: string }[] };
+	/** Everything else it can connect to ([count]: published pieces). */
+	integrations: {
+		heading: string;
+		text: (count: string) => string;
+		groups: Record<AppGroup, string>;
+		more: string;
+	};
+	runs: { heading: string; options: { name: string; text: string }[] };
+	/** The pilot as phases over its weeks (0 to [weeks]). */
+	pilot: { heading: string; week: string; phases: { name: string; from: number; to: number; what: string }[] };
 	faq: { heading: string; items: { q: string; a: string }[] };
 }
 

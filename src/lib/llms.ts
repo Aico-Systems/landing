@@ -4,6 +4,7 @@ import { MESSAGES } from "$lib/i18n/messages";
 import { SPOKEN } from "$lib/i18n/spoken";
 import type { Verb } from "$lib/i18n/types";
 import { UPDATED } from "$lib/site";
+import { APPS, PIECES, type AppGroup } from "$lib/integrations";
 import { absolute, pagePath } from "$lib/seo";
 
 /**
@@ -42,13 +43,15 @@ function full(locale: Locale): string {
 	const m = MESSAGES[locale];
 	const a = m.home.mandy;
 	const out = [`# ${a.question}`, "", `Source: ${absolute(pagePath(locale))}`, "", a.answer, ""];
-	out.push(`## ${a.why.heading}`, "", a.why.text, "");
-	out.push(`## ${a.flow.heading}`, "", ...a.flow.steps.map((f, i) => `${i + 1}. ${f.who}: ${f.text}`), "");
+	out.push(`## ${a.why.heading}`, "", `${a.why.figure} ${a.why.unit}. ${a.why.text}`, "");
+	out.push(`## ${a.flow.heading}`, "", a.flow.caption, "");
 	out.push(`## ${a.verbs.heading}`, "");
 	for (const [verb, v] of Object.entries(a.verbs.items)) out.push(`- ${m.home.verbs[verb as Verb]}: ${v.text} ("${v.says}")`);
 	out.push("", `## ${a.systems.heading}`, "", a.systems.text, "", ...a.systems.groups.map((g) => `- ${g.name}: ${g.items}`), "");
-	out.push(`## ${a.runs.heading}`, "", a.runs.text, "");
-	out.push(`## ${a.pilot.heading}`, "", ...a.pilot.steps.map((p) => `- ${p.when}: ${p.what}`), "");
+	out.push(`## ${a.integrations.heading}`, "", a.integrations.text(String(PIECES)), "");
+	out.push(...Object.entries(APPS).map(([g, apps]) => `- ${a.integrations.groups[g as AppGroup]}: ${apps.join(", ")}`), "");
+	out.push(`## ${a.runs.heading}`, "", ...a.runs.options.map((o) => `- ${o.name}: ${o.text}`), "");
+	out.push(`## ${a.pilot.heading}`, "", ...a.pilot.phases.map((p) => `- ${a.pilot.week} ${p.from === p.to ? p.from : `${p.from}–${p.to}`}, ${p.name}: ${p.what}`), "");
 	out.push(`## ${a.faq.heading}`, "");
 	for (const f of a.faq.items) out.push(`### ${f.q}`, "", f.a, "");
 	for (const v of VERTICALS) {

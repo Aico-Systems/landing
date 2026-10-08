@@ -30,15 +30,18 @@ export const de: Messages = {
 		mandy: {
 			question: "Was ist Mandy?",
 			answer: "Mandy ist ein Sprachassistent f\u00fcr Lager und Produktion. Einmal auf den Handschuh dr\u00fccken, in der eigenen Sprache fragen, und die Antwort kommt aus Ihren SOPs und Systemen.",
-			why: { heading: "Warum sind Ausnahmen so teuer?", text: "Ein fehlendes Teil oder ein unklarer Schritt kostet eine Person 3 bis 15 Minuten, drei- bis f\u00fcnfmal pro Schicht. Die Antwort steht oft irgendwo geschrieben. Auf der Fl\u00e4che hat niemand Zeit, sie nachzuschlagen." },
+			why: {
+				heading: "Warum sind Ausnahmen so teuer?",
+				figure: "3–15",
+				unit: "Min.",
+				text: "So viel kostet ein fehlendes Teil oder ein unklarer Schritt, drei- bis fünfmal pro Schicht. Die Antwort steht oft irgendwo geschrieben. Auf der Fläche hat niemand Zeit, sie nachzuschlagen.",
+			},
 			flow: {
 				heading: "Welche Sprachen spricht Mandy?",
-				steps: [
-					{ who: "Mitarbeiter", text: "Sagt es auf Ukrainisch, die H\u00e4nde an der Palette." },
-					{ who: "Mandy", text: "\u00dcbersetzt und h\u00e4ngt Scan, Ort und Foto an." },
-					{ who: "Teamleitung", text: "Liest es auf Deutsch in Teams und tippt eine Antwort." },
-					{ who: "Mitarbeiter", text: "H\u00f6rt die Antwort auf Ukrainisch." },
-				],
+				glove: "Am Handschuh",
+				teams: "In Teams",
+				bridge: "Übersetzt, mit Scan, Ort und Foto",
+				caption: "Der Mitarbeiter spricht Ukrainisch, die Teamleitung liest Deutsch, und niemand muss umdenken.",
 			},
 			verbs: {
 				heading: "Was kann Mandy?",
@@ -59,14 +62,34 @@ export const de: Messages = {
 					{ name: "Ihr Team", items: "Teams, Slack, WhatsApp, SMS, ein Anruf" },
 				],
 			},
-			runs: { heading: "Wo l\u00e4uft Mandy?", text: "In der EU-Cloud, auf Ihren eigenen Servern oder komplett offline f\u00fcr Werke ohne Internet. Ausgelegt f\u00fcr DSGVO und IT-Sicherheitspr\u00fcfungen." },
+			integrations: {
+				heading: "Womit arbeitet Mandy noch?",
+				text: (count) => `Mandy verbindet sich über Activepieces, einen offenen Katalog mit ${count} Apps, und mit jedem System, das eine REST-API oder einen Webhook hat.`,
+				groups: {
+					erp: "ERP und Planung",
+					service: "Tickets und Service",
+					messaging: "Nachrichten",
+					documents: "Dokumente",
+					data: "Daten",
+				},
+				more: "und Hunderte mehr",
+			},
+			runs: {
+				heading: "Wo läuft Mandy?",
+				options: [
+					{ name: "EU-Cloud", text: "In der EU gehostet, ausgelegt für DSGVO und IT-Prüfungen." },
+					{ name: "Ihre Server", text: "Im eigenen Rechenzentrum, in Ihrem Netz." },
+					{ name: "Offline", text: "Für Werke ohne Internet. Funklöcher werden später abgeglichen." },
+				],
+			},
 			pilot: {
 				heading: "Wie fangen wir an?",
-				steps: [
-					{ when: "Woche 0", what: "Einen Anwendungsfall und 5 bis 12 Leute ausw\u00e4hlen." },
-					{ when: "Woche 1", what: "Wir laden Ihre SOPs und binden Ihre Systeme an." },
-					{ when: "Woche 2\u201313", what: "Ihr Team nutzt Mandy jeden Tag." },
-					{ when: "Woche 14", what: "Sie bekommen die eingesparte Zeit, gemessen." },
+				week: "Woche",
+				phases: [
+					{ name: "Planen", from: 0, to: 0, what: "Ein Anwendungsfall, 5 bis 12 Leute" },
+					{ name: "Einrichten", from: 1, to: 1, what: "SOPs geladen, Systeme angebunden" },
+					{ name: "Im Einsatz", from: 2, to: 13, what: "Ihr Team nutzt Mandy jeden Tag" },
+					{ name: "Entscheiden", from: 14, to: 14, what: "Eingesparte Zeit, gemessen" },
 				],
 			},
 			faq: {
