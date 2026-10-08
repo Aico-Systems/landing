@@ -106,7 +106,9 @@ export interface AboutWords {
 	/** What Mandy is, in two sentences. */
 	answer: string;
 	/** Each part under a heading phrased as the question a reader has. */
-	why: { heading: string; figure: string; unit: string; text: string };
+	/** The cost of an exception, drawn as one shift with its interruptions:
+	 *  [each] labels one gap, [perShift] how many a shift has. */
+	why: { heading: string; each: string; perShift: string; text: string };
 	/** One message on its way round: the worker's thread on a device, the
 	 *  team lead's in their app, Mandy between them. Each window's title
 	 *  cycles through the options: devices for the one, apps for the other. */

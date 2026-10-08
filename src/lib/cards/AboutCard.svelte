@@ -10,6 +10,7 @@
 	import Connect from "./Connect.svelte";
 	import Apps from "./Apps.svelte";
 	import Pilot from "./Pilot.svelte";
+	import Shift from "./Shift.svelte";
 	import Icon, { type IconName } from "./Icon.svelte";
 
 	/** The card about Mandy itself: what it is, one message on its way round
@@ -38,13 +39,10 @@
 		<Bento items={a.verbs.items} />
 	</section>
 
-	<!-- the cost of an exception: the figure as type, the reason beside it -->
-	<section class="split">
-		<p class="figure">{a.why.figure}<span>{a.why.unit}</span></p>
-		<div>
-			{@render heading("clock", a.why.heading)}
-			<p>{a.why.text}</p>
-		</div>
+	<section>
+		{@render heading("clock", a.why.heading)}
+		<Shift each={a.why.each} perShift={a.why.perShift} />
+		<p>{a.why.text}</p>
 	</section>
 
 	<section>
@@ -97,32 +95,6 @@
 	/* the icon on the heading's first line, however many it wraps to */
 	.heading :global(.icon) {
 		margin-top: 0.1em;
-		color: var(--accent);
-	}
-	/* the figure set as type, the reason beside it */
-	.split {
-		display: grid;
-		grid-template-columns: auto 1fr;
-		gap: 2rem;
-		align-items: start;
-	}
-	.figure {
-		margin: -0.35rem 0 0;
-		font-size: clamp(3.5rem, 6vw, 5rem);
-		font-weight: 800;
-		font-stretch: 125%;
-		line-height: 0.9;
-		letter-spacing: -0.04em;
-		color: var(--ink);
-		font-variant-numeric: tabular-nums;
-	}
-	.figure span {
-		display: block;
-		margin-top: 0.35rem;
-		font-size: 1rem;
-		font-weight: 700;
-		font-stretch: 100%;
-		letter-spacing: 0;
 		color: var(--accent);
 	}
 	.runs {
@@ -194,7 +166,6 @@
 		padding-bottom: 1rem;
 	}
 	@media (max-width: 620px) {
-		.split,
 		.faq,
 		.runs {
 			grid-template-columns: 1fr;

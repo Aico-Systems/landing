@@ -67,9 +67,9 @@ export const en: Messages = {
 			answer: "Mandy is a voice assistant for frontline teams in warehouses, plants, stores and hangars. Workers ask in their own language, on whatever they carry, and Mandy answers from your documents and gets the work done in your systems.",
 			why: {
 				heading: "Why do exceptions cost so much?",
-				figure: "3–15",
-				unit: "min",
-				text: "That is what a missing part or an unclear step costs a worker, three to five times a shift. The answer is often written down somewhere. Nobody on the floor has time to look it up.",
+				each: "3–15 min each",
+				perShift: "3–5 per worker, per shift",
+				text: "A missing part or an unclear step stops the worker. Their hands are full, so they walk off to find someone who knows. The answer is often written down somewhere, but nobody on the floor has time to look it up.",
 			},
 			flow: {
 				heading: "Which languages does Mandy speak?",

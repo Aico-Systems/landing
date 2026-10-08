@@ -67,9 +67,9 @@ export const de: Messages = {
 			answer: "Mandy ist ein Sprachassistent für Teams in Lager, Werk, Markt und Hangar. Gefragt wird in der eigenen Sprache, auf jedem Gerät, das gerade zur Hand ist, und Mandy antwortet aus Ihren Dokumenten und erledigt die Arbeit in Ihren Systemen.",
 			why: {
 				heading: "Warum sind Ausnahmen so teuer?",
-				figure: "3–15",
-				unit: "Min.",
-				text: "So viel kostet ein fehlendes Teil oder ein unklarer Schritt, drei- bis fünfmal pro Schicht. Die Antwort steht oft irgendwo geschrieben. Auf der Fläche hat niemand Zeit, sie nachzuschlagen.",
+				each: "je 3–15 Min.",
+				perShift: "3–5 pro Person und Schicht",
+				text: "Ein fehlendes Teil oder ein unklarer Schritt hält die Person an. Die Hände sind voll, also geht sie los und sucht jemanden, der Bescheid weiß. Die Antwort steht oft irgendwo geschrieben, aber auf der Fläche hat niemand Zeit, sie nachzuschlagen.",
 			},
 			flow: {
 				heading: "Welche Sprachen spricht Mandy?",

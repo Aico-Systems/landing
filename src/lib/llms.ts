@@ -44,7 +44,7 @@ function full(locale: Locale): string {
 	const m = MESSAGES[locale];
 	const a = m.home.mandy;
 	const out = [`# ${a.question}`, "", `Source: ${absolute(pagePath(locale))}`, "", a.answer, ""];
-	out.push(`## ${a.why.heading}`, "", `${a.why.figure} ${a.why.unit}. ${a.why.text}`, "");
+	out.push(`## ${a.why.heading}`, "", `${a.why.each}, ${a.why.perShift}. ${a.why.text}`, "");
 	out.push(`## ${a.flow.heading}`, "", a.flow.caption, "");
 	out.push(`## ${a.verbs.heading}`, "");
 	for (const [verb, v] of Object.entries(a.verbs.items)) out.push(`- ${m.home.verbs[verb as Verb]}: ${v.text} ("${v.says}")`);
