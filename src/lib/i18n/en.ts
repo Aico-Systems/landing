@@ -67,9 +67,9 @@ export const en: Messages = {
 			answer: "Mandy is a voice assistant for frontline teams in warehouses, plants, stores and hangars. Workers ask in their own language, on whatever they carry, and Mandy answers from your documents and gets the work done in your systems.",
 			why: {
 				heading: "Why do exceptions cost so much?",
-				each: "3–15 min each",
+				each: "3–15\u00a0min each",
 				perShift: "3–5 per worker, per shift",
-				text: "A missing part or an unclear step stops the worker. Their hands are full, so they walk off to find someone who knows. The answer is often written down somewhere, but nobody on the floor has time to look it up.",
+				text: "A missing part or an unclear step stops the worker. They walk off to find someone who knows, or put down what they hold to type it into a terminal, and go to the office to see that someone is on it. The answer is often written down somewhere, but nobody on the floor has time to look it up.",
 			},
 			flow: {
 				heading: "Which languages does Mandy speak?",
@@ -83,7 +83,7 @@ export const en: Messages = {
 				items: {
 					know: { text: "Answers from any document you give it, from work instructions to client specs, and says when it doesn't know.", says: "How do I pack the returns for route 12?" },
 					act: { text: "Books refills, updates records, opens tickets and runs checklists, reading each one back first.", says: "Refill B14, two boxes." },
-					talk: { text: "Reaches the right person in their app, or calls them when it is urgent.", says: "Kitting needs cable harnesses, three left." },
+					talk: { text: "Reaches the right person in their app, or calls them, and tells the worker someone is on it.", says: "Kitting needs cable harnesses, three left." },
 					record: { text: "Logs tasks, photos and near misses with time and place.", says: "Starting decant, aisle 7." },
 					learn: { text: "Coaches new staff and shows where the floor gets stuck.", says: "First day here. Where do the empty totes go?" },
 				},
@@ -135,6 +135,8 @@ export const en: Messages = {
 					{ q: "Is voice always the right interface?", a: "No. Requests that come up often become one-tap buttons on the glove." },
 					{ q: "How is this different from pick-by-voice?", a: "Pick-by-voice follows a fixed script. Mandy answers open questions and books things in your systems." },
 					{ q: "What if Mandy doesn't know?", a: "It says so, and brings in a person when the standard procedure doesn't cover the case." },
+					{ q: "Is the microphone always on?", a: "No. Mandy listens only while the button is pressed." },
+					{ q: "What about gloves and loud halls?", a: "One press on the glove scanner works with gloves on, and requests that come up often become one-tap buttons, so a loud hall doesn't stop them." },
 				],
 			},
 		},
@@ -150,12 +152,12 @@ export const en: Messages = {
 				does: [
 					{ verb: "know", text: "Each client's SOP, at the rack." },
 					{ verb: "act", text: "Refills and moves booked in the WMS." },
-					{ verb: "learn", text: "Agency staff working alone sooner." },
+					{ verb: "record", text: "Decanting and cleaning logged by voice." },
 				],
 				gain: "Fewer walks to the team leader, fewer SLA misses.",
 				card: {
 					question: "How does Mandy help in a warehouse?",
-					answer: "A 3PL runs a different SOP for every client, often with agency staff who started this week. Mandy answers from the right client's documents at the rack, in the worker's language, and books the result in your WMS.",
+					answer: "A 3PL runs a different SOP for every client, often with agency staff who started this week. Mandy answers from the right client's documents at the rack, in the worker's language, and books the result in your WMS and logs the indirect work no WMS sees.",
 					story: {
 						meaning: "Client says gift wrap, but there's no wrap code on the label. What do I do?",
 						answer: "Client B's SOP: wrap it and add code GW1 at pack station 3.",
@@ -188,20 +190,20 @@ export const en: Messages = {
 				},
 				headline: ["Shorter line stops,", "first time right."],
 				does: [
-					{ verb: "know", text: "Work instructions for the right variant." },
+					{ verb: "know", text: "The standard fix for a damaged or missing part." },
 					{ verb: "talk", text: "Shortages to logistics, part number included." },
 					{ verb: "record", text: "Shift handovers, spoken and translated." },
 				],
 				gain: "Less waiting on the andon, less rework.",
 				card: {
 					question: "How does Mandy help on a production line?",
-					answer: "When a part runs short or a step is unclear, the station stops and the team leader is three areas away. Mandy gives the operator the work instruction for this variant, or sends logistics and maintenance what they need in one message.",
+					answer: "When a part is damaged, missing or in the wrong bin, the worker goes looking for a key user, though the fix is usually the standard one. Mandy walks them through it in their own language, tells logistics, and brings in a person only when the standard path doesn't apply.",
 					story: {
-						meaning: "Torque spec for the rear subframe bolts on the hybrid variant?",
-						answer: "120\u00a0Nm, then 90 degrees. Work instruction 4.3, hybrid.",
-						lands: "From the released work instruction",
+						meaning: "This part is damaged. What do I do?",
+						answer: "Put it in the service area and take the next one from bin 4. Logistics has the part number.",
+						lands: "Exception logged, logistics notified",
 					},
-					result: "Shorter line stops.",
+					result: "Fewer walks to find a key user.",
 				},
 				voices: {
 					lineA: [
@@ -226,7 +228,7 @@ export const en: Messages = {
 				headline: ["Exceptions cleared at the belt,", "trucks out on time."],
 				does: [
 					{ verb: "know", text: "No-reads, damages, out-of-gauge: what to do." },
-					{ verb: "talk", text: "Sort and loading on one line." },
+					{ verb: "talk", text: "Help without hunting for a radio." },
 					{ verb: "act", text: "Faults reported with place and photo." },
 				],
 				gain: "Fewer missorts, departures that make the cut-off.",
@@ -262,14 +264,14 @@ export const en: Messages = {
 				},
 				headline: ["Peak staff productive,", "orders out by cut-off."],
 				does: [
+					{ verb: "act", text: "Short picks, full crates, no barcode: said, not typed." },
 					{ verb: "learn", text: "New pickers ask instead of guessing." },
-					{ verb: "act", text: "Short picks refilled by voice." },
 					{ verb: "know", text: "The right carton for every SKU." },
 				],
 				gain: "Fewer mis-picks, same-day dispatch held.",
 				card: {
 					question: "How does Mandy help in eCommerce fulfilment?",
-					answer: "In peak, hundreds of new pickers and packers meet SKUs they have never seen. Mandy answers at the station, books the replenishment when a location is empty, and the order still makes the cut-off.",
+					answer: "In peak, hundreds of new pickers meet SKUs they have never seen, and every exception means a template on the handheld. Mandy takes the exception by voice, books the replenishment when a location is empty, and the order still makes the cut-off.",
 					story: {
 						meaning: "Location's empty for the SKU ending 4471. Can you book a refill?",
 						answer: "Refill booked from reserve R-12. Pick from 07-B for now.",
@@ -287,6 +289,7 @@ export const en: Messages = {
 					],
 					picker: [
 						{ ask: "Location empty for SKU 4471.", answer: "Refill booked. Pick from 07-B for now." },
+						{ ask: "Crate is full, item still in hand.", answer: "New crate 2231 assigned. Put it there and scan it." },
 					],
 					driver: [
 						{ ask: "Where am I needed for the 3 p.m. wave?", answer: "Pack station 4. Its packer is going on break." },
@@ -302,14 +305,14 @@ export const en: Messages = {
 				},
 				headline: ["Full shelves, the right subs,", "fresh on time."],
 				does: [
-					{ verb: "act", text: "Gaps reported, refill ordered." },
+					{ verb: "act", text: "Missing items reported, no trip to the terminal." },
 					{ verb: "know", text: "Substitution rules while picking." },
 					{ verb: "record", text: "Temperature checks, time-stamped." },
 				],
 				gain: "Better availability, less waste.",
 				card: {
 					question: "How does Mandy help in grocery retail?",
-					answer: "In a store or dark store, the colleague who spots the gap or the warm chiller is often in their first weeks. Mandy gives them the right step the first time and logs it on the spot.",
+					answer: "In a grocery DC or store, a missing item or a warm chiller usually means a walk back to the office, sometimes with a colleague to translate. Mandy gives the right step the first time, in the worker's language, and logs it on the spot.",
 					story: {
 						meaning: "Chiller in aisle 3 reads 9 degrees. Logging it, who do I call?",
 						answer: "Logged at 09:12. Move the dairy to the backroom chiller; the manager is on the way.",
@@ -408,28 +411,29 @@ export const en: Messages = {
 				name: "Aviation",
 				slug: "aviation",
 				seo: {
-					title: "Voice AI for aircraft maintenance and ground handling",
-					description: "AMM and IPC references hands-free, structured shift handovers, and ramp occurrences reported in seconds. The certifying engineer still signs.",
+					title: "Voice AI for ground handling and aircraft maintenance",
+					description: "Drivers called and damaged bags reported by voice on the ramp, AMM and IPC references and handovers in the hangar. The certifying engineer still signs.",
 				},
-				headline: ["Hands on the aircraft,", "handovers on the record."],
+				headline: ["On the ramp and in the hangar,", "nothing waits for the office."],
 				does: [
+					{ verb: "talk", text: "A driver for a full container, no second app." },
+					{ verb: "record", text: "Damaged bags reported where they are found." },
 					{ verb: "know", text: "AMM and IPC references, hands-free." },
-					{ verb: "record", text: "Shift handovers, structured." },
-					{ verb: "talk", text: "Ramp occurrences reported in seconds." },
 				],
-				gain: "Less time lost to paperwork and handovers.",
+				gain: "Transfer bags on their flight, task cards on the record.",
 				card: {
 					question: "How does Mandy help in aviation?",
-					answer: "Technicians are scarce, and a shift handover is where errors start. Mandy finds the AMM or IPC reference hands-free and records a structured handover by voice; on the ramp, an occurrence is reported in seconds, in the agent's own language. The certifying engineer still signs.",
+					answer: "On the ramp, gloves stay on and phones stay away, yet calling a driver for a full container or reporting a damaged bag still means a second app or a trip to the office. Mandy takes both by voice, in the agent's own language. In the hangar it finds the AMM or IPC reference and records the handover; the certifying engineer still signs.",
 					story: {
-						meaning: "IPC part number for the left main gear torque link bushing?",
-						answer: "IPC 32-11-41, item 40. Two in stores, bay C.",
-						lands: "Reference logged on the task card",
+						meaning: "This container for the 14:20 to Madrid is full. I need a driver.",
+						answer: "Driver requested. Tug 7 is at your stand in 4 minutes.",
+						lands: "Request sent to ramp dispatch",
 					},
-					result: "More time on the aircraft.",
+					result: "Nothing waits for the office.",
 				},
 				voices: {
 					ramp: [
+						{ ask: "Damaged bag on belt 3, handle torn off.", answer: "Logged with photo and tag number. Baggage services have it." },
 						{ ask: "Belt loader contact at stand 14, small dent by the aft cargo door.", answer: "Occurrence logged with photo. Maintenance and the duty manager have it." },
 					],
 					mechanic: [

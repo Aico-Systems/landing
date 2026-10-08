@@ -69,7 +69,7 @@ export const de: Messages = {
 				heading: "Warum sind Ausnahmen so teuer?",
 				each: "je 3–15 Min.",
 				perShift: "3–5 pro Person und Schicht",
-				text: "Ein fehlendes Teil oder ein unklarer Schritt hält die Person an. Die Hände sind voll, also geht sie los und sucht jemanden, der Bescheid weiß. Die Antwort steht oft irgendwo geschrieben, aber auf der Fläche hat niemand Zeit, sie nachzuschlagen.",
+				text: "Ein fehlendes Teil oder ein unklarer Schritt hält die Person an. Sie geht los und sucht jemanden, der Bescheid weiß, oder legt ab, was sie in der Hand hat, um es am Terminal einzutippen, und geht ins Büro, um zu sehen, dass sich jemand kümmert. Die Antwort steht oft irgendwo geschrieben, aber auf der Fläche hat niemand Zeit, sie nachzuschlagen.",
 			},
 			flow: {
 				heading: "Welche Sprachen spricht Mandy?",
@@ -83,7 +83,7 @@ export const de: Messages = {
 				items: {
 					know: { text: "Antwortet aus jedem Dokument, das Sie ihr geben, von Arbeitsanweisungen bis Kundenvorgaben, und sagt, wenn sie etwas nicht weiß.", says: "Wie packe ich die Retouren für Tour 12?" },
 					act: { text: "Bucht Nachschub, pflegt Daten, legt Tickets an und führt durch Checklisten, jede Buchung vorher vorgelesen.", says: "Nachschub für B14, zwei Kartons." },
-					talk: { text: "Erreicht die richtige Person in ihrer App, oder ruft an, wenn es dringend ist.", says: "Kitting braucht Kabelbäume, noch drei da." },
+					talk: { text: "Erreicht die richtige Person in ihrer App oder ruft an, und sagt der Person auf der Fläche, dass sich jemand kümmert.", says: "Kitting braucht Kabelbäume, noch drei da." },
 					record: { text: "Erfasst Aufgaben, Fotos und Beinahe-Unfälle mit Zeit und Ort.", says: "Fange mit dem Umpacken in Gang 7 an." },
 					learn: { text: "Arbeitet neue Leute ein und zeigt, wo es auf der Fläche hakt.", says: "Erster Tag. Wohin kommen die leeren Behälter?" },
 				},
@@ -135,6 +135,8 @@ export const de: Messages = {
 					{ q: "Ist Sprache immer die richtige Bedienung?", a: "Nein. Häufige Anfragen werden zu Ein-Tipp-Tasten auf dem Handschuh." },
 					{ q: "Was ist der Unterschied zu Pick-by-Voice?", a: "Pick-by-Voice folgt einem festen Ablauf. Mandy beantwortet offene Fragen und bucht in Ihren Systemen." },
 					{ q: "Was, wenn Mandy etwas nicht weiß?", a: "Sie sagt es und holt einen Menschen dazu, wenn das Standardvorgehen den Fall nicht abdeckt." },
+					{ q: "Ist das Mikrofon immer an?", a: "Nein. Mandy hört nur zu, solange die Taste gedrückt ist." },
+					{ q: "Was ist mit Handschuhen und lauten Hallen?", a: "Ein Druck auf den Handschuh-Scanner funktioniert mit Handschuhen, und häufige Anfragen werden zu Ein-Tipp-Tasten, damit eine laute Halle sie nicht aufhält." },
 				],
 			},
 		},
@@ -150,12 +152,12 @@ export const de: Messages = {
 				does: [
 					{ verb: "know", text: "Die SOP jedes Kunden, am Regal." },
 					{ verb: "act", text: "Nachschub und Umlagerungen im WMS." },
-					{ verb: "learn", text: "Leihkräfte schneller selbstständig." },
+					{ verb: "record", text: "Umpacken und Reinigen per Sprache erfasst." },
 				],
 				gain: "Weniger Wege zur Schichtleitung, weniger SLA-Verstöße.",
 				card: {
 					question: "Wie hilft Mandy im Lager?",
-					answer: "In der Kontraktlogistik gilt für jeden Kunden eine andere SOP, oft mit Leihkräften, die diese Woche angefangen haben. Mandy antwortet am Regal aus den Dokumenten des richtigen Kunden, in der Sprache der Person, und bucht das Ergebnis im WMS.",
+					answer: "In der Kontraktlogistik gilt für jeden Kunden eine andere SOP, oft mit Leihkräften, die diese Woche angefangen haben. Mandy antwortet am Regal aus den Dokumenten des richtigen Kunden, in der Sprache der Person, bucht das Ergebnis im WMS und erfasst die indirekte Arbeit, die kein WMS sieht.",
 					story: {
 						meaning: "Der Kunde will Geschenkverpackung, aber auf dem Label fehlt der Code. Was mache ich?",
 						answer: "SOP von Kunde B: einpacken und am Packplatz 3 den Code GW1 setzen.",
@@ -188,20 +190,20 @@ export const de: Messages = {
 				},
 				headline: ["Kürzere Bandstopps,", "beim ersten Mal richtig."],
 				does: [
-					{ verb: "know", text: "Die Arbeitsanweisung zur Variante." },
+					{ verb: "know", text: "Das Standardvorgehen bei Schaden oder Fehlteil." },
 					{ verb: "talk", text: "Fehlteile an die Logistik, mit Teilenummer." },
 					{ verb: "record", text: "Schichtübergaben, gesprochen und übersetzt." },
 				],
 				gain: "Weniger Warten am Andon, weniger Nacharbeit.",
 				card: {
 					question: "Wie hilft Mandy in der Produktion?",
-					answer: "Fehlt ein Teil oder ist ein Schritt unklar, steht die Station, und der Teamleiter ist drei Bereiche weiter. Mandy gibt dem Werker die Arbeitsanweisung für genau diese Variante oder schickt Logistik und Instandhaltung in einer Nachricht, was sie brauchen.",
+					answer: "Ist ein Teil beschädigt, fehlt es oder liegt es im falschen Fach, sucht der Werker einen Key User, obwohl meist das Standardvorgehen greift. Mandy führt in seiner Sprache durch, informiert die Logistik und holt nur dann einen Menschen dazu, wenn der Standardweg nicht passt.",
 					story: {
-						meaning: "Anzugsmoment für die hinteren Hilfsrahmenschrauben beim Hybrid?",
-						answer: "120\u00a0Nm, dann 90 Grad. Arbeitsanweisung 4.3, Hybrid.",
-						lands: "Aus der freigegebenen Arbeitsanweisung",
+						meaning: "Das Teil ist beschädigt. Was mache ich?",
+						answer: "Leg es in den Servicebereich und nimm das nächste aus Fach 4. Die Logistik hat die Teilenummer.",
+						lands: "Ausnahme erfasst, Logistik informiert",
 					},
-					result: "Kürzere Bandstopps.",
+					result: "Weniger Wege zum Key User.",
 				},
 				voices: {
 					lineA: [
@@ -226,7 +228,7 @@ export const de: Messages = {
 				headline: ["Sonderfälle direkt am Band,", "Lkw pünktlich raus."],
 				does: [
 					{ verb: "know", text: "No-Read, Schaden, Sperrgut: was tun." },
-					{ verb: "talk", text: "Sortierung und Verladung auf einer Linie." },
+					{ verb: "talk", text: "Hilfe, ohne nach dem Funkgerät zu suchen." },
 					{ verb: "act", text: "Störungen mit Ort und Foto gemeldet." },
 				],
 				gain: "Weniger Fehlsortierungen, Abfahrten zum Cut-off.",
@@ -262,14 +264,14 @@ export const de: Messages = {
 				},
 				headline: ["Peak-Personal produktiv,", "Bestellungen vor dem Cut-off raus."],
 				does: [
+					{ verb: "act", text: "Fehlmenge, voller Behälter, kein Barcode: gesagt, nicht getippt." },
 					{ verb: "learn", text: "Neue Kommissionierer fragen, statt zu raten." },
-					{ verb: "act", text: "Fehlmengen per Sprache nachgefüllt." },
 					{ verb: "know", text: "Der richtige Karton für jede SKU." },
 				],
 				gain: "Weniger Fehlpicks, Versand am selben Tag gehalten.",
 				card: {
 					question: "Wie hilft Mandy im E-Commerce-Fulfillment?",
-					answer: "In der Peak-Saison treffen Hunderte neue Kommissionierer und Packer auf Artikel, die sie nie gesehen haben. Mandy antwortet direkt am Platz, bucht Nachschub, wenn ein Fach leer ist, und die Bestellung schafft trotzdem den Cut-off.",
+					answer: "In der Peak-Saison treffen Hunderte neue Kommissionierer auf Artikel, die sie nie gesehen haben, und jede Ausnahme heißt: Formular am Handgerät. Mandy nimmt die Ausnahme per Sprache auf, bucht Nachschub, wenn ein Fach leer ist, und die Bestellung schafft trotzdem den Cut-off.",
 					story: {
 						meaning: "Das Fach für die SKU mit Endung 4471 ist leer. Kannst du Nachschub buchen?",
 						answer: "Nachschub aus Reserve R-12 gebucht. Bis dahin aus 07-B picken.",
@@ -287,6 +289,7 @@ export const de: Messages = {
 					],
 					picker: [
 						{ ask: "Fach leer für SKU 4471.", answer: "Nachschub gebucht. Bis dahin aus 07-B picken." },
+						{ ask: "Behälter ist voll, Artikel noch in der Hand.", answer: "Neuer Behälter 2231 zugewiesen. Dort ablegen und scannen." },
 					],
 					driver: [
 						{ ask: "Wo werde ich für die 15-Uhr-Welle gebraucht?", answer: "Packplatz 4. Dort geht gerade jemand in die Pause." },
@@ -302,14 +305,14 @@ export const de: Messages = {
 				},
 				headline: ["Volle Regale, der richtige Ersatz,", "Frische pünktlich."],
 				does: [
-					{ verb: "act", text: "Lücke gemeldet, Nachschub bestellt." },
+					{ verb: "act", text: "Fehlartikel gemeldet, ohne Weg zum Terminal." },
 					{ verb: "know", text: "Ersatzregeln beim Picken." },
 					{ verb: "record", text: "Temperaturkontrollen mit Zeitstempel." },
 				],
 				gain: "Bessere Verfügbarkeit, weniger Abschriften.",
 				card: {
 					question: "Wie hilft Mandy im Lebensmittelhandel?",
-					answer: "Im Markt oder im Dark Store ist die Person, die die Lücke oder das zu warme Kühlregal bemerkt, oft erst seit ein paar Wochen da. Mandy gibt ihr gleich beim ersten Mal den richtigen Schritt und erfasst ihn sofort.",
+					answer: "Im Lebensmittellager oder im Markt heißt ein fehlender Artikel oder ein zu warmes Kühlregal meist: zurück ins Büro, manchmal mit jemandem, der übersetzt. Mandy gibt gleich beim ersten Mal den richtigen Schritt, in der Sprache der Person, und erfasst ihn sofort.",
 					story: {
 						meaning: "Das Kühlregal in Gang 3 zeigt 9 Grad. Ich erfasse es, wen rufe ich an?",
 						answer: "Erfasst um 09:12. Molkereiprodukte in die Kühlzelle hinten; die Marktleitung kommt.",
@@ -408,28 +411,29 @@ export const de: Messages = {
 				name: "Luftfahrt",
 				slug: "luftfahrt",
 				seo: {
-					title: "Sprach-KI für Flugzeugwartung und Bodenabfertigung",
-					description: "AMM- und IPC-Referenzen freihändig, strukturierte Schichtübergaben und Vorfälle auf dem Vorfeld in Sekunden gemeldet. Unterschreiben tut weiter der freigabeberechtigte Techniker.",
+					title: "Sprach-KI für Bodenabfertigung und Flugzeugwartung",
+					description: "Fahrer gerufen und beschädigte Koffer per Sprache gemeldet auf dem Vorfeld, AMM- und IPC-Referenzen und Übergaben im Hangar. Unterschreiben tut weiter der freigabeberechtigte Techniker.",
 				},
-				headline: ["Hände am Flugzeug,", "Übergaben im Protokoll."],
+				headline: ["Auf dem Vorfeld und im Hangar,", "nichts wartet aufs Büro."],
 				does: [
+					{ verb: "talk", text: "Fahrer für den vollen Container, ohne zweite App." },
+					{ verb: "record", text: "Beschädigte Koffer dort gemeldet, wo sie auffallen." },
 					{ verb: "know", text: "AMM- und IPC-Referenzen, freihändig." },
-					{ verb: "record", text: "Schichtübergaben, strukturiert." },
-					{ verb: "talk", text: "Vorfälle auf dem Vorfeld in Sekunden." },
 				],
-				gain: "Weniger Zeit für Papierkram und Übergaben.",
+				gain: "Umsteigegepäck im richtigen Flug, Taskcards im Protokoll.",
 				card: {
 					question: "Wie hilft Mandy in der Luftfahrt?",
-					answer: "Techniker sind knapp, und an der Schichtübergabe entstehen Fehler. Mandy findet die AMM- oder IPC-Referenz freihändig und nimmt eine strukturierte Übergabe per Sprache auf; auf dem Vorfeld ist ein Vorfall in Sekunden gemeldet, in der Sprache der Person. Unterschreiben tut weiter der freigabeberechtigte Techniker.",
+					answer: "Auf dem Vorfeld bleiben die Handschuhe an und das Handy weg, und trotzdem heißt einen Fahrer für den vollen Container rufen oder einen beschädigten Koffer melden: zweite App oder Weg ins Büro. Mandy nimmt beides per Sprache auf, in der Sprache der Person. Im Hangar findet Mandy die AMM- oder IPC-Referenz und nimmt die Übergabe auf; unterschreiben tut weiter der freigabeberechtigte Techniker.",
 					story: {
-						meaning: "IPC-Teilenummer für die Buchse am Drehmomentlenker des linken Hauptfahrwerks?",
-						answer: "IPC 32-11-41, Position 40. Zwei im Lager, Fach C.",
-						lands: "Referenz auf der Taskcard vermerkt",
+						meaning: "Der Container für den 14:20 nach Madrid ist voll. Ich brauche einen Fahrer.",
+						answer: "Fahrer angefordert. Schlepper 7 ist in 4 Minuten an deiner Position.",
+						lands: "Anforderung an die Vorfelddisposition",
 					},
-					result: "Mehr Zeit am Flugzeug.",
+					result: "Nichts wartet aufs Büro.",
 				},
 				voices: {
 					ramp: [
+						{ ask: "Beschädigter Koffer auf Band 3, Griff abgerissen.", answer: "Mit Foto und Anhängernummer erfasst. Der Gepäckservice hat es." },
 						{ ask: "Bandlader hat an Position 14 angestoßen, kleine Delle an der hinteren Frachttür.", answer: "Vorfall mit Foto erfasst. Wartung und Dienstleitung haben es." },
 					],
 					mechanic: [

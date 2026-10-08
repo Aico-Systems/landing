@@ -14,13 +14,13 @@ export interface Spoken {
 /** The exchange each vertical's card replays: the worker's words. */
 export const SPOKEN: Record<VerticalId, Spoken> = {
 	warehouse: { lang: "uk", text: "Клієнт пише подарункове пакування, але на етикетці немає коду. Що робити?" },
-	manufacturing: { lang: "pl", text: "Jaki moment dokręcania tylnych śrub ramy pomocniczej w wersji hybrydowej?" },
+	manufacturing: { lang: "sr", text: "Ovaj deo je oštećen. Šta da radim?" },
 	parcel: { lang: "ro", text: "Eticheta e ruptă, lipsește jumătate din codul poștal. Unde merge?" },
 	ecommerce: { lang: "bg", text: "Мястото за артикула, завършващ на 4471, е празно. Можеш ли да заявиш попълване?" },
 	grocery: { lang: "tr", text: "3. reyondaki dolap 9 derece gösteriyor. Kaydediyorum, kimi aramalıyım?" },
 	fashion: { lang: "vi", text: "Đường may hơi bị tuột, không còn mác. Bán lại hay tân trang?" },
 	pharma: { lang: "pl", text: "Rejestrator na tym pojemniku pokazuje 9,2 stopnia. Mam go dać do kwarantanny?" },
-	aviation: { lang: "es", text: "¿Número de pieza IPC del casquillo del brazo de torsión del tren principal izquierdo?" },
+	aviation: { lang: "es", text: "Este contenedor para el vuelo de las 14:20 a Madrid está lleno. Necesito un conductor." },
 };
 
 /** The message the card about Mandy follows round: said in Ukrainian, read
