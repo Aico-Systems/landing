@@ -18,7 +18,7 @@ export interface Mover {
 	object: THREE.Object3D;
 	/** The point a speech bubble hangs from, in the mover's own frame. */
 	head: THREE.Vector3;
-	/** Asking Mandy now: glove up and pulsing, still walking. */
+	/** Talking to Mandy now: glove up, still walking. */
 	talk(on: boolean): void;
 	update(dt: number): void;
 	recolour(p: Palette): void;
@@ -88,7 +88,7 @@ const HATS = ["person", "accent", "cartonLight"] as const;
  * A worker, as abstract as the scenes: a vest-coloured capsule, a head in
  * its hard hat, two stub legs, and the glove — one orange dot at the right
  * hand. Walking is a bob and a sway with the legs stepping; asking Mandy,
- * the glove comes up to the chest and pulses, and the walk goes on.
+ * the glove comes up to the chest, and the walk goes on.
  * About 2.3 m to the hat: drawn a little large, to read at the diorama's
  * distance.
  */
@@ -101,7 +101,6 @@ function worker(p: Palette, n: number) {
 		hat: new THREE.MeshLambertMaterial({ color: p[hat] }),
 		glove: new THREE.MeshLambertMaterial({ color: p.accent }),
 	};
-	const ring = new THREE.MeshBasicMaterial({ color: p.accent, transparent: true, opacity: 0, depthWrite: false });
 	const mesh = (geo: THREE.BufferGeometry, mat: THREE.Material, parent: THREE.Object3D, y = 0) => {
 		const m = new THREE.Mesh(geo, mat);
 		m.position.y = y;
@@ -124,9 +123,6 @@ function worker(p: Palette, n: number) {
 	mesh(new THREE.SphereGeometry(0.2, 14, 10), mats.head, torso, 1.18);
 	mesh(new THREE.SphereGeometry(0.23, 14, 8, 0, Math.PI * 2, 0, Math.PI / 2), mats.hat, torso, 1.22);
 	const glove = mesh(new THREE.SphereGeometry(0.11, 12, 8), mats.glove, torso);
-	const pulse = new THREE.Mesh(new THREE.RingGeometry(0.14, 0.18, 24), ring);
-	pulse.rotation.x = -Math.PI / 2;
-	glove.add(pulse);
 
 	/** Where the glove hangs, at the side, and where it is held, before the chest. */
 	const down = new THREE.Vector3(0.36, 0.2, 0.05);
@@ -134,7 +130,6 @@ function worker(p: Palette, n: number) {
 	glove.position.copy(down);
 	let phase = Math.random() * Math.PI * 2;
 	let lift = 0;
-	let beat = 0;
 	return {
 		group,
 		animate(dt: number, speed: number, talk: boolean) {
@@ -148,10 +143,6 @@ function worker(p: Palette, n: number) {
 			lift += ((talk ? 1 : 0) - lift) * (1 - Math.exp(-dt * 8));
 			glove.position.lerpVectors(down, up, lift);
 			glove.position.z += 0.06 * s * (1 - lift);
-			// the ring leaves the glove and fades, again and again, while they talk
-			beat = (beat + dt / 0.9) % 1;
-			pulse.scale.setScalar(1 + beat * 3);
-			ring.opacity = lift * (1 - beat) * 0.9;
 		},
 		recolour(next: Palette) {
 			mats.legs.color.copy(next.ink);
@@ -159,7 +150,6 @@ function worker(p: Palette, n: number) {
 			mats.head.color.copy(next.person);
 			mats.hat.color.copy(next[hat]);
 			mats.glove.color.copy(next.accent);
-			ring.color.copy(next.accent);
 		},
 	};
 }

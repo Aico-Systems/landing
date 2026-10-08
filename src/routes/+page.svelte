@@ -13,6 +13,8 @@
 	let active = $state(0);
 	let exchange = $state<Exchange | null>(null);
 	let answered = $state(false);
+	/** Who is speaking right now, the worker or Mandy: their bubble's wave moves. */
+	let voice = $state<"ask" | "answer" | null>(null);
 	const vertical = $derived(VERTICALS[active]);
 	/** The vertical whose words are up: they leave with its scene and the
 	 *  next one's arrive as its scene starts to build. */
@@ -21,7 +23,8 @@
 	/** How long one exchange stays up, and the pause before Mandy answers. */
 	const EXCHANGE_MS = 4200;
 	const ANSWER_MS = 1300;
-	/** How long the asker holds the glove up once the answer is in. */
+	/** How long Mandy speaks, and the asker holds the glove up, once the
+	 *  answer is in. */
 	const TALK_AFTER_MS = 1400;
 	/** After a scene stands, the beat before the first question. */
 	const FIRST_ASK_MS = 1000;
@@ -39,21 +42,34 @@
 		exchange = null;
 		speaker?.talk(false);
 		speaker = undefined;
+		voice = null;
 		const talkers = stage?.movers.filter((m) => m.actor.asks?.length) ?? [];
 		if (!talkers.length) return;
 		let turn = 0;
 		const next = () => {
 			speaker?.talk(false);
 			speaker = talkers[turn % talkers.length];
-			// asking: the glove comes up while they ask and hear the answer
+			// the glove comes up and the floor ripples round them while they
+			// ask and hear the answer
 			const asking = speaker;
 			asking.talk(true);
-			timers.push(setTimeout(() => asking.talk(false), ANSWER_MS + TALK_AFTER_MS));
+			voice = "ask";
+			timers.push(
+				setTimeout(() => {
+					asking.talk(false);
+					voice = null;
+				}, ANSWER_MS + TALK_AFTER_MS),
+			);
 			const asks = speaker.actor.asks!;
 			exchange = asks[Math.floor(turn / talkers.length) % asks.length];
 			answered = false;
 			turn++;
-			timers.push(setTimeout(() => (answered = true), ANSWER_MS));
+			timers.push(
+				setTimeout(() => {
+					answered = true;
+					voice = "answer";
+				}, ANSWER_MS),
+			);
 			timers.push(setTimeout(next, EXCHANGE_MS));
 		};
 		timers.push(setTimeout(next, FIRST_ASK_MS));
@@ -126,6 +142,7 @@
 						exchange = null;
 						speaker?.talk(false);
 						speaker = undefined;
+						voice = null;
 						shown = null;
 						stage?.show(VERTICALS[i]);
 					}, SETTLE_MS);
@@ -189,13 +206,20 @@
 	}}
 ></canvas>
 
+<!-- a voice: four bars that move while it speaks and lie flat once it is done -->
+{#snippet wave(live: boolean)}
+	<span class="wave" class:live aria-hidden="true">
+		{#each [0.9, 1.15, 0.75, 1] as d, b (b)}<i style="--d: {d}s; --b: {b}"></i>{/each}
+	</span>
+{/snippet}
+
 <div class="bubble" bind:this={bubble} aria-live="polite">
 	{#if exchange}
 		{#key exchange}
 			<div class="talk">
-			{#if answered}<p class="answer">{exchange.answer}</p>{/if}
+			{#if answered}<p class="answer">{@render wave(voice === "answer")}{exchange.answer}</p>{/if}
 			<p class="ask">
-				{exchange.ask}
+				{@render wave(voice === "ask")}{exchange.ask}
 				{#if exchange.lang}<span class="lang">Asked in {exchange.lang}</span>{/if}
 			</p>
 			</div>
@@ -520,6 +544,43 @@
 		color: var(--ink);
 		border: 1px solid var(--glass-edge);
 	}
+	/* as tall as one line and set at its top, so the bars grow from the
+	   middle of the first line of text */
+	.wave {
+		display: inline-flex;
+		align-items: center;
+		gap: 2px;
+		height: 1.3em; /* the bubble's line-height, where lh is unknown */
+		height: 1lh;
+		margin-right: 0.5em;
+		vertical-align: top;
+	}
+	.wave i {
+		width: 2px;
+		height: 2px;
+		border-radius: 1px;
+		background: currentColor;
+		opacity: 0.55;
+		transition:
+			height 0.3s,
+			opacity 0.3s;
+	}
+	.wave.live i {
+		opacity: 1;
+		animation: voice var(--d) ease-in-out infinite alternate;
+		animation-delay: calc(var(--b) * -0.21s);
+	}
+	@keyframes voice {
+		from {
+			height: 0.2em;
+		}
+		to {
+			height: 0.8em;
+		}
+	}
+	.ask .wave {
+		color: var(--accent);
+	}
 	.lang {
 		display: block;
 		margin-top: 0.2rem;
@@ -538,6 +599,7 @@
 	}
 	@media (prefers-reduced-motion: reduce) {
 		.bubble p,
+		.wave.live i,
 		.ch,
 		.headline,
 		.vertical li,
