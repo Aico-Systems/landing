@@ -30,7 +30,7 @@ interface Piece {
 }
 
 /** Building: the floor, and with it the wave of racking down the aisle. */
-const FLOOR_S = 0.5;
+const FLOOR_S = 0.38;
 const RACKS_AT = 0.12;
 const WAVE_S = 0.8;
 const CARTON_LAG = 0.12;
@@ -71,7 +71,7 @@ export class Assembly {
 			);
 
 		const buildEnd = RACKS_AT + WAVE_S + CARTON_LAG + 0.28;
-		add(slab, () => 0, FLOOR_S, 0, -16, 0);
+		add(slab, () => 0, FLOOR_S, 0, -30, 0);
 		// the walls take the whole build to come in, so they are seen arriving
 		add(wallX, () => 0.05, buildEnd - 0.05, -50, 0, 0);
 		add(wallY, () => 0.1, buildEnd - 0.1, 0, 0, -50);
