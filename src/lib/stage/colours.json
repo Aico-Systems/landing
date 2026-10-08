@@ -1,0 +1,48 @@
+{
+	"//": "The scenes' colours: palette slots to blueprint tokens per theme (person: the workers' heads and reflective bands, the one slot that stands off the floor in both themes), and the film's material roles (FLAT_<role>) to slots. Read by palette.ts (the page) and tools/blender/preview.py (Blender), so a scene previews in the colours it ships in.",
+	"themes": {
+		"light": {
+			"paper": "--aico-grey-100",
+			"floor": "--aico-grey-200",
+			"wall": "--aico-grey-50",
+			"ink": "--aico-grey-500",
+			"steel": "--aico-grey-500",
+			"steelDeep": "--aico-grey-600",
+			"cartonDeep": "--aico-orange-700",
+			"carton": "--aico-orange-500",
+			"cartonLight": "--aico-orange-300",
+			"lane": "--aico-orange-300",
+			"vest": "--aico-orange-400",
+			"accent": "--aico-orange-600",
+			"person": "--aico-grey-800"
+		},
+		"dark": {
+			"paper": "--aico-grey-950",
+			"floor": "--aico-grey-850",
+			"wall": "--aico-grey-800",
+			"ink": "--aico-grey-600",
+			"steel": "--aico-grey-600",
+			"steelDeep": "--aico-grey-700",
+			"cartonDeep": "--aico-orange-900",
+			"carton": "--aico-orange-700",
+			"cartonLight": "--aico-orange-500",
+			"lane": "--aico-orange-800",
+			"vest": "--aico-orange-400",
+			"accent": "--aico-orange-500",
+			"person": "--aico-grey-200"
+		}
+	},
+	"roles": {
+		"paper": "wall",
+		"paper_dk": "floor",
+		"ink": "ink",
+		"steel": "steel",
+		"steel_dk": "steelDeep",
+		"brown": "cartonDeep",
+		"orange": "carton",
+		"orange_lt": "cartonLight",
+		"hivis": "lane",
+		"white": "wall",
+		"blue": "steelDeep"
+	}
+}

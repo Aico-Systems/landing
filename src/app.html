@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content="Mandy answers your shop floor: press the glove, ask, done." />
+		<link rel="icon" href="%sveltekit.assets%/favicon.svg" />
+		<title>Mandy</title>
+		<script>
+			// blueprint's dark theme is a class; follow the system's before first paint
+			const dark = matchMedia("(prefers-color-scheme: dark)");
+			const apply = () => document.documentElement.classList.toggle("aico-dark", dark.matches);
+			apply();
+			dark.addEventListener("change", apply);
+		</script>
+		%sveltekit.head%
+	</head>
+	<body>
+		<div style="display: contents">%sveltekit.body%</div>
+	</body>
+</html>

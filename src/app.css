@@ -1,186 +1,49 @@
-@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,500&display=swap');
+@import "@aico/blueprint/blueprint.css";
+@import "@fontsource-variable/archivo/standard.css";
 
 :root {
-  font-family: 'Sora', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  line-height: 1.6;
-  font-weight: 400;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
-
-  --blueprint-content-max-width: 1200px;
-  --blueprint-radius-xs: 4px;
-  --blueprint-radius-sm: 6px;
-  --blueprint-radius-md: 10px;
-  --blueprint-radius-lg: 16px;
-  --blueprint-radius-xl: 24px;
-  --control-height-sm: 30px;
-  --control-height-md: 36px;
-  --control-height-lg: 44px;
-  --transition-duration-fast: 0.18s;
-  --transition-duration: 0.28s;
-  --transition-easing: cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-easing-smooth: cubic-bezier(0.215, 0.61, 0.355, 1);
-  --transition-colors:
-    color var(--transition-duration-fast) var(--transition-easing),
-    background-color var(--transition-duration-fast) var(--transition-easing),
-    border-color var(--transition-duration-fast) var(--transition-easing);
-  --transition-button:
-    var(--transition-colors),
-    box-shadow var(--transition-duration-fast) var(--transition-easing),
-    transform 0.2s var(--transition-easing-smooth);
-  --font-ui: 'Sora', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  --font-editorial: 'Source Serif 4', Georgia, 'Times New Roman', serif;
-
-  /* Light theme (default) */
-  --text-primary: #0F172A;
-  --text-secondary: #475569;
-  --text-tertiary: #64748B;
-  --bg-primary: #F6F8FB;
-  --bg-secondary: #EEF2F7;
-  --bg-tertiary: #E2E8F0;
-  --bg-secondary-rgb: 241, 245, 249;
-  --border-color: rgba(15, 23, 42, 0.08);
-  --border-subtle: rgba(15, 23, 42, 0.08);
-  --border-strong: rgba(15, 23, 42, 0.14);
-  --shadow-color: rgba(15, 23, 42, 0.04);
-  --panel-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
-  --panel-shadow-lg: 0 6px 18px rgba(15, 23, 42, 0.08);
-  --nav-bg: rgba(246, 248, 251, 0.86);
-  --card-bg: #ffffff;
-  --hover-bg: rgba(15, 23, 42, 0.05);
-  --surface-elevated: rgba(255, 255, 255, 0.92);
-  --surface-elevated-strong: rgba(255, 255, 255, 0.97);
-  --surface-muted: rgba(15, 23, 42, 0.04);
-  --surface-overlay: rgba(255, 255, 255, 0.88);
-  --surface-overlay-strong: rgba(255, 255, 255, 0.96);
-  --accent-primary: #145B7A;
-  --accent-primary-strong: #114d67;
-  --accent-soft: rgba(20, 91, 122, 0.08);
-  --accent-soft-strong: rgba(20, 91, 122, 0.14);
-  --accent-border: rgba(20, 91, 122, 0.14);
-  --button-primary-bg: #145B7A;
-  --button-primary-bg-hover: #114d67;
-  --button-primary-text: #FFFFFF;
-  --button-secondary-bg: rgba(255, 255, 255, 0.92);
-  --button-secondary-bg-hover: rgba(255, 255, 255, 0.98);
-  --button-secondary-text: #0F172A;
-  --button-secondary-border: rgba(15, 23, 42, 0.12);
-  --button-secondary-border-hover: rgba(20, 91, 122, 0.18);
-  --gradient-start: #0B1226;
-  --gradient-end: #145B7A;
+	--font-display: "Archivo Variable", sans-serif;
+	--paper: var(--aico-grey-100);
+	--ink: var(--aico-grey-900);
+	--ink-soft: var(--aico-grey-500);
+	--accent: var(--aico-orange-600);
 }
-
-/* Dark theme - brand midnight base */
-[data-theme="dark"] {
-  --text-primary: #F8FAFC;
-  --text-secondary: #CBD5E1;
-  --text-tertiary: #94A3B8;
-  --bg-primary: #0B1226;
-  --bg-secondary: #0F172A;
-  --bg-tertiary: #1E293B;
-  --bg-secondary-rgb: 15, 23, 42;
-  --border-color: rgba(148, 163, 184, 0.16);
-  --border-subtle: rgba(148, 163, 184, 0.16);
-  --border-strong: rgba(148, 163, 184, 0.24);
-  --shadow-color: rgba(0, 0, 0, 0.5);
-  --panel-shadow: 0 1px 2px rgba(2, 6, 23, 0.18);
-  --panel-shadow-lg: 0 8px 20px rgba(2, 6, 23, 0.22);
-  --nav-bg: rgba(11, 18, 38, 0.9);
-  --card-bg: #0F172A;
-  --hover-bg: rgba(255, 255, 255, 0.06);
-  --surface-elevated: rgba(15, 23, 42, 0.9);
-  --surface-elevated-strong: rgba(15, 23, 42, 0.96);
-  --surface-muted: rgba(255, 255, 255, 0.05);
-  --surface-overlay: rgba(11, 18, 38, 0.88);
-  --surface-overlay-strong: rgba(11, 18, 38, 0.94);
-  --accent-primary: #5EEAD4;
-  --accent-primary-strong: #A7F3D0;
-  --accent-soft: rgba(167, 243, 208, 0.08);
-  --accent-soft-strong: rgba(167, 243, 208, 0.14);
-  --accent-border: rgba(167, 243, 208, 0.16);
-  --button-primary-bg: #5EEAD4;
-  --button-primary-bg-hover: #7CEFD9;
-  --button-primary-text: #06261F;
-  --button-secondary-bg: rgba(15, 23, 42, 0.92);
-  --button-secondary-bg-hover: rgba(30, 41, 59, 0.96);
-  --button-secondary-text: #F8FAFC;
-  --button-secondary-border: rgba(148, 163, 184, 0.18);
-  --button-secondary-border-hover: rgba(167, 243, 208, 0.18);
+:root.aico-dark {
+	--paper: var(--aico-grey-900);
+	--ink: var(--aico-grey-50);
+	--ink-soft: var(--aico-grey-400);
+	--accent: var(--aico-orange-500);
 }
-
-:root {
-  color: var(--text-primary);
-  background-color: var(--bg-primary);
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+html,
 body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-  overflow-x: clip;
+	margin: 0;
+	background: var(--paper);
+	color: var(--ink);
+	font-family: var(--font-display);
 }
 
-#app {
-  width: 100%;
-  overflow-x: clip;
+/* No scrollbars anywhere on the page; scrolling itself (wheel, touch,
+   keys, scroll snap) is untouched. Every engine needs its own switch:
+   - scrollbar-width: Firefox, and Chrome/Edge 121+
+   - ::-webkit-scrollbar: Safari (desktop and iOS) and older Chromium
+   - -ms-overflow-style: legacy Edge and IE
+   scrollbar-gutter: auto keeps no space reserved where the bar was. */
+*,
+*::before,
+*::after {
+	scrollbar-width: none;
+	-ms-overflow-style: none;
 }
-
-/* Smooth scrolling */
 html {
-  scroll-behavior: smooth;
+	scrollbar-gutter: auto;
 }
-
-/* Selection color */
-::selection {
-  background-color: rgba(167, 243, 208, 0.2);
-  color: #0F172A;
-}
-
-[data-theme="dark"] ::selection {
-  background-color: rgba(167, 243, 208, 0.3);
-  color: #F8FAFC;
-}
-
-.blur-layer {
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  backdrop-filter: blur(6px);
-  pointer-events: none;
-  background: rgba(255, 255, 255, 0.015);
-}
-
-[data-theme="dark"] .blur-layer {
-  backdrop-filter: blur(7px);
-  background: rgba(0, 0, 0, 0.18);
-}
-
-:focus-visible {
-  outline: 2px solid rgba(94, 234, 212, 0.7);
-  outline-offset: 2px;
-}
-
-[data-theme="dark"] :focus-visible {
-  outline-color: rgba(94, 234, 212, 0.7);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+*::-webkit-scrollbar,
+*::-webkit-scrollbar-track,
+*::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-corner {
+	display: none;
+	width: 0;
+	height: 0;
+	background: transparent;
+	-webkit-appearance: none;
 }
