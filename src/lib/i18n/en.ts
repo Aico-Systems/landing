@@ -3,19 +3,19 @@ import type { Messages } from "./types";
 export const en: Messages = {
 	site: {
 		brand: "Mandy",
-		tagline: "Press once and ask, in your own language.",
+		tagline: "Ask in any language. Mandy answers and gets it done.",
 		demo: "Book a demo",
 		updated: (date) => `Updated ${date}`,
 		seo: {
-			title: "Voice AI assistant for shop floor workers",
+			title: "Voice AI for frontline teams",
 			description:
-				"Mandy is a voice assistant on the ProGlove MAI glove. Warehouse and factory workers press once, ask in their own language and get answers from your SOPs and systems.",
+				"Mandy is a voice assistant for frontline teams. Workers ask in their own language on whatever they carry; Mandy answers from your documents and does the work in your systems.",
 		},
 		language: "English",
 	},
 	gateway: {
 		intro:
-			"Mandy is a voice assistant for warehouse and factory workers. Workers press the MAI glove once, ask in their own language, and Mandy answers from the site's own documents and systems.",
+			"Mandy is a voice assistant for frontline teams. Workers ask in their own language, on a glove scanner, a phone, a watch or a call, and Mandy answers from the site's documents and does the work in its systems.",
 		enter: "Read on in English",
 	},
 	home: {
@@ -29,7 +29,7 @@ export const en: Messages = {
 		verbs: { know: "Know", act: "Act", talk: "Talk", record: "Record", learn: "Learn" },
 		mandy: {
 			question: "What is Mandy?",
-			answer: "Mandy is a voice assistant for warehouse and factory workers. Press the glove once, ask in any language, and get the answer from your own SOPs and systems.",
+			answer: "Mandy is a voice assistant for frontline teams in warehouses, plants, stores and hangars. Workers ask in their own language, on whatever they carry, and Mandy answers from your documents and gets the work done in your systems.",
 			why: {
 				heading: "Why do exceptions cost so much?",
 				figure: "3–15",
@@ -38,26 +38,27 @@ export const en: Messages = {
 			},
 			flow: {
 				heading: "Which languages does Mandy speak?",
-				glove: "On the glove",
-				teams: "In Teams",
+				glove: ["On the glove", "On the phone", "On the watch"],
+				teams: ["In Teams", "In Slack", "In WhatsApp", "By SMS"],
 				bridge: "Translated, with scan, place and photo",
-				caption: "The worker speaks Ukrainian, the team lead reads German, and neither has to switch.",
+				caption: "The worker speaks Ukrainian, the team lead reads German in the app they already use, and neither has to switch.",
 			},
 			verbs: {
 				heading: "What can Mandy do?",
 				items: {
-					know: { text: "Answers from your SOPs and systems, and says when it doesn't know.", says: "How do I pack the returns for route 12?" },
-					act: { text: "Books refills, stock moves and tickets, and reads each one back first.", says: "Refill B14, two boxes." },
-					talk: { text: "Gets the message to the right person, translated.", says: "Kitting needs cable harnesses, three left." },
+					know: { text: "Answers from any document you give it, from work instructions to client specs, and says when it doesn't know.", says: "How do I pack the returns for route 12?" },
+					act: { text: "Books refills, updates records, opens tickets and runs checklists, reading each one back first.", says: "Refill B14, two boxes." },
+					talk: { text: "Reaches the right person in their app, or calls them when it is urgent.", says: "Kitting needs cable harnesses, three left." },
 					record: { text: "Logs tasks, photos and near misses with time and place.", says: "Starting decant, aisle 7." },
 					learn: { text: "Coaches new staff and shows where the floor gets stuck.", says: "First day here. Where do the empty totes go?" },
 				},
 			},
 			systems: {
-				heading: "What does it connect to?",
-				text: "Mandy reads from what you already have and writes back to it. There is nothing new to buy.",
+				heading: "Where does Mandy work?",
+				text: "People reach Mandy on whatever they carry. Mandy works in what you already run, and there is nothing new to buy.",
+				devices: ["ProGlove MAI glove", "Android phone or scanner", "Smartwatch", "Phone call", "Browser"],
 				groups: [
-					{ name: "Your documents", items: "SharePoint, SOPs, manuals, packing rules" },
+					{ name: "Your documents", items: "Work instructions, manuals, specs, spreadsheets, SharePoint" },
 					{ name: "Your systems", items: "SAP, WMS, ServiceNow, Jira, Zendesk" },
 					{ name: "Your team", items: "Teams, Slack, WhatsApp, SMS, a phone call" },
 				],
@@ -87,7 +88,7 @@ export const en: Messages = {
 				week: "Week",
 				phases: [
 					{ name: "Scope", from: 0, to: 0, what: "One use case, 5 to 12 workers" },
-					{ name: "Setup", from: 1, to: 1, what: "Your SOPs loaded, systems connected" },
+					{ name: "Setup", from: 1, to: 1, what: "Your documents loaded, systems connected" },
 					{ name: "Live", from: 2, to: 13, what: "Your team uses Mandy every day" },
 					{ name: "Decide", from: 14, to: 14, what: "Time saved, measured" },
 				],

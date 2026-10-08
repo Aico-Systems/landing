@@ -1,24 +1,38 @@
 <script lang="ts">
+	import { onMount } from "svelte";
 	import Wave from "$lib/Wave.svelte";
 	import { m } from "$lib/i18n/index.svelte";
 	import type { FLOW_SPOKEN } from "$lib/i18n/spoken";
 
 	/**
 	 * One message on its way round, as the two chats it really is: the
-	 * worker's thread on the glove (Ukrainian), the team lead's in Teams
-	 * (German), Mandy between them. It plays once as the card opens: the
+	 * worker's thread on their device (Ukrainian), the team lead's in their
+	 * app (German), Mandy between them. It plays once as the card opens: the
 	 * worker speaks, the message crosses and lands in Teams with scan,
 	 * place and photo, the lead taps a reply, and it crosses back.
 	 */
 	let {
 		words,
 		spoken,
-	}: { words: { glove: string; teams: string; bridge: string; caption: string }; spoken: typeof FLOW_SPOKEN } = $props();
+	}: { words: { glove: string[]; teams: string[]; bridge: string; caption: string }; spoken: typeof FLOW_SPOKEN } = $props();
+
+	// the windows' titles turn through the options (a device on the one
+	// side, an app on the other): the example is one of many
+	let turn = $state(0);
+	onMount(() => {
+		if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+		const t = setInterval(() => turn++, 2600);
+		return () => clearInterval(t);
+	});
 </script>
 
 <figure class="chat">
 	<div class="window glove">
-		<header><span class="dot"></span>{words.glove}<span class="lang">{spoken.ask.lang}</span></header>
+		<header>
+			<span class="dot"></span>
+			{#key turn}<span class="title">{words.glove[turn % words.glove.length]}</span>{/key}
+			<span class="lang">{spoken.ask.lang}</span>
+		</header>
 		<div class="thread">
 			<p class="out s1" lang={spoken.ask.lang}><Wave live />{spoken.ask.text}</p>
 			<p class="in s4" lang={spoken.reply.lang}><Wave live />{spoken.reply.text}</p>
@@ -32,7 +46,11 @@
 	</div>
 
 	<div class="window teams">
-		<header><span class="dot"></span>{words.teams}<span class="lang">{spoken.read.lang}</span></header>
+		<header>
+			<span class="dot"></span>
+			{#key turn}<span class="title">{words.teams[turn % words.teams.length]}</span>{/key}
+			<span class="lang">{spoken.read.lang}</span>
+		</header>
 		<div class="thread">
 			<div class="in card s2">
 				<span class="from"><b>{m().site.brand}</b></span>
@@ -70,6 +88,15 @@
 		font-size: 0.78rem;
 		font-weight: 600;
 		color: var(--ink-soft);
+	}
+	.title {
+		animation: title 0.35s ease-out both;
+	}
+	@keyframes title {
+		from {
+			opacity: 0;
+			translate: 0 0.3rem;
+		}
 	}
 	.dot {
 		width: 0.45rem;

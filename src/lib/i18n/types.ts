@@ -102,13 +102,15 @@ export interface AboutWords {
 	answer: string;
 	/** Each part under a heading phrased as the question a reader has. */
 	why: { heading: string; figure: string; unit: string; text: string };
-	/** One message on its way round: the worker's thread on the glove, the
-	 *  team lead's in Teams, Mandy between them. */
-	flow: { heading: string; glove: string; teams: string; bridge: string; caption: string };
+	/** One message on its way round: the worker's thread on a device, the
+	 *  team lead's in their app, Mandy between them. Each window's title
+	 *  cycles through the options: devices for the one, apps for the other. */
+	flow: { heading: string; glove: string[]; teams: string[]; bridge: string; caption: string };
 	/** The five verbs: what each covers, and something a worker says. */
 	verbs: { heading: string; items: Record<Verb, { text: string; says: string }> };
-	/** What Mandy reads and writes, as the diagram's three boxes. */
-	systems: { heading: string; text: string; groups: { name: string; items: string }[] };
+	/** How people reach Mandy (the devices along the diagram's top) and what
+	 *  it works with (its three boxes). */
+	systems: { heading: string; text: string; devices: string[]; groups: { name: string; items: string }[] };
 	/** Everything else it can connect to ([count]: published pieces). */
 	integrations: {
 		heading: string;

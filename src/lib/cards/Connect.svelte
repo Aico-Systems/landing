@@ -2,28 +2,32 @@
 	import { m } from "$lib/i18n/index.svelte";
 
 	/**
-	 * What Mandy is wired to, drawn as a board: Mandy the chip, traces down
-	 * to three boxes (your documents, your systems, your team), and signals
-	 * running along the traces while the card is open.
+	 * Where Mandy works, drawn as a board: the devices people reach it on
+	 * along the top, Mandy the chip in the middle, traces down to three
+	 * boxes (your documents, your systems, your team). Signals run in from
+	 * the devices and out to the boxes while the card is open.
 	 */
-	let { groups }: { groups: { name: string; items: string }[] } = $props();
+	let { devices, groups }: { devices: string[]; groups: { name: string; items: string }[] } = $props();
 
-	/** Traces from the chip's pins to each box, and two that run off the board. */
-	const TO_BOXES = ["M272 74 V112 H100 V196", "M300 74 V196", "M328 74 V112 H500 V196"];
-	const OFF_BOARD = ["M234 34 H150 V14 H40", "M366 52 H452 V22 H560"];
+	/** Device x positions across the top (five, evenly), the box centres below. */
+	const IN = [60, 180, 300, 420, 540].map((x, i) => `M${x} 0 V36 H${264 + i * 18} V82`);
+	const OUT = ["M272 134 V172 H100 V250", "M300 134 V250", "M328 134 V172 H500 V250"];
 </script>
 
 <div class="board">
-	<svg viewBox="0 0 600 196" aria-hidden="true">
-		{#each [...TO_BOXES, ...OFF_BOARD] as d (d)}<path class="trace" {d} />{/each}
-		{#each TO_BOXES as d, i (d)}<path class="signal" {d} style="--i: {i}" />{/each}
-		<circle cx="40" cy="14" r="3" /><circle cx="560" cy="22" r="3" />
+	<ul class="devices">
+		{#each devices as d (d)}<li>{d}</li>{/each}
+	</ul>
+	<svg viewBox="0 0 600 250" aria-hidden="true">
+		{#each [...IN, ...OUT] as d (d)}<path class="trace" {d} />{/each}
+		{#each IN as d, i (d)}<path class="signal" {d} style="--i: {i}" />{/each}
+		{#each OUT as d, i (d)}<path class="signal" {d} style="--i: {i + 2.5}" />{/each}
 		{#each [0, 1, 2, 3, 4, 5] as k (k)}
-			<rect class="pin" x={252 + k * 18} y="14" width="6" height="8" />
-			<rect class="pin" x={252 + k * 18} y="70" width="6" height="8" />
+			<rect class="pin" x={252 + k * 18} y="74" width="6" height="8" />
+			<rect class="pin" x={252 + k * 18} y="130" width="6" height="8" />
 		{/each}
-		<rect class="chip" x="234" y="20" width="132" height="52" rx="8" />
-		<text x="300" y="52">{m().site.brand}</text>
+		<rect class="chip" x="234" y="80" width="132" height="52" rx="8" />
+		<text x="300" y="112">{m().site.brand}</text>
 	</svg>
 	<ul>
 		{#each groups as g (g.name)}
@@ -49,9 +53,6 @@
 		fill: none;
 		stroke: color-mix(in srgb, var(--ink) 22%, transparent);
 		stroke-width: 1.2;
-	}
-	circle {
-		fill: var(--ink-soft);
 	}
 	/* a signal: a short orange dash travelling down a trace, one after
 	   another, only while the card is open */
@@ -97,6 +98,21 @@
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 		gap: 0.75rem;
 	}
+	/* the devices: small plates along the top edge, one per trace */
+	ul.devices {
+		grid-template-columns: repeat(5, minmax(0, 1fr));
+		gap: 0.5rem;
+	}
+	.devices li {
+		padding: 0.45rem 0.4rem;
+		border-radius: 0.5rem;
+		background: none;
+		text-align: center;
+		font-size: 0.78rem;
+		font-weight: 600;
+		line-height: 1.25;
+		color: var(--ink);
+	}
 	li {
 		display: grid;
 		gap: 0.3rem;
@@ -119,7 +135,8 @@
 		svg {
 			display: none;
 		}
-		ul {
+		ul,
+		ul.devices {
 			grid-template-columns: 1fr;
 		}
 	}

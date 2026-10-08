@@ -3,19 +3,19 @@ import type { Messages } from "./types";
 export const de: Messages = {
 	site: {
 		brand: "Mandy",
-		tagline: "Einmal drücken und fragen, in der eigenen Sprache.",
+		tagline: "Fragen in jeder Sprache. Mandy antwortet und erledigt es.",
 		demo: "Demo vereinbaren",
 		updated: (date) => `Stand: ${date}`,
 		seo: {
-			title: "KI-Sprachassistent für die Fläche",
+			title: "Sprach-KI für die Fläche",
 			description:
-				"Mandy ist ein Sprachassistent auf dem ProGlove MAI Handschuh. Mitarbeitende in Lager und Produktion fragen in ihrer Sprache und bekommen Antworten aus Ihren SOPs und Systemen.",
+				"Mandy ist ein Sprachassistent für Teams auf der Fläche. Gefragt wird in der eigenen Sprache auf jedem Gerät; Mandy antwortet aus Ihren Dokumenten und erledigt die Arbeit in Ihren Systemen.",
 		},
 		language: "Deutsch",
 	},
 	gateway: {
 		intro:
-			"Mandy ist ein Sprachassistent für Mitarbeitende in Lager und Produktion. Sie drücken einmal auf den MAI Handschuh, fragen in ihrer Sprache, und Mandy antwortet aus den Dokumenten und Systemen des Standorts.",
+			"Mandy ist ein Sprachassistent für Teams auf der Fläche. Gefragt wird in der eigenen Sprache, am Handschuh-Scanner, Smartphone, an der Uhr oder per Anruf, und Mandy antwortet aus den Dokumenten des Standorts und erledigt die Arbeit in seinen Systemen.",
 		enter: "Weiter auf Deutsch",
 	},
 	home: {
@@ -29,7 +29,7 @@ export const de: Messages = {
 		verbs: { know: "Wissen", act: "Handeln", talk: "Abstimmen", record: "Erfassen", learn: "Lernen" },
 		mandy: {
 			question: "Was ist Mandy?",
-			answer: "Mandy ist ein Sprachassistent f\u00fcr Lager und Produktion. Einmal auf den Handschuh dr\u00fccken, in der eigenen Sprache fragen, und die Antwort kommt aus Ihren SOPs und Systemen.",
+			answer: "Mandy ist ein Sprachassistent für Teams in Lager, Werk, Markt und Hangar. Gefragt wird in der eigenen Sprache, auf jedem Gerät, das gerade zur Hand ist, und Mandy antwortet aus Ihren Dokumenten und erledigt die Arbeit in Ihren Systemen.",
 			why: {
 				heading: "Warum sind Ausnahmen so teuer?",
 				figure: "3–15",
@@ -38,26 +38,27 @@ export const de: Messages = {
 			},
 			flow: {
 				heading: "Welche Sprachen spricht Mandy?",
-				glove: "Am Handschuh",
-				teams: "In Teams",
+				glove: ["Am Handschuh", "Am Smartphone", "An der Uhr"],
+				teams: ["In Teams", "In Slack", "In WhatsApp", "Per SMS"],
 				bridge: "Übersetzt, mit Scan, Ort und Foto",
-				caption: "Der Mitarbeiter spricht Ukrainisch, die Teamleitung liest Deutsch, und niemand muss umdenken.",
+				caption: "Der Mitarbeiter spricht Ukrainisch, die Teamleitung liest Deutsch in der App, die sie schon nutzt, und niemand muss umdenken.",
 			},
 			verbs: {
 				heading: "Was kann Mandy?",
 				items: {
-					know: { text: "Antwortet aus Ihren SOPs und Systemen und sagt, wenn sie etwas nicht wei\u00df.", says: "Wie packe ich die Retouren f\u00fcr Tour 12?" },
-					act: { text: "Bucht Nachschub, Umlagerungen und Tickets und liest jede Buchung vorher vor.", says: "Nachschub f\u00fcr B14, zwei Kartons." },
-					talk: { text: "Bringt die Nachricht \u00fcbersetzt zur richtigen Person.", says: "Kitting braucht Kabelb\u00e4ume, noch drei da." },
-					record: { text: "Erfasst Aufgaben, Fotos und Beinahe-Unf\u00e4lle mit Zeit und Ort.", says: "Fange mit dem Umpacken in Gang 7 an." },
-					learn: { text: "Arbeitet neue Leute ein und zeigt, wo es auf der Fl\u00e4che hakt.", says: "Erster Tag. Wohin kommen die leeren Beh\u00e4lter?" },
+					know: { text: "Antwortet aus jedem Dokument, das Sie ihr geben, von Arbeitsanweisungen bis Kundenvorgaben, und sagt, wenn sie etwas nicht weiß.", says: "Wie packe ich die Retouren für Tour 12?" },
+					act: { text: "Bucht Nachschub, pflegt Daten, legt Tickets an und führt durch Checklisten, jede Buchung vorher vorgelesen.", says: "Nachschub für B14, zwei Kartons." },
+					talk: { text: "Erreicht die richtige Person in ihrer App, oder ruft an, wenn es dringend ist.", says: "Kitting braucht Kabelbäume, noch drei da." },
+					record: { text: "Erfasst Aufgaben, Fotos und Beinahe-Unfälle mit Zeit und Ort.", says: "Fange mit dem Umpacken in Gang 7 an." },
+					learn: { text: "Arbeitet neue Leute ein und zeigt, wo es auf der Fläche hakt.", says: "Erster Tag. Wohin kommen die leeren Behälter?" },
 				},
 			},
 			systems: {
-				heading: "Mit welchen Systemen arbeitet Mandy?",
-				text: "Mandy liest aus dem, was Sie schon haben, und schreibt dorthin zur\u00fcck. Neu kaufen m\u00fcssen Sie nichts.",
+				heading: "Wo arbeitet Mandy?",
+				text: "Erreichbar ist Mandy auf dem, was die Leute ohnehin dabeihaben. Gearbeitet wird in dem, was Sie schon nutzen, und neu kaufen müssen Sie nichts.",
+				devices: ["ProGlove MAI Handschuh", "Android-Smartphone oder Scanner", "Smartwatch", "Telefonanruf", "Browser"],
 				groups: [
-					{ name: "Ihre Dokumente", items: "SharePoint, SOPs, Handb\u00fccher, Packvorgaben" },
+					{ name: "Ihre Dokumente", items: "Arbeitsanweisungen, Handbücher, Vorgaben, Tabellen, SharePoint" },
 					{ name: "Ihre Systeme", items: "SAP, WMS, ServiceNow, Jira, Zendesk" },
 					{ name: "Ihr Team", items: "Teams, Slack, WhatsApp, SMS, ein Anruf" },
 				],
@@ -87,18 +88,18 @@ export const de: Messages = {
 				week: "Woche",
 				phases: [
 					{ name: "Planen", from: 0, to: 0, what: "Ein Anwendungsfall, 5 bis 12 Leute" },
-					{ name: "Einrichten", from: 1, to: 1, what: "SOPs geladen, Systeme angebunden" },
+					{ name: "Einrichten", from: 1, to: 1, what: "Dokumente geladen, Systeme angebunden" },
 					{ name: "Im Einsatz", from: 2, to: 13, what: "Ihr Team nutzt Mandy jeden Tag" },
 					{ name: "Entscheiden", from: 14, to: 14, what: "Eingesparte Zeit, gemessen" },
 				],
 			},
 			faq: {
-				heading: "H\u00e4ufige Fragen",
+				heading: "Häufige Fragen",
 				items: [
-					{ q: "Funktioniert Mandy ohne Internet?", a: "Ja. Mandy l\u00e4uft auf Ihren eigenen Servern oder komplett offline." },
-					{ q: "Ist Sprache immer die richtige Bedienung?", a: "Nein. H\u00e4ufige Anfragen werden zu Ein-Tipp-Tasten auf dem Handschuh." },
+					{ q: "Funktioniert Mandy ohne Internet?", a: "Ja. Mandy läuft auf Ihren eigenen Servern oder komplett offline." },
+					{ q: "Ist Sprache immer die richtige Bedienung?", a: "Nein. Häufige Anfragen werden zu Ein-Tipp-Tasten auf dem Handschuh." },
 					{ q: "Was ist der Unterschied zu Pick-by-Voice?", a: "Pick-by-Voice folgt einem festen Ablauf. Mandy beantwortet offene Fragen und bucht in Ihren Systemen." },
-					{ q: "Was, wenn Mandy etwas nicht wei\u00df?", a: "Sie sagt es und holt einen Menschen dazu, wenn das Standardvorgehen den Fall nicht abdeckt." },
+					{ q: "Was, wenn Mandy etwas nicht weiß?", a: "Sie sagt es und holt einen Menschen dazu, wenn das Standardvorgehen den Fall nicht abdeckt." },
 				],
 			},
 		},
@@ -107,7 +108,7 @@ export const de: Messages = {
 				name: "Lager",
 				slug: "lager",
 				seo: {
-					title: "KI-Sprachassistent f\u00fcr Lager und Kontraktlogistik",
+					title: "KI-Sprachassistent für Lager und Kontraktlogistik",
 					description: "Mandy beantwortet Fragen direkt am Regal in der Sprache der Mitarbeitenden: Verpackungsregeln je Kunde, Nachschub und Umlagerungen per Sprache.",
 				},
 				headline: ["Antworten am Regal,", "in jeder Sprache."],
@@ -122,10 +123,10 @@ export const de: Messages = {
 					answer: "Jeder Kunde hat eigene Pack- und Etikettierregeln, und die halbe Schicht ist neu. Mandy antwortet direkt am Regal, in der Sprache jeder Person.",
 					story: {
 						meaning: "Wie will Kunde B diese Palette etikettiert haben?",
-						answer: "Zwei Etiketten auf gegen\u00fcberliegenden Seiten, h\u00f6chstens 1,8 m hoch.",
+						answer: "Zwei Etiketten auf gegenüberliegenden Seiten, höchstens 1,8 m hoch.",
 						lands: "Beantwortet aus der SOP von Kunde B",
 					},
-					result: "Weniger Wege ins B\u00fcro.",
+					result: "Weniger Wege ins Büro.",
 				},
 				voices: {
 					picker: [
@@ -141,8 +142,8 @@ export const de: Messages = {
 				name: "Produktion",
 				slug: "produktion",
 				seo: {
-					title: "KI-Sprachassistent f\u00fcr Produktion und Montage",
-					description: "Mandy meldet Fehlteile mit Teilenummer und Station an die Logistik, erkl\u00e4rt Fehlercodes und \u00fcbersetzt die Schicht\u00fcbergabe, freih\u00e4ndig an der Linie.",
+					title: "KI-Sprachassistent für Produktion und Montage",
+					description: "Mandy meldet Fehlteile mit Teilenummer und Station an die Logistik, erklärt Fehlercodes und übersetzt die Schichtübergabe, freihändig an der Linie.",
 				},
 				headline: ["Die Linie läuft weiter,", "auch wenn Teile knapp werden."],
 				does: [
@@ -153,9 +154,9 @@ export const de: Messages = {
 				gain: "Weniger Linienstopps, und Meister betreuen mehr Fläche.",
 				card: {
 					question: "Wie hilft Mandy in der Produktion?",
-					answer: "Ein fehlendes Teil h\u00e4lt die Station an, und der Meister ist drei Bereiche weiter. Mandy schickt der Logistik Teilenummer und Station in einer Nachricht.",
+					answer: "Ein fehlendes Teil hält die Station an, und der Meister ist drei Bereiche weiter. Mandy schickt der Logistik Teilenummer und Station in einer Nachricht.",
 					story: {
-						meaning: "Am Kitting sind nur noch drei Kabelb\u00e4ume.",
+						meaning: "Am Kitting sind nur noch drei Kabelbäume.",
 						answer: "Die Logistik hat Teilenummer und Station. Der Routenzug kommt in 8 Minuten.",
 						lands: "Nachricht an die Logistik, in Teams",
 					},
@@ -174,8 +175,8 @@ export const de: Messages = {
 				name: "Paket",
 				slug: "paket",
 				seo: {
-					title: "KI-Sprachassistent f\u00fcr Paket- und Postzentren",
-					description: "Mandy sagt am Sorter, was mit Paketen ohne Label, besch\u00e4digten oder sperrigen Sendungen passiert, und verbindet Sortierung und Verladung.",
+					title: "KI-Sprachassistent für Paket- und Postzentren",
+					description: "Mandy sagt am Sorter, was mit Paketen ohne Label, beschädigten oder sperrigen Sendungen passiert, und verbindet Sortierung und Verladung.",
 				},
 				headline: ["Sonderfälle am Sorter gelöst,", "Lkw fahren voll los."],
 				does: [
@@ -186,10 +187,10 @@ export const de: Messages = {
 				gain: "Vollere Lkw und eine leere Halle zum Schichtende.",
 				card: {
 					question: "Wie hilft Mandy im Paketzentrum?",
-					answer: "Der Sorter l\u00e4uft, bis ein Paket kein Label hat. Mandy sagt, was damit passiert, und erfasst Scan und Foto.",
+					answer: "Der Sorter läuft, bis ein Paket kein Label hat. Mandy sagt, was damit passiert, und erfasst Scan und Foto.",
 					story: {
 						meaning: "Dieses Paket hat kein Label.",
-						answer: "Bring es zum Kl\u00e4rplatz. Scan und Foto sind erfasst.",
+						answer: "Bring es zum Klärplatz. Scan und Foto sind erfasst.",
 						lands: "Sonderfall mit Scan und Foto erfasst",
 					},
 					result: "Lkw fahren voll los.",
@@ -207,8 +208,8 @@ export const de: Messages = {
 				name: "E-Commerce",
 				slug: "e-commerce",
 				seo: {
-					title: "KI-Sprachassistent f\u00fcr E-Commerce-Fulfillment",
-					description: "Saisonkr\u00e4fte fragen Mandy, statt zu raten: welcher Karton, wie Glas verpackt wird, wohin ein Fehlpick geht. In ihrer eigenen Sprache.",
+					title: "KI-Sprachassistent für E-Commerce-Fulfillment",
+					description: "Saisonkräfte fragen Mandy, statt zu raten: welcher Karton, wie Glas verpackt wird, wohin ein Fehlpick geht. In ihrer eigenen Sprache.",
 				},
 				headline: ["Saisonkräfte,", "produktiv ab der ersten Stunde."],
 				does: [
@@ -241,8 +242,8 @@ export const de: Messages = {
 				name: "Lebensmittel",
 				slug: "lebensmittel",
 				seo: {
-					title: "KI-Sprachassistent f\u00fcr Lebensmittelhandel und Dark Stores",
-					description: "Mitarbeitende bestellen Nachschub, sobald sie ein leeres Regal sehen, bekommen Ersatzartikel beim Picken und erfassen K\u00fchltemperaturen per Sprache.",
+					title: "KI-Sprachassistent für Lebensmittelhandel und Dark Stores",
+					description: "Mitarbeitende bestellen Nachschub, sobald sie ein leeres Regal sehen, bekommen Ersatzartikel beim Picken und erfassen Kühltemperaturen per Sprache.",
 				},
 				headline: ["Volle Regale, vollständige Bestellungen,", "gesteuert aus dem Gang."],
 				does: [
@@ -253,7 +254,7 @@ export const de: Messages = {
 				gain: "Weniger Lücken im Regal und in den Bestellungen.",
 				card: {
 					question: "Wie hilft Mandy im Lebensmittelhandel?",
-					answer: "Wer das leere Regal sieht, bestellt den Nachschub sofort. Kein Terminal, kein Zettel f\u00fcr sp\u00e4ter.",
+					answer: "Wer das leere Regal sieht, bestellt den Nachschub sofort. Kein Terminal, kein Zettel für später.",
 					story: {
 						meaning: "Das Haferdrink-Regal ist fast leer.",
 						answer: "Zwei Kisten bestellt. Sie stehen im Lager.",
@@ -274,8 +275,8 @@ export const de: Messages = {
 				name: "Mode",
 				slug: "mode",
 				seo: {
-					title: "KI-Sprachassistent f\u00fcr Retouren in der Modebranche",
-					description: "Mandy gibt jeder Person in der Retourenbewertung dieselben Regeln je Marke und Material, h\u00e4ngt Schadensfotos an und zeigt dem Einkauf wiederkehrende M\u00e4ngel.",
+					title: "KI-Sprachassistent für Retouren in der Modebranche",
+					description: "Mandy gibt jeder Person in der Retourenbewertung dieselben Regeln je Marke und Material, hängt Schadensfotos an und zeigt dem Einkauf wiederkehrende Mängel.",
 				},
 				headline: ["Retouren einheitlich bewertet,", "schneller wieder im Verkauf."],
 				does: [
@@ -286,7 +287,7 @@ export const de: Messages = {
 				gain: "Mehr Wiederverkaufswert in jeder Schicht.",
 				card: {
 					question: "Wie hilft Mandy bei Mode-Retouren?",
-					answer: "Die eine verkauft die Jacke mit offener Naht wieder, der n\u00e4chste schickt sie in die Reparatur. Mandy gibt allen dieselben Regeln.",
+					answer: "Die eine verkauft die Jacke mit offener Naht wieder, der nächste schickt sie in die Reparatur. Mandy gibt allen dieselben Regeln.",
 					story: {
 						meaning: "Naht ist offen. Wiederverkaufen oder reparieren?",
 						answer: "Reparieren. Das kostet unter zwei Euro.",
@@ -307,8 +308,8 @@ export const de: Messages = {
 				name: "Pharma",
 				slug: "pharma",
 				seo: {
-					title: "KI-Sprachassistent f\u00fcr GMP-Pharmalager",
-					description: "Mandy f\u00fchrt Mitarbeitende im Pharmalager per Sprache durch GMP-Checklisten, erfasst jeden Schritt mit wer, wann und wo und meldet Abweichungen sofort an die QA.",
+					title: "KI-Sprachassistent für GMP-Pharmalager",
+					description: "Mandy führt Mitarbeitende im Pharmalager per Sprache durch GMP-Checklisten, erfasst jeden Schritt mit wer, wann und wo und meldet Abweichungen sofort an die QA.",
 				},
 				headline: ["GMP-Dokumentation,", "freihändig."],
 				does: [
@@ -319,13 +320,13 @@ export const de: Messages = {
 				gain: "Auditfähig ohne Tastatur.",
 				card: {
 					question: "Wie hilft Mandy im Pharmalager?",
-					answer: "Unter GMP braucht jeder Schritt einen Nachweis. Mandy f\u00fchrt per Sprache durch die Checkliste und erfasst jeden Schritt sofort.",
+					answer: "Unter GMP braucht jeder Schritt einen Nachweis. Mandy führt per Sprache durch die Checkliste und erfasst jeden Schritt sofort.",
 					story: {
-						meaning: "Die K\u00fchlraumt\u00fcr war f\u00fcnf Minuten offen.",
+						meaning: "Die Kühlraumtür war fünf Minuten offen.",
 						answer: "Abweichung mit Uhrzeit erfasst. Die QA hat es.",
 						lands: "Abweichungsmeldung an die QA",
 					},
-					result: "Auditf\u00e4hig, ohne zu tippen.",
+					result: "Auditfähig, ohne zu tippen.",
 				},
 				voices: {
 					picker: [
@@ -340,8 +341,8 @@ export const de: Messages = {
 				name: "Luftfahrt",
 				slug: "luftfahrt",
 				seo: {
-					title: "KI-Sprachassistent f\u00fcr Flugzeugwartung und Bodenabfertigung",
-					description: "Mandy liest Taskcards und Drehmomente vor, erfasst M\u00e4ngel mit Foto und Position und bringt Vorfeld, Catering und Wartung beim Turnaround zusammen.",
+					title: "KI-Sprachassistent für Flugzeugwartung und Bodenabfertigung",
+					description: "Mandy liest Taskcards und Drehmomente vor, erfasst Mängel mit Foto und Position und bringt Vorfeld, Catering und Wartung beim Turnaround zusammen.",
 				},
 				headline: ["Mehr Zeit am Flugzeug,", "weniger mit Papierkram."],
 				does: [
@@ -352,9 +353,9 @@ export const de: Messages = {
 				gain: "Turnarounds bleiben im Plan.",
 				card: {
 					question: "Wie hilft Mandy in der Luftfahrt?",
-					answer: "Techniker verlieren einen gro\u00dfen Teil der Schicht an Papierkram. Mandy liest die Taskcard vor und erfasst M\u00e4ngel, w\u00e4hrend die H\u00e4nde am Flugzeug bleiben.",
+					answer: "Techniker verlieren einen großen Teil der Schicht an Papierkram. Mandy liest die Taskcard vor und erfasst Mängel, während die Hände am Flugzeug bleiben.",
 					story: {
-						meaning: "Drehmoment f\u00fcr den Verschluss der Triebwerksverkleidung?",
+						meaning: "Drehmoment für den Verschluss der Triebwerksverkleidung?",
 						answer: "12 Nm laut Taskcard.",
 						lands: "Schritt auf der Taskcard abgezeichnet",
 					},

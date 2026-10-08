@@ -50,7 +50,7 @@
 	<section>
 		{@render heading("plug", a.systems.heading)}
 		<p>{a.systems.text}</p>
-		<Connect groups={a.systems.groups} />
+		<Connect devices={a.systems.devices} groups={a.systems.groups} />
 	</section>
 
 	<section>
