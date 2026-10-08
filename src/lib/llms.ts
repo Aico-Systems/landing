@@ -1,7 +1,8 @@
 import { VERTICALS } from "$lib/verticals";
 import { LOCALES, type Locale } from "$lib/i18n/locales";
 import { MESSAGES } from "$lib/i18n/messages";
-import { SPOKEN, SYSTEMS } from "$lib/i18n/spoken";
+import { SPOKEN } from "$lib/i18n/spoken";
+import type { Verb } from "$lib/i18n/types";
 import { UPDATED } from "$lib/site";
 import { absolute, pagePath } from "$lib/seo";
 
@@ -15,9 +16,7 @@ export function llmsIndex(): string {
 	const lines = [
 		`# ${en.site.brand}`,
 		"",
-		`> ${en.home.mandy.answer[0]}`,
-		"",
-		en.home.mandy.answer[1],
+		`> ${en.home.mandy.answer}`,
 		"",
 		`Full text of every page: ${absolute("/llms-full.txt")}`,
 		"",
@@ -42,28 +41,22 @@ export function llmsFull(): string {
 function full(locale: Locale): string {
 	const m = MESSAGES[locale];
 	const a = m.home.mandy;
-	const out = [`# ${a.question}`, "", `Source: ${absolute(pagePath(locale))}`, "", ...para(a.answer)];
-	out.push(...a.figures.map((f) => `- ${f.value} ${f.unit}: ${f.label}`), "");
-	out.push(`## ${a.whyHeading}`, "", ...para(a.why));
-	out.push(`## ${a.flowHeading}`, "", a.flowText, "", ...a.flow.map((f, i) => `${i + 1}. ${f.who}: ${f.text}`), "");
-	out.push(`## ${a.verbsHeading}`, "", ...Object.entries(a.verbs).map(([verb, text]) => `- ${m.home.verbs[verb as keyof typeof a.verbs]}: ${text}`), "");
-	out.push(`## ${a.systemsHeading}`, "", `${a.systemsText} (${SYSTEMS.join(", ")})`, "");
-	out.push(`## ${a.runsHeading}`, "", ...a.runs.map((r) => `- ${r.name}: ${r.text}`), "");
-	out.push(`## ${a.pilotHeading}`, "", a.pilotText, "", ...a.pilot.map((p) => `- ${p.when}: ${p.what}`), "");
-	out.push(`## ${a.faqHeading}`, "");
-	for (const f of a.faq) out.push(`### ${f.q}`, "", f.a, "");
+	const out = [`# ${a.question}`, "", `Source: ${absolute(pagePath(locale))}`, "", a.answer, ""];
+	out.push(`## ${a.why.heading}`, "", a.why.text, "");
+	out.push(`## ${a.flow.heading}`, "", ...a.flow.steps.map((f, i) => `${i + 1}. ${f.who}: ${f.text}`), "");
+	out.push(`## ${a.verbs.heading}`, "");
+	for (const [verb, v] of Object.entries(a.verbs.items)) out.push(`- ${m.home.verbs[verb as Verb]}: ${v.text} ("${v.says}")`);
+	out.push("", `## ${a.systems.heading}`, "", a.systems.text, "", `## ${a.runs.heading}`, "", a.runs.text, "");
+	out.push(`## ${a.pilot.heading}`, "", ...a.pilot.steps.map((p) => `- ${p.when}: ${p.what}`), "");
+	out.push(`## ${a.faq.heading}`, "");
+	for (const f of a.faq.items) out.push(`### ${f.q}`, "", f.a, "");
 	for (const v of VERTICALS) {
-		const w = m.home.verticals[v.id];
-		const c = w.card;
-		out.push(`## ${c.question}`, "", `Source: ${absolute(pagePath(locale, v.id))}`, "", ...para(c.answer));
+		const c = m.home.verticals[v.id].card;
 		const said = SPOKEN[v.id];
-		out.push(`### ${m.home.cardHeadings.story}`, "", `- "${said.text}" (${said.lang}): ${c.story.meaning}`, `- Mandy: ${c.story.answer}`, `- ${c.story.lands}`, "");
-		out.push(`### ${m.home.cardHeadings.asks}`, "", ...c.asks.map((q) => `- "${q}"`), "");
-		out.push(`### ${m.home.cardHeadings.helps}`, "", ...c.helps.map((d) => `- ${m.home.verbs[d.verb]}: ${d.text}`), "");
-		out.push(`### ${m.home.cardHeadings.result}`, "", c.result, "");
+		out.push(`## ${c.question}`, "", `Source: ${absolute(pagePath(locale, v.id))}`, "", c.answer, "");
+		out.push(`> "${said.text}" (${said.lang}): ${c.story.meaning}`, `> Mandy: ${c.story.answer}`, `> ${c.story.lands}`, "", c.result, "");
 	}
 	out.push(m.site.updated(UPDATED));
 	return out.join("\n");
 }
 
-const para = (ps: string[]) => ps.flatMap((p) => [p, ""]);

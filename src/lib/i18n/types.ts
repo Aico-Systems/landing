@@ -39,8 +39,8 @@ export interface Messages {
 		 *  opens on its own question). */
 		about: string;
 		close: string;
-		/** Headings of the parts of every vertical's card. */
-		cardHeadings: { story: string; asks: string; helps: string; result: string };
+		/** Plays a card's exchange again. */
+		replay: string;
 		/** Under a worker's words in their language: what they mean ([language]
 		 *  already named in the page's language). */
 		heardIn: (language: string) => string;
@@ -80,46 +80,35 @@ export interface VerticalWords {
 	card: VerticalCard;
 }
 
-/** The longer text behind a vertical, for whoever wants to know more. */
+/** The longer text behind a vertical, for whoever wants to know more:
+ *  short, because the page beside it already says what Mandy does here. */
 export interface VerticalCard {
 	/** The question the card answers, as a searcher would ask it. */
 	question: string;
-	/** The answer, first sentence first: it has to stand on its own. */
-	answer: string[];
-	/** One exchange the card replays: what the worker said (in their own
+	/** The answer in two sentences; the first has to stand on its own. */
+	answer: string;
+	/** The exchange the card replays: what the worker said (in their own
 	 *  language, src/lib/i18n/spoken.ts) means this, Mandy answers, and the
 	 *  result lands somewhere. */
 	story: { meaning: string; answer: string; lands: string };
-	/** What workers here say to Mandy, as they would say it. */
-	asks: string[];
-	helps: Doing[];
+	/** What changes, in a few words. */
 	result: string;
 }
 
 export interface AboutWords {
 	question: string;
-	answer: string[];
-	/** The numbers that frame the problem and the pilot, each a figure, a
-	 *  unit and what it counts. */
-	figures: { value: string; unit: string; label: string }[];
-	whyHeading: string;
-	why: string[];
-	/** One message on its way round, the pitch deck's four steps. */
-	flowHeading: string;
-	flowText: string;
-	flow: { who: string; text: string }[];
-	verbsHeading: string;
-	/** What each of the five verbs covers. */
-	verbs: Record<Verb, string>;
-	systemsHeading: string;
-	systemsText: string;
-	runsHeading: string;
-	runs: { name: string; text: string }[];
-	pilotHeading: string;
-	pilotText: string;
-	pilot: { when: string; what: string }[];
-	faqHeading: string;
-	faq: { q: string; a: string }[];
+	/** What Mandy is, in two sentences. */
+	answer: string;
+	/** Each part under a heading phrased as the question a reader has. */
+	why: { heading: string; text: string };
+	/** One message on its way round, in the pitch deck's four steps. */
+	flow: { heading: string; steps: { who: string; text: string }[] };
+	/** The five verbs: what each covers, and something a worker says. */
+	verbs: { heading: string; items: Record<Verb, { text: string; says: string }> };
+	systems: { heading: string; text: string };
+	runs: { heading: string; text: string };
+	pilot: { heading: string; steps: { when: string; what: string }[] };
+	faq: { heading: string; items: { q: string; a: string }[] };
 }
 
 export interface Doing {

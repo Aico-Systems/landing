@@ -63,7 +63,7 @@ export function structuredData(locale: Locale, vertical?: VerticalId): object {
 				"@type": "Product",
 				"@id": id("mandy"),
 				name: m.site.brand,
-				description: m.home.mandy.answer[0],
+				description: m.home.mandy.answer,
 				category: m.site.seo.title,
 				brand: { "@type": "Brand", name: m.site.brand },
 				manufacturer: { "@id": id("org") },
@@ -104,7 +104,7 @@ export function structuredData(locale: Locale, vertical?: VerticalId): object {
 							"@type": "FAQPage",
 							"@id": `${url}#faq`,
 							inLanguage: locale,
-							mainEntity: m.home.mandy.faq.map((f) => ({
+							mainEntity: m.home.mandy.faq.items.map((f) => ({
 								"@type": "Question",
 								name: f.q,
 								acceptedAnswer: { "@type": "Answer", text: f.a },

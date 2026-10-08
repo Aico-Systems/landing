@@ -28,6 +28,3 @@ export const FLOW_SPOKEN = {
 	ask: { lang: "uk", text: "Палета 4 пошкоджена, дві коробки розчавлені." },
 	reply: { lang: "uk", text: "Вже йду." },
 } satisfies Record<string, Spoken>;
-
-/** The systems Mandy reads from and writes to: names, the same in every language. */
-export const SYSTEMS = ["SAP", "Microsoft Teams", "Slack", "WhatsApp", "SMS", "ServiceNow", "Jira", "Zendesk", "SharePoint", "WMS", "ERP"];

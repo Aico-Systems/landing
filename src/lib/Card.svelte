@@ -8,9 +8,9 @@
 	 * (inert and out of view), so the text is there for search and answer
 	 * engines, which read the HTML as built.
 	 *
-	 * Its parts come in as they scroll into view: anything marked
-	 * data-reveal gets the class "in" (its own delay in --d), and loses it
-	 * when the card closes, so the card plays again next time.
+	 * One part of each card plays when it opens (the replayed exchange, the
+	 * message on its way round), keyed to the card's "open" class; the rest
+	 * is set to be read, and stays still.
 	 */
 	let {
 		id,
@@ -22,26 +22,16 @@
 
 	let card: HTMLElement;
 
+	// a card opens at its top
 	$effect(() => {
-		const parts = card.querySelectorAll("[data-reveal]");
-		if (!open) {
-			parts.forEach((p) => p.classList.remove("in"));
-			card.scrollTop = 0;
-			return;
-		}
-		const seen = new IntersectionObserver(
-			(entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add("in")),
-			{ root: card, threshold: 0.2 },
-		);
-		parts.forEach((p) => seen.observe(p));
-		return () => seen.disconnect();
+		if (!open) card.scrollTop = 0;
 	});
 </script>
 
 <button class="veil" class:open tabindex="-1" aria-hidden="true" onclick={onclose}></button>
 <article {id} bind:this={card} class="card" class:open inert={!open} aria-labelledby="{id}-title">
 	<button class="close" onclick={onclose} aria-label={m().home.close}>×</button>
-	<div class="text">
+	<div class="card-text">
 		<h2 id="{id}-title">{title}</h2>
 		{@render children()}
 	</div>
@@ -108,68 +98,72 @@
 		outline: 2px solid var(--accent);
 	}
 
-	/* the card's type: the page's, set for reading at length */
-	.text {
-		max-width: 42rem;
+	/* the card's type: Archivo's widths carry the hierarchy, one size step
+	   per level, lines kept under 70 characters. These are defaults for
+	   whatever a card holds, kept at one class and one element so a part's
+	   own (scoped) styles win over them. */
+	.card-text {
+		max-width: 40rem;
 		color: var(--ink);
-		font-size: 1rem;
+		font-size: 1.0625rem;
 		line-height: 1.6;
 	}
-	.text :global(h2) {
+	:global(.card-text h2) {
 		margin: 0 0 1.25rem;
-		font-size: clamp(1.75rem, 2.6vw, 2.4rem);
+		max-width: 16ch;
+		font-size: clamp(2rem, 3.2vw, 2.85rem);
 		font-weight: 800;
-		font-stretch: 112%;
-		line-height: 1.05;
-		letter-spacing: -0.025em;
+		font-stretch: 115%;
+		line-height: 1.02;
+		letter-spacing: -0.03em;
 		text-wrap: balance;
 	}
-	.text :global(h3) {
-		margin: 2.25rem 0 0.75rem;
-		font-size: 1.05rem;
-		font-weight: 700;
-		font-stretch: 105%;
-	}
-	.text :global(h4) {
-		margin: 1.25rem 0 0.25rem;
-		font-size: 1rem;
-		font-weight: 600;
-	}
-	.text :global(p) {
-		margin: 0 0 0.9rem;
+	/* the answer under the question: the one paragraph everyone reads */
+	:global(.card-text .answer) {
+		margin: 0 0 2.5rem;
+		max-width: 34em;
+		font-size: 1.3rem;
+		line-height: 1.45;
+		letter-spacing: -0.01em;
 		text-wrap: pretty;
 	}
-	.text :global(.lead) {
-		font-size: 1.1rem;
-		line-height: 1.55;
+	/* a part: a hairline over it, its question as the heading */
+	:global(.card-text section) {
+		margin-top: 2.75rem;
+		padding-top: 1.25rem;
+		border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
 	}
-	.text :global(.updated) {
-		margin-top: 2.5rem;
-		font-size: 0.85rem;
-		color: var(--ink-soft);
-	}
-
-	/* a part coming into view */
-	.card :global([data-reveal]) {
-		opacity: 0;
-		translate: 0 1.25rem;
-		transition:
-			opacity 0.6s cubic-bezier(0.2, 0.8, 0.2, 1),
-			translate 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
-		transition-delay: var(--d, 0s);
-	}
-	.card :global([data-reveal].in) {
-		opacity: 1;
-		translate: none;
-	}
-	/* a part's heading, the eyebrow over it */
-	.text :global(.eyebrow) {
-		margin: 3rem 0 1rem;
-		font-size: 0.8rem;
+	:global(.card-text h3) {
+		margin: 0 0 0.6rem;
+		font-size: 1.15rem;
 		font-weight: 700;
-		font-stretch: 112%;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
+		font-stretch: 108%;
+		letter-spacing: -0.01em;
+	}
+	:global(.card-text p) {
+		margin: 0;
+		max-width: 36em;
+		color: color-mix(in srgb, var(--ink) 78%, var(--paper));
+		text-wrap: pretty;
+	}
+	/* floor tape: the diagonal hatching that marks lanes and hazards on a
+	   warehouse floor, down the edge of the live moment in each card */
+	:global(.card-text .tape) {
+		position: relative;
+		padding-left: 1.6rem;
+	}
+	:global(.card-text .tape::before) {
+		content: "";
+		position: absolute;
+		left: 0;
+		top: 0;
+		bottom: 0;
+		width: 6px;
+		background: repeating-linear-gradient(-45deg, var(--accent) 0 7px, var(--ink) 7px 14px);
+	}
+	:global(.card-text .updated) {
+		margin-top: 3rem;
+		font-size: 0.85rem;
 		color: var(--ink-soft);
 	}
 
@@ -185,10 +179,6 @@
 		}
 	}
 	@media (prefers-reduced-motion: reduce) {
-		.card :global([data-reveal]) {
-			translate: none;
-			transition: none;
-		}
 		.card,
 		.card.open,
 		.veil {

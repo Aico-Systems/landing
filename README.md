@@ -17,12 +17,12 @@ bun run check
 | Path | What |
 | --- | --- |
 | `src/lib/verticals.ts` | The verticals as data: scene file, size, people and machines with their routes and voices. No text |
-| `src/lib/i18n/` | Every word on the site, one file per language (`en.ts`, `de.ts`), all typed by `types.ts`, the list of languages in `locales.ts`; what workers say in their own language, and system names, once in `spoken.ts` |
+| `src/lib/i18n/` | Every word on the site, one file per language (`en.ts`, `de.ts`), all typed by `types.ts`, the list of languages in `locales.ts`; what workers say in their own language, once in `spoken.ts` |
 | `src/lib/stage/` | The 3D stage: `stage.ts` (renderer, isometric camera, drag to turn, switching scenes), `scene.ts` (loads a scene, restyles it, draws the outlines), `assemble.ts` (a scene building itself, and taking itself apart), `actors.ts` (the workers and forklifts, built in code: walk cycle, the press-the-glove gesture), `palette.ts` + `colours.json` (film material roles to blueprint tokens, shared with the Blender preview) |
 | `src/routes/` | `/` (everyone's address: sends a visitor on to their language, and tells crawlers what Mandy is), `/[lang]/` (home), `/[lang]/[slug]/` (a vertical: `/en/parcel/`, `/de/paket/`), and the generated `sitemap.xml`, `robots.txt`, `llms.txt`, `llms-full.txt` |
 | `src/lib/Home.svelte` | The page: the stage, the speech bubbles, the vertical's words, the cards; keeps the address in step with the scroll |
-| `src/lib/Card.svelte`, `Head.svelte` | A card of longer text (in the HTML even when closed; its parts come in as they scroll into view); a page's title, description, canonical, hreflang, share card and JSON-LD |
-| `src/lib/cards/` | What the cards are made of: `AboutCard` and `VerticalCard`, built from `Replay` (one exchange played through, the worker's own words first), `Flow`, `Figures`, `Bento` (with `Glyph`), `Systems` and `Pilot` |
+| `src/lib/Card.svelte`, `Head.svelte` | A card of longer text (in the HTML even when closed); a page's title, description, canonical, hreflang, share card and JSON-LD |
+| `src/lib/cards/` | What the cards are made of: `AboutCard` and `VerticalCard`; `Replay` and `Flow` (the one part of each card that plays, edged in floor tape), `Verbs` (tabs), `Pilot`, `Glyph` |
 | `src/lib/seo.ts`, `llms.ts` | Addresses, alternates and structured data; the Markdown for language models. All from the words in `src/lib/i18n` |
 | `src/lib/site.ts` | The site's address (`SITE_URL`), its parent company (structured data only), the date of its facts (`UPDATED`), the demo link |
 | `src/hooks.server.ts` | Fills `src/app.html`'s blanks at build time: the page's language, and the list of languages |

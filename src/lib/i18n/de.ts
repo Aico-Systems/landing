@@ -23,66 +23,53 @@ export const de: Messages = {
 		industries: "Branchen",
 		askedIn: (language) => `Auf ${language} gefragt`,
 		about: "Was ist Mandy?",
+		replay: "Noch einmal abspielen",
 		close: "Schließen",
-		cardHeadings: { story: "Ein Beispiel im Ablauf", asks: "Was Mitarbeitende fragen", helps: "Was Mandy übernimmt", result: "Was sich ändert" },
 		heardIn: (language) => `Auf ${language} gesagt`,
 		verbs: { know: "Wissen", act: "Handeln", talk: "Abstimmen", record: "Erfassen", learn: "Lernen" },
 		mandy: {
 			question: "Was ist Mandy?",
-			answer: [
-				"Mandy ist ein Sprachassistent f\u00fcr Menschen, die in Lager und Produktion arbeiten. Mandy l\u00e4uft auf dem ProGlove MAI Handschuh, auf einem Android-Smartphone oder einer Uhr. Wer eine Frage hat, dr\u00fcckt einmal, fragt in der eigenen Sprache und bekommt eine Antwort aus den Dokumenten und Systemen des Standorts.",
-				"Mandy setzt auch um, was sie h\u00f6rt: Sie bucht Nachschub in SAP, schreibt dem Team oder legt einen Wartungsauftrag an und h\u00e4lt fest, wer wann wo gefragt hat.",
-			],
-			figures: [
-				{ value: "3\u201315", unit: "Min.", label: "verliert eine Person bei jeder Ausnahme" },
-				{ value: "3\u20135", unit: "\u00d7", label: "Ausnahmen pro Person und Schicht" },
-				{ value: "40", unit: "%", label: "eines Tages kann indirekte Arbeit sein, die kein WMS sieht" },
-				{ value: "14", unit: "Wochen", label: "vom ersten Gespr\u00e4ch bis zum gemessenen Ergebnis" },
-			],
-			whyHeading: "Warum sind Ausnahmen so teuer?",
-			why: [
-				"Ein fehlendes Teil, ein besch\u00e4digter Karton oder ein unklarer Arbeitsschritt h\u00e4lt eine Person mitten in der Arbeit auf. Die H\u00e4nde sind voll, also geht sie los und sucht jemanden, der Bescheid wei\u00df. Die Antwort steht oft in einer SOP, die niemand gelesen hat, am wenigsten die neue Aushilfe.",
-				"Meister betreuen mehrere Bereiche gleichzeitig, und oft spricht die H\u00e4lfte der Schicht nicht die Sprache des Standorts. Keine dieser Fragen landet in einem System, also sieht das Management nie, woran es auf der Fl\u00e4che hakt.",
-			],
-			flowHeading: "Welche Sprachen spricht Mandy?",
-			flowText: "Die Sprache der jeweiligen Person. Mandy \u00fcbersetzt jede Nachricht unterwegs: Der Meister liest Deutsch, die SOP bleibt auf Deutsch, und niemand muss umdenken.",
-			flow: [
-				{ who: "Mitarbeiter", text: "Sagt es auf Ukrainisch in den Handschuh, die H\u00e4nde noch an der Palette." },
-				{ who: "Mandy", text: "Schreibt mit, \u00fcbersetzt und h\u00e4ngt Scan, Station und Foto an." },
-				{ who: "Teamleitung", text: "Liest in Teams eine saubere Meldung auf Deutsch und antwortet mit einem Tipp." },
-				{ who: "Mitarbeiter", text: "H\u00f6rt die Antwort auf Ukrainisch, am Handschuh." },
-			],
-			verbsHeading: "Was kann Mandy?",
-			verbs: {
-				know: "Antwortet aus Ihren SOPs, Verpackungsvorgaben, Auftragsst\u00e4nden und Maschinenhandb\u00fcchern und sagt es offen, wenn sie etwas nicht wei\u00df.",
-				act: "Bucht Nachschub, Umlagerungen, Z\u00e4hlungen und Serviceauftr\u00e4ge in ERP und WMS und liest jede Buchung vorher noch einmal vor.",
-				talk: "Schickt strukturierte Nachrichten an das richtige Team, ruft bei Dringendem den Meister an und \u00fcbernimmt die Schicht\u00fcbergabe.",
-				record: "Erfasst Aufgaben, Fotos, Checklisten und Beinahe-Unf\u00e4lle mit Zeit, Ort und Namen.",
-				learn: "Arbeitet neue und Leihkr\u00e4fte in ihrer Sprache ein und zeigt dem Management die Fragen der Woche und wie lange Eskalationen warten.",
+			answer: "Mandy ist ein Sprachassistent f\u00fcr Lager und Produktion. Einmal auf den Handschuh dr\u00fccken, in der eigenen Sprache fragen, und die Antwort kommt aus Ihren SOPs und Systemen.",
+			why: { heading: "Warum sind Ausnahmen so teuer?", text: "Ein fehlendes Teil oder ein unklarer Schritt kostet eine Person 3 bis 15 Minuten, drei- bis f\u00fcnfmal pro Schicht. Die Antwort steht oft irgendwo geschrieben. Auf der Fl\u00e4che hat niemand Zeit, sie nachzuschlagen." },
+			flow: {
+				heading: "Welche Sprachen spricht Mandy?",
+				steps: [
+					{ who: "Mitarbeiter", text: "Sagt es auf Ukrainisch, die H\u00e4nde noch an der Palette." },
+					{ who: "Mandy", text: "\u00dcbersetzt und h\u00e4ngt Scan, Station und Foto an." },
+					{ who: "Teamleitung", text: "Liest es auf Deutsch in Teams und antwortet mit einem Tipp." },
+					{ who: "Mitarbeiter", text: "H\u00f6rt die Antwort auf Ukrainisch." },
+				],
 			},
-			systemsHeading: "Mit welchen Systemen arbeitet Mandy?",
-			systemsText: "Mit denen, die der Standort schon hat: ERP-, WMS- und Personalsysteme f\u00fcr Abfragen und Buchungen, Ticketsysteme f\u00fcr St\u00f6rungen, Ihre SOPs als Quelle der Antworten und die Messenger des Teams. Neu kaufen m\u00fcssen Sie nichts.",
-			runsHeading: "Wo l\u00e4uft Mandy?",
-			runs: [
-				{ name: "Cloud", text: "Datenhaltung in der EU, ausgelegt f\u00fcr DSGVO und IT-Sicherheitspr\u00fcfungen." },
-				{ name: "Eigenes Rechenzentrum", text: "Auf Ihren Servern, in Ihrem Netz." },
-				{ name: "Offline", text: "F\u00fcr Werke ohne Internet. Funkl\u00f6cher werden zwischengespeichert und sp\u00e4ter abgeglichen." },
-			],
-			pilotHeading: "Wie l\u00e4uft ein Pilot ab?",
-			pilotText: "Ein Standort, ein Anwendungsfall, 5 bis 12 Mitarbeitende. Sie legen das Ziel fest, wir messen dagegen.",
-			pilot: [
-				{ when: "Woche 0", what: "Anwendungsfall, Team und einen Meister w\u00e4hlen, der das Problem l\u00f6sen will." },
-				{ when: "Woche 1", what: "Wir laden Ihre SOPs, binden Ihre Systeme an und legen die Sprachen fest." },
-				{ when: "Woche 2\u201313", what: "Das Team nutzt Mandy t\u00e4glich. H\u00e4ufige Anfragen werden zu Ein-Tipp-Tasten." },
-				{ when: "Woche 14", what: "Eingesparte Zeit, gemessen, und der n\u00e4chste Anwendungsfall geplant." },
-			],
-			faqHeading: "H\u00e4ufige Fragen",
-			faq: [
-				{ q: "Funktioniert Mandy ohne Internet?", a: "Ja. Mandy l\u00e4uft auch im eigenen Rechenzentrum oder komplett offline." },
-				{ q: "Ist Sprache immer die richtige Bedienung?", a: "Nein. Anfragen, die immer wieder kommen, werden zu Ein-Tipp-Tasten auf dem Handschuh, und f\u00fcr alles andere bleibt die Sprache." },
-				{ q: "Was unterscheidet Mandy von Pick-by-Voice oder einer Wissens-App?", a: "Pick-by-Voice folgt einem festen Ablauf, und eine Wissens-App beantwortet Fragen, kann aber nichts buchen. Mandy beantwortet offene Fragen und schreibt zur\u00fcck in Ihre Systeme." },
-				{ q: "Was passiert, wenn Mandy die Antwort nicht kennt?", a: "Sie sagt es. Wenn das Standardvorgehen einen Fall nicht abdeckt, holt Mandy einen Menschen dazu." },
-			],
+			verbs: {
+				heading: "Was kann Mandy?",
+				items: {
+					know: { text: "Antwortet aus Ihren SOPs und Systemen und sagt, wenn sie etwas nicht wei\u00df.", says: "Wie packe ich die Retouren f\u00fcr Tour 12?" },
+					act: { text: "Bucht Nachschub, Umlagerungen und Tickets und liest jede Buchung vorher vor.", says: "Nachschub f\u00fcr B14, zwei Kartons." },
+					talk: { text: "Bringt die Nachricht \u00fcbersetzt zur richtigen Person.", says: "Kitting braucht Kabelb\u00e4ume, noch drei da." },
+					record: { text: "Erfasst Aufgaben, Fotos und Beinahe-Unf\u00e4lle mit Zeit und Ort.", says: "Fange mit dem Umpacken in Gang 7 an." },
+					learn: { text: "Arbeitet neue Leute ein und zeigt, wo es auf der Fl\u00e4che hakt.", says: "Erster Tag. Wohin kommen die leeren Beh\u00e4lter?" },
+				},
+			},
+			systems: { heading: "Mit welchen Systemen arbeitet Mandy?", text: "SAP und andere ERP- und WMS-Systeme, ServiceNow, Jira und Zendesk, SharePoint, Teams, Slack, WhatsApp und SMS. Neu kaufen m\u00fcssen Sie nichts." },
+			runs: { heading: "Wo l\u00e4uft Mandy?", text: "In der EU-Cloud, auf Ihren eigenen Servern oder komplett offline f\u00fcr Werke ohne Internet. Ausgelegt f\u00fcr DSGVO und IT-Sicherheitspr\u00fcfungen." },
+			pilot: {
+				heading: "Wie fangen wir an?",
+				steps: [
+					{ when: "Woche 0", what: "Einen Anwendungsfall und 5 bis 12 Leute ausw\u00e4hlen." },
+					{ when: "Woche 1", what: "Wir laden Ihre SOPs und binden Ihre Systeme an." },
+					{ when: "Woche 2\u201313", what: "Ihr Team nutzt Mandy jeden Tag." },
+					{ when: "Woche 14", what: "Sie bekommen die eingesparte Zeit, gemessen." },
+				],
+			},
+			faq: {
+				heading: "H\u00e4ufige Fragen",
+				items: [
+					{ q: "Funktioniert Mandy ohne Internet?", a: "Ja. Mandy l\u00e4uft auf Ihren eigenen Servern oder komplett offline." },
+					{ q: "Ist Sprache immer die richtige Bedienung?", a: "Nein. H\u00e4ufige Anfragen werden zu Ein-Tipp-Tasten auf dem Handschuh." },
+					{ q: "Was ist der Unterschied zu Pick-by-Voice?", a: "Pick-by-Voice folgt einem festen Ablauf. Mandy beantwortet offene Fragen und bucht in Ihren Systemen." },
+					{ q: "Was, wenn Mandy etwas nicht wei\u00df?", a: "Sie sagt es und holt einen Menschen dazu, wenn das Standardvorgehen den Fall nicht abdeckt." },
+				],
+			},
 		},
 		verticals: {
 			warehouse: {
@@ -101,31 +88,17 @@ export const de: Messages = {
 				gain: "Produktiv ab der ersten Schicht.",
 				card: {
 					question: "Wie hilft Mandy im Lager?",
-					answer: [
-						"In der Kontraktlogistik hat jeder Kunde eigene Regeln f\u00fcr Verpackung, Etiketten und Retouren, und ein gro\u00dfer Teil der Schicht sind Leihkr\u00e4fte, neu am Standort und oft ohne Deutschkenntnisse. Mandy beantwortet ihre Fragen direkt am Regal, in ihrer Sprache, aus den Vorgaben des jeweiligen Kunden.",
-						"Nachschub und Umlagerungen buchen die Mitarbeitenden per Sprache. Mandy liest jede Buchung vor dem Buchen noch einmal vor und h\u00e4lt fest, wer sie wann und wo ausgel\u00f6st hat.",
-					],
+					answer: "Jeder Kunde hat eigene Pack- und Etikettierregeln, und die halbe Schicht ist neu. Mandy antwortet direkt am Regal, in der Sprache jeder Person.",
 					story: {
 						meaning: "Wie will Kunde B diese Palette etikettiert haben?",
-						answer: "Zwei Etiketten auf gegen\u00fcberliegenden Seiten, h\u00f6chstens 1,8 m hoch.",
+						answer: "Zwei Etiketten auf gegen\u00fcberliegenden Seiten, h\u00f6chstens 1,8 m hoch.",
 						lands: "Beantwortet aus der SOP von Kunde B",
 					},
-					asks: [
-						"Wie will Kunde B diese Palette etikettiert haben?",
-						"Wann kommt der Nachschub f\u00fcr B14?",
-						"Rest der Palette in Zone C umlagern.",
-					],
-					helps: [
-						{ verb: "know", text: "Verpackungs- und Etikettierregeln je Kunde, aus Ihren vorhandenen SOPs." },
-						{ verb: "act", text: "Nachschub, Umlagerungen und Z\u00e4hlungen per Sprache im WMS gebucht." },
-						{ verb: "record", text: "Indirekte Arbeit wie Umpacken und Reinigen, mit Zeit und Ort erfasst. Sie macht bis zu 40 % eines Tages aus, und kein WMS sieht sie." },
-						{ verb: "learn", text: "Leihkr\u00e4fte, die ab der ersten Schicht selbstst\u00e4ndig arbeiten." },
-					],
-					result: "Weniger Wege ins B\u00fcro, und neue Kr\u00e4fte sind ab der ersten Schicht produktiv.",
+					result: "Weniger Wege ins B\u00fcro.",
 				},
 				voices: {
 					picker: [
-						{ ask: "Wie will Kunde B diese Palette etikettiert haben?", answer: "Zwei Etiketten auf gegenüberliegenden Seiten, höchstens 1,8 m hoch.", lang: "uk" },
+						{ ask: "Wie will Kunde B diese Palette etikettiert haben?", answer: "Zwei Etiketten auf gegenüberliegenden Seiten, höchstens 1,8 m hoch.", lang: "uk" },
 						{ ask: "Nachschub für B14, zwei Kartons.", answer: "Gebucht: zwei Kartons nach B14, um 10:40 da." },
 					],
 					receiver: [{ ask: "Palette 4 ist beschädigt, zwei Kartons eingedrückt.", answer: "Foto abgelegt, deine Teamleitung weiß Bescheid.", lang: "ro" }],
@@ -149,27 +122,13 @@ export const de: Messages = {
 				gain: "Weniger Linienstopps, und Meister betreuen mehr Fläche.",
 				card: {
 					question: "Wie hilft Mandy in der Produktion?",
-					answer: [
-						"An der Montagelinie h\u00e4lt ein fehlendes Teil oder ein Fehlercode eine Station an, und der Meister betreut oft vier Bereiche gleichzeitig. Mandy nimmt den zuletzt gescannten Barcode und das Gesagte und schickt der Logistik eine vollst\u00e4ndige Anforderung mit Teilenummer, Station und Restmenge.",
-						"Fehlercodes, R\u00fcstschritte und Einstellungen jeder Linie sind eine Frage entfernt, und die Schicht\u00fcbergabe wird einmal gesprochen und f\u00fcr die n\u00e4chste Schicht \u00fcbersetzt.",
-					],
+					answer: "Ein fehlendes Teil h\u00e4lt die Station an, und der Meister ist drei Bereiche weiter. Mandy schickt der Logistik Teilenummer und Station in einer Nachricht.",
 					story: {
 						meaning: "Am Kitting sind nur noch drei Kabelb\u00e4ume.",
 						answer: "Die Logistik hat Teilenummer und Station. Der Routenzug kommt in 8 Minuten.",
 						lands: "Nachricht an die Logistik, in Teams",
 					},
-					asks: [
-						"Am Kitting sind nur noch drei Kabelb\u00e4ume.",
-						"Was bedeutet Fehler E-47 am Schrauber?",
-						"Sag der n\u00e4chsten Schicht, dass der Etikettierer an Linie 2 aussetzt.",
-					],
-					helps: [
-						{ verb: "talk", text: "Fehlteile erreichen die Logistik in einer Nachricht, mit Teilenummer und Station." },
-						{ verb: "know", text: "Fehlercodes, R\u00fcstschritte und Maschineneinstellungen je Station." },
-						{ verb: "act", text: "Eine defekte Maschine \u00f6ffnet einen Wartungsauftrag mit Ort, Scan und Foto." },
-						{ verb: "record", text: "Schicht\u00fcbergaben zusammengefasst und f\u00fcr die n\u00e4chste Schicht \u00fcbersetzt." },
-					],
-					result: "Weniger Linienstopps, und Meister betreuen mehr Fl\u00e4che.",
+					result: "Weniger Linienstopps.",
 				},
 				voices: {
 					lineA: [
@@ -196,26 +155,13 @@ export const de: Messages = {
 				gain: "Vollere Lkw und eine leere Halle zum Schichtende.",
 				card: {
 					question: "Wie hilft Mandy im Paketzentrum?",
-					answer: [
-						"Ein Sorter l\u00e4uft schnell, bis ein Paket kein Label hat, besch\u00e4digt ankommt oder zu gro\u00df f\u00fcr das Band ist. Mandy sagt, was damit zu tun ist, und erfasst Scan und Foto.",
-						"Sortierung, Packerei und Verladung sprechen auf einem Kanal. Fragt die Verladung per Sprache, ob noch Pakete f\u00fcr die 20-Uhr-Tour \u00fcbrig sind, landet die Frage bei der Packerei in Teams und wird mit einem Tipp beantwortet. So fahren keine halbleeren Lkw mehr los.",
-					],
+					answer: "Der Sorter l\u00e4uft, bis ein Paket kein Label hat. Mandy sagt, was damit passiert, und erfasst Scan und Foto.",
 					story: {
 						meaning: "Dieses Paket hat kein Label.",
 						answer: "Bring es zum Kl\u00e4rplatz. Scan und Foto sind erfasst.",
 						lands: "Sonderfall mit Scan und Foto erfasst",
 					},
-					asks: [
-						"Dieses Paket hat kein Label.",
-						"Sind noch Pakete f\u00fcr die 20-Uhr-Tour da?",
-						"Tor 3 geht nicht zu.",
-					],
-					helps: [
-						{ verb: "know", text: "Regeln f\u00fcr \u00dcberma\u00df, Sch\u00e4den und Pakete ohne Label." },
-						{ verb: "talk", text: "Fragen zwischen Sortierung, Packerei und Verladung in Sekunden beantwortet." },
-						{ verb: "act", text: "Defekte B\u00e4nder und Tore mit Ort und Foto gemeldet." },
-					],
-					result: "Vollere Lkw, und zum Schichtende bleibt kein Stapel Sonderf\u00e4lle liegen.",
+					result: "Lkw fahren voll los.",
 				},
 				voices: {
 					sorter: [
@@ -242,26 +188,13 @@ export const de: Messages = {
 				gain: "Peak-Teams in wenigen Stunden eingearbeitet.",
 				card: {
 					question: "Wie hilft Mandy im E-Commerce-Fulfillment?",
-					answer: [
-						"In der Hochsaison kommen Hunderte Kommissionierer und Packer, die den Standort noch nie gesehen haben. Mit Mandy fragen sie in ihrer Sprache, statt zu raten: welcher Karton, wie Glas verpackt wird, was bei einem Fehlpick zu tun ist.",
-						"Die Antworten kommen aus Ihren Verpackungsvorgaben je Artikel. So geht jede Bestellung im richtigen Karton mit dem richtigen Polster raus.",
-					],
+					answer: "In der Hochsaison kommen Hunderte Leute, die den Standort nie gesehen haben. Mit Mandy fragen sie, statt zu raten.",
 					story: {
 						meaning: "Mein erster Tag. Wie packe ich Glas?",
 						answer: "Zweimal einwickeln, Karton M und ein Zerbrechlich-Etikett.",
 						lands: "Beantwortet aus den Verpackungsvorgaben",
 					},
-					asks: [
-						"Mein erster Tag. Wie packe ich Glas?",
-						"Welcher Karton f\u00fcr Auftrag 8840?",
-						"In Beh\u00e4lter 118 fehlt ein Artikel.",
-					],
-					helps: [
-						{ verb: "learn", text: "Einarbeitung am Packplatz, in der Sprache jeder Person." },
-						{ verb: "know", text: "Kartongr\u00f6\u00dfe und Verpackungsregeln je Artikel." },
-						{ verb: "record", text: "Fehlpicks, Nacharbeit und Umpacken sofort erfasst." },
-					],
-					result: "Saisonteams in wenigen Stunden eingearbeitet, und weniger besch\u00e4digte oder zu gro\u00dfe Sendungen.",
+					result: "Neue Leute in Stunden eingearbeitet.",
 				},
 				voices: {
 					newcomer: [
@@ -289,31 +222,18 @@ export const de: Messages = {
 				gain: "Weniger Lücken im Regal und in den Bestellungen.",
 				card: {
 					question: "Wie hilft Mandy im Lebensmittelhandel?",
-					answer: [
-						"Im Markt oder im Dark Store sollte die Person, die das leere Regal sieht, auch den Nachschub bestellen. Mit Mandy sagt sie es einfach, und die Bestellung ist ausgel\u00f6st, ohne Weg zum Terminal.",
-						"Wer Onlinebestellungen pickt, bekommt Ersatzartikel und Auftragsstatus w\u00e4hrend des Pickens, und K\u00fchltemperaturen und Frischekontrollen werden per Sprache mit Zeitstempel erfasst.",
-					],
+					answer: "Wer das leere Regal sieht, bestellt den Nachschub sofort. Kein Terminal, kein Zettel f\u00fcr sp\u00e4ter.",
 					story: {
 						meaning: "Das Haferdrink-Regal ist fast leer.",
 						answer: "Zwei Kisten bestellt. Sie stehen im Lager.",
 						lands: "Nachschubbestellung im Warenwirtschaftssystem",
 					},
-					asks: [
-						"Das Haferdrink-Regal ist fast leer.",
-						"Nudeln 500 g sind aus. Was nehme ich als Ersatz?",
-						"K\u00fchlregal sechs hat sieben Grad.",
-					],
-					helps: [
-						{ verb: "act", text: "Nachschubbestellungen und Regaldaten per Sprache aktualisiert." },
-						{ verb: "know", text: "Ersatzartikel und Auftragsstatus w\u00e4hrend des Pickens." },
-						{ verb: "record", text: "Temperatur- und Frischekontrollen mit Zeitstempel." },
-					],
-					result: "Weniger L\u00fccken im Regal und weniger fehlende Artikel in Onlinebestellungen.",
+					result: "Weniger leere Regale.",
 				},
 				voices: {
 					shelves: [
 						{ ask: "Das Haferdrink-Regal ist fast leer.", answer: "Zwei Kisten bestellt. Sie stehen im Lager." },
-						{ ask: "Nudeln 500 g sind aus.", answer: "Ersatz freigegeben: Vollkorn, gleiche Größe." },
+						{ ask: "Nudeln 500 g sind aus.", answer: "Ersatz freigegeben: Vollkorn, gleiche Größe." },
 					],
 					fridges: [{ ask: "Kühlregal sechs hat sieben Grad.", answer: "Erfasst. Bring den Joghurt in die Kühlzelle hinten.", lang: "tr" }],
 					floor: [{ ask: "In Gang 3 ist was ausgelaufen.", answer: "Die Reinigung kommt. Stell bitte das Warnschild auf." }],
@@ -335,26 +255,13 @@ export const de: Messages = {
 				gain: "Mehr Wiederverkaufswert in jeder Schicht.",
 				card: {
 					question: "Wie hilft Mandy bei Mode-Retouren?",
-					answer: [
-						"Wie eine Retoure bewertet wird, h\u00e4ngt davon ab, wer sie pr\u00fcft: Die eine verkauft die Jacke mit offener Naht wieder, der n\u00e4chste schickt sie in die Reparatur. Mandy gibt allen dieselben Regeln je Marke und Material.",
-						"Ein Doppeldruck auf den Handschuh macht ein Foto, Mandy beschreibt den Schaden und h\u00e4ngt ihn an die Retoure. Weil jeder Mangel erfasst ist, sehen Qualit\u00e4t und Einkauf, welche M\u00e4ngel immer wiederkommen.",
-					],
+					answer: "Die eine verkauft die Jacke mit offener Naht wieder, der n\u00e4chste schickt sie in die Reparatur. Mandy gibt allen dieselben Regeln.",
 					story: {
 						meaning: "Naht ist offen. Wiederverkaufen oder reparieren?",
 						answer: "Reparieren. Das kostet unter zwei Euro.",
 						lands: "Bewertung an der Retoure erfasst",
 					},
-					asks: [
-						"Naht ist offen. Wiederverkaufen oder reparieren?",
-						"Wie pr\u00fcfe ich, ob das Label echt ist?",
-						"Fleck am \u00c4rmel, ich mache ein Foto.",
-					],
-					helps: [
-						{ verb: "know", text: "Bewertungsregeln je Marke und Material, in jeder Schicht gleich." },
-						{ verb: "record", text: "Sch\u00e4den fotografiert, beschrieben und an die Retoure geh\u00e4ngt." },
-						{ verb: "learn", text: "Wiederkehrende M\u00e4ngel landen bei Qualit\u00e4t und Einkauf." },
-					],
-					result: "Einheitliche Bewertungen, und mehr Retouren schneller wieder im Verkauf.",
+					result: "Dieselbe Bewertung in jeder Schicht.",
 				},
 				voices: {
 					grader: [
@@ -381,26 +288,13 @@ export const de: Messages = {
 				gain: "Auditfähig ohne Tastatur.",
 				card: {
 					question: "Wie hilft Mandy im Pharmalager?",
-					answer: [
-						"Unter GMP braucht jeder Schritt einen Nachweis, wer ihn wann und wo erledigt hat, und ein falscher Pick kann Patienten schaden. Mandy f\u00fchrt per Sprache durch Checklisten und erfasst jeden Schritt, w\u00e4hrend er passiert.",
-						"Chargenstatus, Lagerbedingungen und SOPs kommen direkt aus Ihren Systemen, und Abweichungen erreichen die QA sofort mit Zeit und Ort.",
-					],
+					answer: "Unter GMP braucht jeder Schritt einen Nachweis. Mandy f\u00fchrt per Sprache durch die Checkliste und erfasst jeden Schritt sofort.",
 					story: {
 						meaning: "Die K\u00fchlraumt\u00fcr war f\u00fcnf Minuten offen.",
 						answer: "Abweichung mit Uhrzeit erfasst. Die QA hat es.",
 						lands: "Abweichungsmeldung an die QA",
 					},
-					asks: [
-						"Ist Charge 24-117 freigegeben?",
-						"K\u00fchlketten-Checkliste starten.",
-						"Diese Seriennummer l\u00e4sst sich nicht verifizieren.",
-					],
-					helps: [
-						{ verb: "record", text: "Gef\u00fchrte Checklisten, jeder Schritt mit wer, wann und wo erfasst." },
-						{ verb: "know", text: "Chargenstatus, Lagerbedingungen und die SOP zu jedem Schritt." },
-						{ verb: "talk", text: "Abweichungen sofort an die QA gemeldet." },
-					],
-					result: "Auditf\u00e4hige Nachweise, ohne dass jemand sie abtippen muss.",
+					result: "Auditf\u00e4hig, ohne zu tippen.",
 				},
 				voices: {
 					picker: [
@@ -427,31 +321,18 @@ export const de: Messages = {
 				gain: "Turnarounds bleiben im Plan.",
 				card: {
 					question: "Wie hilft Mandy in der Luftfahrt?",
-					answer: [
-						"Techniker und Bodenpersonal verbringen viel ihrer Schicht mit Dokumentation statt am Flugzeug. Mandy liest Taskcards und Drehmomente vor und erfasst M\u00e4ngel mit Foto und Position, w\u00e4hrend die H\u00e4nde an der Arbeit bleiben.",
-						"Vorfeld, Catering, Gep\u00e4ck und Wartung stimmen den Turnaround auf einem Kanal ab, jede Gruppe in ihrer Sprache.",
-					],
+					answer: "Techniker verlieren einen gro\u00dfen Teil der Schicht an Papierkram. Mandy liest die Taskcard vor und erfasst M\u00e4ngel, w\u00e4hrend die H\u00e4nde am Flugzeug bleiben.",
 					story: {
 						meaning: "Drehmoment f\u00fcr den Verschluss der Triebwerksverkleidung?",
-						answer: "12 Nm laut Taskcard.",
+						answer: "12 Nm laut Taskcard.",
 						lands: "Schritt auf der Taskcard abgezeichnet",
 					},
-					asks: [
-						"Drehmoment f\u00fcr den Verschluss der Triebwerksverkleidung?",
-						"Hydraulikleck am linken Hauptfahrwerk.",
-						"Ist Position 14 frei zum Pushback?",
-					],
-					helps: [
-						{ verb: "know", text: "Taskcards und Drehmomente, freih\u00e4ndig vorgelesen." },
-						{ verb: "record", text: "M\u00e4ngel mit Foto und Position am Flugzeug erfasst." },
-						{ verb: "talk", text: "Vorfeld, Catering und Wartung auf einem Kanal." },
-					],
-					result: "Mehr Zeit am Flugzeug, und Turnarounds bleiben im Plan.",
+					result: "Turnarounds bleiben im Plan.",
 				},
 				voices: {
 					ramp: [{ ask: "Auf Wagen 3 ist ein Koffer ohne Anhänger.", answer: "Foto abgelegt. Der Gepäckservice weiß Bescheid." }],
 					mechanic: [
-						{ ask: "Drehmoment für den Verschluss der Triebwerksverkleidung?", answer: "12 Nm laut Taskcard. Erfasst." },
+						{ ask: "Drehmoment für den Verschluss der Triebwerksverkleidung?", answer: "12 Nm laut Taskcard. Erfasst." },
 						{ ask: "Hydraulikleck am linken Hauptfahrwerk.", answer: "Mangel mit Foto gemeldet. Die Wartung ist unterwegs." },
 					],
 					tug: [{ ask: "Ist Position 14 frei zum Pushback?", answer: "Noch nicht. Das Catering gibt die hintere Tür in 2 Minuten frei." }],

@@ -350,7 +350,12 @@
 	{/if}
 
 	{#snippet about()}<AboutCard open={card === "mandy"} onclose={() => open(null)} />{/snippet}
-	{#snippet details()}<VerticalCard vertical={vertical.id} open={card === "details"} onclose={() => open(null)} />{/snippet}
+	{#snippet details()}<VerticalCard
+			vertical={vertical.id}
+			open={card === "details"}
+			onclose={() => open(null)}
+			onabout={() => open("mandy")}
+		/>{/snippet}
 
 	<!-- one screen of scroll per vertical; the stage above shows the one in view -->
 	{#each VERTICALS as v, i (v.id)}

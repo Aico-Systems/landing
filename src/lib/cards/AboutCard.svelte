@@ -4,98 +4,82 @@
 	import { FLOW_SPOKEN } from "$lib/i18n/spoken";
 	import { UPDATED } from "$lib/site";
 	import { longDate } from "$lib/seo";
-	import Figures from "./Figures.svelte";
 	import Flow from "./Flow.svelte";
-	import Bento from "./Bento.svelte";
-	import Systems from "./Systems.svelte";
+	import Verbs from "./Verbs.svelte";
 	import Pilot from "./Pilot.svelte";
-	import type { Verb } from "$lib/i18n/index.svelte";
 
-	/** The card about Mandy itself: the home page's long text, staged. */
+	/** The card about Mandy itself: what it is, one message on its way round
+	 *  (the part that plays), then the questions a buyer has, briefly. */
 	let { open, onclose }: { open: boolean; onclose: () => void } = $props();
 
 	const a = $derived(m().home.mandy);
-	const verbs = $derived(Object.entries(a.verbs).map(([verb, text]) => ({ verb: verb as Verb, text })));
 </script>
 
 <Card id="mandy" title={a.question} {open} {onclose}>
-	{#each a.answer as p, i (p)}<p class="lead" data-reveal style="--d: {0.1 + i * 0.1}s">{p}</p>{/each}
-	<Figures items={a.figures} />
+	<p class="answer">{a.answer}</p>
 
-	<h3 class="eyebrow">{a.whyHeading}</h3>
-	{#each a.why as p (p)}<p data-reveal>{p}</p>{/each}
+	<section>
+		<h3>{a.flow.heading}</h3>
+		<Flow steps={a.flow.steps} ask={FLOW_SPOKEN.ask} reply={FLOW_SPOKEN.reply} />
+	</section>
 
-	<h3 class="eyebrow">{a.flowHeading}</h3>
-	<p data-reveal>{a.flowText}</p>
-	<Flow steps={a.flow} ask={FLOW_SPOKEN.ask} reply={FLOW_SPOKEN.reply} />
+	<section>
+		<h3>{a.verbs.heading}</h3>
+		<Verbs items={a.verbs.items} />
+	</section>
 
-	<h3 class="eyebrow">{a.verbsHeading}</h3>
-	<Bento items={verbs} />
+	<section>
+		<h3>{a.why.heading}</h3>
+		<p>{a.why.text}</p>
+	</section>
 
-	<h3 class="eyebrow">{a.systemsHeading}</h3>
-	<p data-reveal>{a.systemsText}</p>
-	<Systems />
+	<section class="pair">
+		<div>
+			<h3>{a.systems.heading}</h3>
+			<p>{a.systems.text}</p>
+		</div>
+		<div>
+			<h3>{a.runs.heading}</h3>
+			<p>{a.runs.text}</p>
+		</div>
+	</section>
 
-	<h3 class="eyebrow">{a.runsHeading}</h3>
-	<ul class="runs">
-		{#each a.runs as r, i (r.name)}
-			<li data-reveal style="--d: {i * 0.08}s"><strong>{r.name}</strong>{r.text}</li>
-		{/each}
-	</ul>
+	<section>
+		<h3>{a.pilot.heading}</h3>
+		<Pilot steps={a.pilot.steps} />
+	</section>
 
-	<h3 class="eyebrow">{a.pilotHeading}</h3>
-	<p data-reveal>{a.pilotText}</p>
-	<Pilot steps={a.pilot} />
-
-	<h3 class="eyebrow" id="faq">{a.faqHeading}</h3>
-	<div class="faq">
-		{#each a.faq as f (f.q)}
-			<details data-reveal>
+	<section id="faq">
+		<h3>{a.faq.heading}</h3>
+		{#each a.faq.items as f (f.q)}
+			<details>
 				<summary>{f.q}</summary>
 				<p>{f.a}</p>
 			</details>
 		{/each}
-	</div>
+	</section>
+
 	<p class="updated">{m().site.updated(longDate(i18n.locale, UPDATED))}</p>
 </Card>
 
 <style>
-	.runs {
-		list-style: none;
-		padding: 0;
-		margin: 0;
+	/* two short answers side by side */
+	.pair {
 		display: grid;
-		grid-template-columns: repeat(3, minmax(0, 1fr));
-		gap: 0.75rem;
+		grid-template-columns: 1fr 1fr;
+		gap: 2rem;
 	}
-	.runs li {
-		display: grid;
-		gap: 0.4rem;
-		align-content: start;
-		margin: 0;
-		padding: 1.1rem;
-		border-radius: 1.1rem;
-		border: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
-		font-size: 0.9rem;
-		line-height: 1.45;
-		color: var(--ink-soft);
-	}
-	.runs strong {
-		font-size: 1rem;
-		font-stretch: 112%;
-		color: var(--ink);
-	}
-	.faq {
-		border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+	.pair p {
+		font-size: 0.98rem;
 	}
 	details {
-		border-bottom: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+		border-bottom: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
 	}
 	summary {
 		display: flex;
 		justify-content: space-between;
 		gap: 1rem;
-		padding: 1rem 0;
+		padding: 0.85rem 0;
 		font-weight: 600;
 		cursor: pointer;
 		list-style: none;
@@ -106,8 +90,8 @@
 	summary::after {
 		content: "+";
 		color: var(--accent);
-		font-weight: 400;
 		font-size: 1.3rem;
+		font-weight: 400;
 		line-height: 1;
 		transition: rotate 0.25s;
 	}
@@ -115,11 +99,10 @@
 		rotate: 45deg;
 	}
 	details p {
-		margin: 0 0 1rem;
-		color: var(--ink-soft);
+		padding-bottom: 1rem;
 	}
 	@media (max-width: 620px) {
-		.runs {
+		.pair {
 			grid-template-columns: 1fr;
 		}
 	}

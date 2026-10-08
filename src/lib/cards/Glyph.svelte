@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { Verb } from "$lib/i18n/index.svelte";
 
-	/** A verb's mark, a few strokes that draw themselves when their tile
-	 *  comes into view: a bulb, a bolt, two bubbles, a camera, a rising chart. */
+	/** A verb's mark, a few strokes: a bulb, a bolt, two bubbles, a camera,
+	 *  a rising chart. */
 	let { verb }: { verb: Verb } = $props();
 
 	const PATHS: Record<Verb, string[]> = {
@@ -20,27 +20,13 @@
 
 <style>
 	.glyph {
-		width: 2rem;
-		height: 2rem;
+		width: 1.25rem;
+		height: 1.25rem;
+		flex: none;
 		fill: none;
 		stroke: var(--accent);
 		stroke-width: 1.6;
 		stroke-linecap: round;
 		stroke-linejoin: round;
-	}
-	path {
-		stroke-dasharray: 1;
-		stroke-dashoffset: 1;
-		transition: stroke-dashoffset 0.9s cubic-bezier(0.6, 0, 0.2, 1);
-		transition-delay: calc(var(--d, 0s) + 0.2s + var(--i) * 0.15s);
-	}
-	:global(.in) path {
-		stroke-dashoffset: 0;
-	}
-	@media (prefers-reduced-motion: reduce) {
-		path {
-			stroke-dashoffset: 0;
-			transition: none;
-		}
 	}
 </style>
