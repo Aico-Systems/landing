@@ -6,8 +6,8 @@
 	 * One message on its way round, drawn as four stages on a board joined
 	 * by a single trace: the worker's words in Ukrainian, Mandy's structured
 	 * report, the team lead's message in German with a one-tap reply, the
-	 * reply heard back in Ukrainian. A signal runs the trace once as the
-	 * card opens.
+	 * reply heard back in Ukrainian. Connectors join the stages; a signal
+	 * runs them, stage by stage, once as the card opens.
 	 */
 	let { steps, spoken }: { steps: { who: string; text: string }[]; spoken: typeof FLOW_SPOKEN } = $props();
 </script>
@@ -49,53 +49,21 @@
 		padding: 1.25rem;
 		display: grid;
 		grid-template-columns: repeat(4, minmax(0, 1fr));
-		gap: 1rem;
+		/* one set of rows for all the stages: labels, drawings and captions
+		   line up across the board */
+		grid-template-rows: auto 7.5rem auto;
+		gap: 0.6rem 1.75rem;
 		border: 1px solid color-mix(in srgb, var(--ink) 13%, transparent);
 		border-radius: 0.9rem;
 		background:
 			radial-gradient(color-mix(in srgb, var(--ink) 14%, transparent) 1px, transparent 1.2px) 0 0 / 14px 14px,
 			linear-gradient(color-mix(in srgb, var(--ink) 4%, transparent), transparent 70%);
 	}
-	/* the trace through the stages, and the signal that runs it */
-	.flow::before,
-	.flow::after {
-		content: "";
-		position: absolute;
-		left: 2.5rem;
-		right: 2.5rem;
-		top: 6.1rem;
-		height: 1px;
-		background: var(--line);
-	}
-	.flow::after {
-		height: 2px;
-		margin-top: -0.5px;
-		background: linear-gradient(90deg, transparent, var(--accent) 40%, var(--accent) 60%, transparent) no-repeat;
-		background-size: 4rem 100%;
-		background-position: -4rem 0;
-		opacity: 0;
-	}
-	:global(.open) .flow::after {
-		animation: signal 3.2s cubic-bezier(0.45, 0, 0.55, 1) 0.4s both;
-	}
-	@keyframes signal {
-		0% {
-			opacity: 1;
-			background-position: -4rem 0;
-		}
-		90% {
-			opacity: 1;
-		}
-		100% {
-			opacity: 0;
-			background-position: calc(100% + 4rem) 0;
-		}
-	}
 	li {
 		position: relative;
+		grid-row: span 3;
 		display: grid;
-		grid-template-rows: auto 7.5rem auto;
-		gap: 0.6rem;
+		grid-template-rows: subgrid;
 		min-width: 0;
 	}
 	.who {
@@ -111,10 +79,9 @@
 		font-variant-numeric: tabular-nums;
 		color: var(--ink-soft);
 	}
-	/* each stage's drawing sits on the trace */
+	/* each stage's drawing, full column width, centred in its row */
 	.node {
 		position: relative;
-		z-index: 1;
 		display: grid;
 		align-items: center;
 		font-size: 0.8rem;
@@ -134,7 +101,6 @@
 		color: var(--accent);
 	}
 	.reply.bubble {
-		justify-self: start;
 		background: var(--accent);
 		border-color: transparent;
 		color: white;
@@ -202,6 +168,52 @@
 		line-height: 1.4;
 		color: var(--ink-soft);
 	}
+	/* the connector to the next stage: a hairline across the gap at the
+	   row's middle, an arrowhead at its end, and a signal dot that runs it
+	   once its stage has lit */
+	li:not(:last-child) .node::after {
+		content: "";
+		position: absolute;
+		left: calc(100% + 0.3rem);
+		width: calc(1.75rem - 0.6rem);
+		top: 50%;
+		height: 7px;
+		margin-top: -3.5px;
+		background:
+			linear-gradient(var(--line), var(--line)) left center / calc(100% - 4px) 1px no-repeat,
+			conic-gradient(from -135deg at 100% 50%, var(--ink-soft) 90deg, transparent 0) right center / 5px 7px no-repeat;
+	}
+	li:not(:last-child) .node::before {
+		content: "";
+		position: absolute;
+		z-index: 1;
+		left: calc(100% + 0.3rem);
+		top: 50%;
+		width: 5px;
+		height: 5px;
+		margin-top: -2.5px;
+		border-radius: 50%;
+		background: var(--accent);
+		box-shadow: 0 0 6px var(--accent);
+		opacity: 0;
+	}
+	:global(.open) li:not(:last-child) .node::before {
+		animation: run 0.55s ease-in both;
+		animation-delay: calc(0.85s + var(--i) * 0.85s);
+	}
+	@keyframes run {
+		0% {
+			opacity: 1;
+			translate: 0;
+		}
+		85% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0;
+			translate: calc(1.75rem - 0.6rem - 5px);
+		}
+	}
 	/* the stages come up as the signal reaches them */
 	.node {
 		opacity: 0.35;
@@ -218,9 +230,10 @@
 	@media (max-width: 720px) {
 		.flow {
 			grid-template-columns: 1fr 1fr;
+			grid-template-rows: auto 7.5rem auto auto 7.5rem auto;
 		}
-		.flow::before,
-		.flow::after {
+		li .node::before,
+		li .node::after {
 			display: none;
 		}
 	}
@@ -229,7 +242,7 @@
 			opacity: 1;
 		}
 		:global(.open) .node,
-		:global(.open) .flow::after {
+		:global(.open) li .node::before {
 			animation: none;
 		}
 	}

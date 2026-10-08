@@ -103,8 +103,9 @@
 	   per level, lines kept under 70 characters. These are defaults for
 	   whatever a card holds, kept at one class and one element so a part's
 	   own (scoped) styles win over them. */
+	/* the column fills the panel: boards and tiles take its full width,
+	   running text keeps its own measure (p, .answer) */
 	.card-text {
-		max-width: 44rem;
 		color: var(--ink);
 		font-size: 1.0625rem;
 		line-height: 1.6;

@@ -84,7 +84,7 @@
 	}
 	text {
 		fill: var(--ink);
-		font-size: 20px;
+		font-size: 17px;
 		font-weight: 800;
 		font-stretch: 115%;
 		text-anchor: middle;
