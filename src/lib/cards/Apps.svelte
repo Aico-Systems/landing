@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { APPS, type AppGroup } from "$lib/integrations";
+	import { SYSTEMS } from "$lib/systems";
+	import Logo from "./Logo.svelte";
 
 	/** The apps Mandy works with, by what they are for: a spec sheet of
 	 *  columns, the catalog's rest summed up under it. */
@@ -13,7 +15,7 @@
 		<div class="group">
 			<h4>{groups[id]}</h4>
 			<ul>
-				{#each APPS[id] as app (app)}<li>{app}</li>{/each}
+				{#each APPS[id] as app (app)}<li><Logo id={app} />{SYSTEMS[app].name}</li>{/each}
 			</ul>
 		</div>
 	{/each}
@@ -48,12 +50,21 @@
 		margin: 0;
 		padding: 0;
 		display: grid;
-		gap: 0.35rem;
+		gap: 0.5rem;
 	}
 	li {
+		display: flex;
+		align-items: center;
+		gap: 0.55rem;
 		font-size: 0.86rem;
-		line-height: 1.3;
+		line-height: 1.25;
 		color: var(--ink);
+	}
+	li :global(.logo) {
+		width: 1.6rem;
+		height: 1.6rem;
+		border-radius: 0.4rem;
+		padding: 0.2rem;
 	}
 	.more {
 		grid-column: 1 / -1;

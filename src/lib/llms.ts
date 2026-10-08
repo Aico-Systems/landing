@@ -5,6 +5,7 @@ import { SPOKEN } from "$lib/i18n/spoken";
 import type { Verb } from "$lib/i18n/types";
 import { UPDATED } from "$lib/site";
 import { APPS, PIECES, type AppGroup } from "$lib/integrations";
+import { SYSTEMS, VERTICAL_SYSTEMS } from "$lib/systems";
 import { absolute, pagePath } from "$lib/seo";
 
 /**
@@ -59,6 +60,7 @@ function full(locale: Locale): string {
 		const said = SPOKEN[v.id];
 		out.push(`## ${c.question}`, "", `Source: ${absolute(pagePath(locale, v.id))}`, "", c.answer, "");
 		out.push(`> "${said.text}" (${said.lang}): ${c.story.meaning}`, `> Mandy: ${c.story.answer}`, `> ${c.story.lands}`, "", c.result, "");
+		out.push(`${m.home.systems.heading}: ${VERTICAL_SYSTEMS[v.id].map((id) => SYSTEMS[id].name).join(", ")}`, "");
 	}
 	out.push(m.site.updated(UPDATED));
 	return out.join("\n");

@@ -9,15 +9,19 @@
  * (@activepieces/piece-*) on PIECES_COUNTED; recount when updating:
  * curl "https://registry.npmjs.org/-/v1/search?text=%40activepieces%2Fpiece-&size=250&from=<0,250,…>"
  */
+import type { SystemId } from "$lib/systems";
+
 export const PIECES = 777;
 export const PIECES_COUNTED = "2026-10-08";
 
 export type AppGroup = "erp" | "service" | "messaging" | "documents" | "data";
 
-export const APPS: Record<AppGroup, string[]> = {
-	erp: ["SAP Ariba", "Dynamics 365", "NetSuite", "Odoo", "Workday", "Salesforce"],
-	service: ["ServiceNow", "Jira", "Zendesk", "Freshdesk", "Azure DevOps", "Monday"],
-	messaging: ["Microsoft Teams", "Slack", "WhatsApp", "Twilio SMS", "Telegram", "Outlook"],
-	documents: ["SharePoint", "OneDrive", "Confluence", "Google Drive", "Notion", "Dropbox"],
-	data: ["Excel 365", "Google Sheets", "Power BI", "SQL Server", "Postgres", "Webhooks"],
+/** The apps by what they are for: systems from the registry, so they carry
+ *  their logos. */
+export const APPS: Record<AppGroup, SystemId[]> = {
+	erp: ["ariba", "dynamics", "netsuite", "odoo", "workday", "salesforce"],
+	service: ["servicenow", "jira", "zendesk", "freshdesk", "azureDevops", "monday"],
+	messaging: ["teams", "slack", "whatsapp", "twilio", "telegram", "outlook"],
+	documents: ["sharepoint", "onedrive", "confluence", "googleDrive", "notion", "dropbox"],
+	data: ["excel", "googleSheets", "powerBi", "sqlServer", "postgres", "webhooks"],
 };

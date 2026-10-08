@@ -7,6 +7,7 @@
       "dependencies": {
         "@fontsource-variable/archivo": "^5.3.0",
         "animejs": "^4.2.2",
+        "simple-icons": "^16.34.0",
         "three": "^0.186.0",
       },
       "devDependencies": {
@@ -184,6 +185,8 @@
     "sade": ["sade@1.8.1", "", { "dependencies": { "mri": "^1.1.0" } }, "sha512-xal3CZX1Xlo/k4ApwCFrHVACi9fBqJ7V+mwhBsuf/1IOKbBy098Fex+Wa/5QMubw09pSZ/u8EY8PWgevJsXp1A=="],
 
     "set-cookie-parser": ["set-cookie-parser@3.1.2", "", {}, "sha512-5/r/lTwbJ3zQ+qwdUFZYeRNqda7P5HD8zQKqlSjdGt1/S0cjLAphHusj4Y58ahDtWn/g32xrIS58/ikOvwl0Lw=="],
+
+    "simple-icons": ["simple-icons@16.34.0", "", {}, "sha512-UTxKn0PVspk84B2hHF3Dqiqht1yDjJmDc/t4cO7PyCQxCMk6OjEu95pnpGjhLaGeQ4qBrGASbefTIe/+czrX7g=="],
 
     "sirv": ["sirv@3.0.2", "", { "dependencies": { "@polka/url": "^1.0.0-next.24", "mrmime": "^2.0.0", "totalist": "^3.0.0" } }, "sha512-2wcC/oGxHis/BoHkkPwldgiPSYcpZK3JU28WoMVv55yHJgcZ8rlXvuG9iZggz+sU1d4bRgIGASwyWqjxu3FM0g=="],
 

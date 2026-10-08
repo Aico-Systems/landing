@@ -6,6 +6,8 @@
 	import { longDate } from "$lib/seo";
 	import type { VerticalId } from "$lib/verticals";
 	import Replay from "./Replay.svelte";
+	import Systems from "./Systems.svelte";
+	import { VERTICAL_SYSTEMS } from "$lib/systems";
 
 	/** A vertical's card: its question answered in two sentences, one
 	 *  exchange played through, and what changes. */
@@ -31,6 +33,11 @@
 		lands={c.story.lands}
 	/>
 	<p class="result">{c.result}</p>
+	<section>
+		<h3>{words.systems.heading}</h3>
+		<p class="note">{words.systems.note}</p>
+		<Systems ids={VERTICAL_SYSTEMS[vertical]} />
+	</section>
 	<a
 		class="about"
 		href="#mandy"
@@ -54,6 +61,10 @@
 		line-height: 1.08;
 		letter-spacing: -0.025em;
 		color: var(--ink);
+	}
+	.note {
+		font-size: 0.9rem;
+		color: var(--ink-soft);
 	}
 	.about {
 		display: inline-block;

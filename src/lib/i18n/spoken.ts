@@ -13,14 +13,14 @@ export interface Spoken {
 
 /** The exchange each vertical's card replays: the worker's words. */
 export const SPOKEN: Record<VerticalId, Spoken> = {
-	warehouse: { lang: "uk", text: "Як клієнт B хоче маркувати цю палету?" },
-	manufacturing: { lang: "pl", text: "Na kittingu zostały tylko trzy wiązki kablowe." },
-	parcel: { lang: "ro", text: "Coletul acesta nu are etichetă." },
-	ecommerce: { lang: "bg", text: "Първи ден съм. Как да опаковам стъкло?" },
-	grocery: { lang: "tr", text: "Yulaf içeceği rafı neredeyse boş." },
-	fashion: { lang: "vi", text: "Đường may bị bung. Bán lại hay sửa?" },
-	pharma: { lang: "pl", text: "Drzwi chłodni były otwarte przez pięć minut." },
-	aviation: { lang: "es", text: "¿Qué par de apriete lleva el cierre del capó del motor?" },
+	warehouse: { lang: "uk", text: "Клієнт пише подарункове пакування, але на етикетці немає коду. Що робити?" },
+	manufacturing: { lang: "pl", text: "Jaki moment dokręcania tylnych śrub ramy pomocniczej w wersji hybrydowej?" },
+	parcel: { lang: "ro", text: "Eticheta e ruptă, lipsește jumătate din codul poștal. Unde merge?" },
+	ecommerce: { lang: "bg", text: "Мястото за артикула, завършващ на 4471, е празно. Можеш ли да заявиш попълване?" },
+	grocery: { lang: "tr", text: "3. reyondaki dolap 9 derece gösteriyor. Kaydediyorum, kimi aramalıyım?" },
+	fashion: { lang: "vi", text: "Đường may hơi bị tuột, không còn mác. Bán lại hay tân trang?" },
+	pharma: { lang: "pl", text: "Rejestrator na tym pojemniku pokazuje 9,2 stopnia. Mam go dać do kwarantanny?" },
+	aviation: { lang: "es", text: "¿Número de pieza IPC del casquillo del brazo de torsión del tren principal izquierdo?" },
 };
 
 /** The message the card about Mandy follows round: said in Ukrainian, read

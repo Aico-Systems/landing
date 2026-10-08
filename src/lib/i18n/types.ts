@@ -1,5 +1,6 @@
 import type { VerticalId } from "$lib/verticals";
 import type { AppGroup } from "$lib/integrations";
+import type { SystemKind } from "$lib/systems";
 
 /**
  * Every word on the site, one shape for every language: a locale file that
@@ -45,6 +46,10 @@ export interface Messages {
 		/** Under a worker's words in their language: what they mean ([language]
 		 *  already named in the page's language). */
 		heardIn: (language: string) => string;
+		/** What each kind of system is called. */
+		systemKinds: Record<SystemKind, string>;
+		/** A vertical card's systems: its heading, and how they connect. */
+		systems: { heading: string; note: string };
 		verbs: Record<Verb, string>;
 		/** The card about Mandy as a whole: the home page's long text. */
 		mandy: AboutWords;
