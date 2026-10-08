@@ -56,8 +56,10 @@ export interface System {
 	piece?: string;
 	/** Its Simple Icons slug, when Simple Icons has its mark. */
 	icon?: string;
-	/** The site's icon is not the product's mark: draw a lettered tile. */
-	lettered?: true;
+	/** Where its logo is, when neither Simple Icons nor the piece has it:
+	 *  an image URL, or a page whose header carries the logo as inline SVG
+	 *  ("inline:<url>"). Without one, the vendor's site icon is used. */
+	logo?: string;
 }
 
 export const SYSTEMS = {
@@ -69,14 +71,14 @@ export const SYSTEMS = {
 	blueYonder: { name: "Blue Yonder", domain: "blueyonder.com", kind: "wms" },
 	infios: { name: "Infios", domain: "infios.com", kind: "wms" },
 	korber: { name: "Körber", domain: "koerber.com", kind: "wms" },
-	extensiv: { name: "Extensiv", domain: "extensiv.com", kind: "wms" },
+	extensiv: { name: "Extensiv", domain: "extensiv.com", kind: "wms", logo: "https://www.extensiv.com/hs-fs/hubfs/DSG+Extensiv_Three_Color_Logo_RGB-300.png?width=300&height=128&name=DSG+Extensiv_Three_Color_Logo_RGB-300.png" },
 	vocollect: { name: "Honeywell Vocollect", domain: "honeywell.com", kind: "voice" },
 	ukg: { name: "UKG Pro", domain: "ukg.com", kind: "workforce" },
 	atoss: { name: "ATOSS", domain: "atoss.com", kind: "workforce" },
 	transporeon: { name: "Transporeon", domain: "transporeon.com", kind: "yard" },
 	servicenow: { name: "ServiceNow", domain: "servicenow.com", kind: "tickets", piece: "service-now" },
 	maintainx: { name: "MaintainX", domain: "getmaintainx.com", kind: "maintenance" },
-	maximo: { name: "IBM Maximo", domain: "ibm.com", kind: "maintenance", lettered: true },
+	maximo: { name: "IBM Maximo", domain: "ibm.com", kind: "maintenance", logo: "https://commons.wikimedia.org/wiki/Special:FilePath/IBM_logo.svg" },
 	sharepoint: { name: "SharePoint", domain: "microsoft.com", kind: "documents", piece: "microsoft-sharepoint" },
 	teams: { name: "Microsoft Teams", domain: "microsoft.com", kind: "messaging", piece: "microsoft-teams" },
 	flip: { name: "Flip", domain: "getflip.com", kind: "messaging" },
@@ -92,10 +94,10 @@ export const SYSTEMS = {
 	tulip: { name: "Tulip", domain: "tulip.co", kind: "instructions" },
 	vanderlande: { name: "Vanderlande", domain: "vanderlande.com", kind: "sorting" },
 	intelligrated: { name: "Honeywell Intelligrated", domain: "honeywell.com", kind: "sorting" },
-	descartes: { name: "Descartes", domain: "descartes.com", kind: "routing" },
+	descartes: { name: "Descartes", domain: "descartes.com", kind: "routing", logo: "https://www.descartes.com/themes/descartes/logo-dark.png" },
 	ptv: { name: "PTV", domain: "ptvgroup.com", kind: "routing" },
 	aeb: { name: "AEB", domain: "aeb.com", kind: "customs" },
-	dakosy: { name: "DAKOSY", domain: "dakosy.de", kind: "customs" },
+	dakosy: { name: "DAKOSY", domain: "dakosy.de", kind: "customs", logo: "inline:https://www.dakosy.de/" },
 	shopify: { name: "Shopify", domain: "shopify.com", kind: "shop", piece: "shopify", icon: "shopify" },
 	shopware: { name: "Shopware", domain: "shopware.com", kind: "shop", icon: "shopware" },
 	jtl: { name: "JTL", domain: "jtl-software.de", kind: "erp" },
@@ -107,30 +109,30 @@ export const SYSTEMS = {
 	loop: { name: "Loop Returns", domain: "loopreturns.com", kind: "returns" },
 	gorgias: { name: "Gorgias", domain: "gorgias.com", kind: "helpdesk" },
 	zendesk: { name: "Zendesk", domain: "zendesk.com", kind: "helpdesk", piece: "zendesk", icon: "zendesk" },
-	amazon: { name: "Amazon Seller Central", domain: "sellercentral.amazon.com", kind: "marketplace" },
+	amazon: { name: "Amazon Seller Central", domain: "sellercentral.amazon.com", kind: "marketplace", logo: "https://commons.wikimedia.org/wiki/Special:FilePath/Amazon_logo.svg" },
 	gk: { name: "GK Software", domain: "gk-software.com", kind: "erp" },
 	relex: { name: "RELEX", domain: "relexsolutions.com", kind: "replenishment" },
 	workcloud: { name: "Zebra Workcloud", domain: "zebra.com", kind: "workforce" },
 	yoobic: { name: "YOOBIC", domain: "yoobic.com", kind: "tasks" },
 	smartsense: { name: "SmartSense", domain: "smartsense.co", kind: "temperature" },
 	testo: { name: "testo Saveris", domain: "testo.com", kind: "temperature" },
-	danfoss: { name: "Danfoss", domain: "danfoss.com", kind: "temperature" },
-	servicechannel: { name: "ServiceChannel", domain: "servicechannel.com", kind: "maintenance" },
+	danfoss: { name: "Danfoss", domain: "danfoss.com", kind: "temperature", logo: "https://www.danfoss.com/static/images/new-logo.svg" },
+	servicechannel: { name: "ServiceChannel", domain: "servicechannel.com", kind: "maintenance", logo: "https://servicechannel.com/dist/images/temp/svg/logo.svg" },
 	ocado: { name: "Ocado", domain: "ocadogroup.com", kind: "shop" },
 	zigzag: { name: "ZigZag", domain: "zigzag.global", kind: "returns" },
 	parcellab: { name: "parcelLab", domain: "parcellab.com", kind: "returns" },
 	narvar: { name: "Narvar", domain: "narvar.com", kind: "returns" },
 	trove: { name: "Trove", domain: "trove.com", kind: "resale" },
 	returnpro: { name: "ReturnPro", domain: "returnpro.com", kind: "returns" },
-	centric: { name: "Centric PLM", domain: "centricsoftware.com", kind: "plm" },
-	lectra: { name: "Lectra", domain: "lectra.com", kind: "plm" },
+	centric: { name: "Centric PLM", domain: "centricsoftware.com", kind: "plm", logo: "https://images.ctfassets.net/32vxorm5v0vi/7zKz43DPvoHTtEtz4weDpG/4670c96639ce1004b855d58528b910ad/centric-icon__1_.svg" },
+	lectra: { name: "Lectra", domain: "lectra.com", kind: "plm", logo: "https://www.lectra.com/themes/custom/lectra_b5/logo.svg" },
 	fluent: { name: "Fluent Commerce", domain: "fluentcommerce.com", kind: "shop" },
 	inspectorio: { name: "Inspectorio", domain: "inspectorio.com", kind: "quality" },
 	zalando: { name: "Zalando ZEOS", domain: "zeos.eu", kind: "marketplace", icon: "zalando" },
-	veeva: { name: "Veeva Vault", domain: "veeva.com", kind: "quality" },
+	veeva: { name: "Veeva Vault", domain: "veeva.com", kind: "quality", logo: "https://commons.wikimedia.org/wiki/Special:FilePath/Veeva_Systems_logo.svg" },
 	trackwise: { name: "TrackWise", domain: "honeywell.com", kind: "quality" },
-	mastercontrol: { name: "MasterControl", domain: "mastercontrol.com", kind: "quality" },
-	securpharm: { name: "securPharm", domain: "securpharm.de", kind: "serialisation", lettered: true },
+	mastercontrol: { name: "MasterControl", domain: "mastercontrol.com", kind: "quality", logo: "https://www.mastercontrol.com/images/default-source/mcui-design-system/logos/mastercontrol/teal/mc-logo-teal-hz.svg" },
+	securpharm: { name: "securPharm", domain: "securpharm.de", kind: "serialisation", logo: "https://www.securpharm.de/wp-content/uploads/2024/08/cropped-favicon-192x192.bmp" },
 	tracelink: { name: "TraceLink", domain: "tracelink.com", kind: "serialisation" },
 	rfxcel: { name: "rfxcel", domain: "rfxcel.com", kind: "serialisation" },
 	vaisala: { name: "Vaisala viewLinc", domain: "vaisala.com", kind: "temperature" },
@@ -138,9 +140,9 @@ export const SYSTEMS = {
 	amos: { name: "AMOS", domain: "swiss-as.com", kind: "mro" },
 	boeing: { name: "Boeing Toolbox", domain: "services.boeing.com", kind: "techdocs", icon: "boeing" },
 	airnavx: { name: "Airbus airnavX", domain: "airbus.com", kind: "techdocs", icon: "airbus" },
-	trax: { name: "TRAX", domain: "trax.aero", kind: "mro" },
-	ifs: { name: "IFS Maintenix", domain: "ifs.com", kind: "mro" },
-	ramco: { name: "Ramco Aviation", domain: "ramco.com", kind: "mro" },
+	trax: { name: "TRAX", domain: "trax.aero", kind: "mro", logo: "https://www.trax.aero/images/favicon-trax.svg" },
+	ifs: { name: "IFS Maintenix", domain: "ifs.com", kind: "mro", logo: "https://commons.wikimedia.org/wiki/Special:FilePath/Ifs_logo.svg" },
+	ramco: { name: "Ramco Aviation", domain: "ramco.com", kind: "mro", logo: "https://www.ramco.com/hs-fs/hubfs/website-assets/ramco-logo.png?width=130&height=28&name=ramco-logo.png" },
 	groundstar: { name: "INFORM GroundStar", domain: "inform-software.com", kind: "groundops" },
 	amadeus: { name: "Amadeus", domain: "amadeus.com", kind: "groundops" },
 	worldtracer: { name: "SITA WorldTracer", domain: "sita.aero", kind: "baggage" },
@@ -168,7 +170,7 @@ export const SYSTEMS = {
 	powerBi: { name: "Power BI", domain: "powerbi.com", kind: "documents", piece: "microsoft-power-bi" },
 	sqlServer: { name: "SQL Server", domain: "microsoft.com", kind: "documents", piece: "microsoft-sql-server" },
 	postgres: { name: "Postgres", domain: "postgresql.org", kind: "documents", piece: "postgres", icon: "postgresql" },
-	webhooks: { name: "Webhooks", domain: "activepieces.com", kind: "tickets", piece: "webhook", lettered: true },
+	webhooks: { name: "Webhooks", domain: "activepieces.com", kind: "tickets", piece: "webhook", logo: "local:webhooks" },
 } satisfies Record<string, System>;
 
 export type SystemId = keyof typeof SYSTEMS;

@@ -25,7 +25,7 @@ bun run check
 | `src/lib/cards/` | What the cards are made of: `AboutCard` and `VerticalCard`; `Replay` and `Chat` (the part of each card that plays: an exchange, and one message between the glove and Teams), `Bento` with `VerbVisual`, `Connect` (the wiring board), `Apps` (the integrations), `Pilot` (a week plan), `Icon` |
 | `src/lib/integrations.ts` | The apps the integrations section lists, and the size of the Activepieces catalog (with the date it was counted and how to recount) |
 | `src/lib/systems.ts` | Every system the cards name (name, domain, kind, its Activepieces piece) and which ones each vertical runs, from per-industry research |
-| `src/lib/logos/` | Their logos, fetched once by `tools/logos/fetch.py` (Simple Icons, the Activepieces piece logo, or the vendor's site icon); a system without one gets a lettered tile |
+| `src/lib/logos/` | Their logos, `<id>.png` for light tiles and `<id>-dark.png` where a mark needs its own for dark tiles, made by `tools/logos/fetch.py` (from a curated URL, Simple Icons, the Activepieces piece logo or the vendor's site icon; white backgrounds removed, marks trimmed and squared, dark ink turned light for dark tiles) |
 | `src/lib/seo.ts`, `llms.ts` | Addresses, alternates and structured data; the Markdown for language models. All from the words in `src/lib/i18n` |
 | `src/lib/site.ts` | The site's address (`SITE_URL`), its parent company (structured data only), the date of its facts (`UPDATED`), the demo link |
 | `src/hooks.server.ts` | Fills `src/app.html`'s blanks at build time: the page's language, and the list of languages |
