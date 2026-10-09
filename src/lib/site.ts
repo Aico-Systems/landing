@@ -17,3 +17,12 @@ export const UPDATED = "2026-10-08";
 
 /** Where "Book a demo" leads. The button stays hidden until it is set. */
 export const DEMO_URL = "";
+
+/** The assistant visitors can talk to, in the corner of every page: the AICO
+ *  widget (static/aico/, tools/widget.ts) on the DEMO organization's demo
+ *  flow, on the local stack in development and on the sandbox on the site. */
+export const ASSISTANT = {
+	api: import.meta.env.DEV ? "http://localhost:8000" : "https://api.sandbox.aicoflow.com",
+	org: "DEMO",
+	flow: "demomesse",
+};

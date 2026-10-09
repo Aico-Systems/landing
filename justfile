@@ -1,8 +1,10 @@
 # =============================================================================
 # landing/justfile — Mandy's landing page (static SvelteKit, prerendered)
 # =============================================================================
-# Not in process-compose: the site talks to no AICO service, so it runs on
-# its own. Its Vite port (vite.config.js) stays clear of the host plane's
+# Not in process-compose: the site runs on its own. Its one AICO piece is the
+# widget in the corner (src/lib/Assistant.svelte), built from clients/widget
+# by tools/widget.ts on dev and build, on the local stack in development and
+# the sandbox's API on the site (src/lib/site.ts ASSISTANT). Its Vite port (vite.config.js) stays clear of the host plane's
 # frontend (5173) and widget (5174).
 #
 # Deployed as files: a Caddy drop-in on the sandbox box (deploy/landing.caddy)

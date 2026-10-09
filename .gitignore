@@ -2,6 +2,9 @@ node_modules/
 .svelte-kit/
 build/
 
+# the AICO widget, copied from clients/widget by tools/widget.ts
+static/aico/
+
 # confidential reference material (customer and partner documents): never committed
 res/
 tools/og/.cache/

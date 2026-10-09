@@ -19,6 +19,13 @@ just deploy        # build, sync to the sandbox box, live at mandy.insight-progl
 Caddy. The build writes a `.br`, `.zst` and `.gz` beside every text file and
 scene (`tools/compress.ts`), which Caddy serves as they are.
 
+The assistant in the corner is the AICO widget (`src/lib/Assistant.svelte`,
+launcher mode, text and voice) on the DEMO organization's demo flow:
+`tools/widget.ts` builds `clients/widget` (its voice core needs Rust, see that
+README) and copies it into `static/aico/` (not committed) on every dev and
+build. Development talks to the local stack, the site to the sandbox's API
+(`ASSISTANT` in `src/lib/site.ts`). Its script loads once the page is idle.
+
 ## Layout
 
 | Path | What |
@@ -34,7 +41,8 @@ scene (`tools/compress.ts`), which Caddy serves as they are.
 | `src/lib/systems.ts` | Every system the cards name (name, domain, kind, its Activepieces piece) and which ones each vertical runs, from per-industry research |
 | `src/lib/logos/` | Their logos, `<id>.png` for light tiles and `<id>-dark.png` where a mark needs its own for dark tiles, made by `tools/logos/fetch.py` (from a curated URL, Simple Icons, the Activepieces piece logo or the vendor's site icon; white backgrounds removed, marks trimmed and squared, dark ink turned light for dark tiles) |
 | `src/lib/seo.ts`, `llms.ts` | Addresses, alternates and structured data; the Markdown for language models. All from the words in `src/lib/i18n` |
-| `src/lib/site.ts` | The site's address (`SITE_URL`), its parent company (structured data only), the date of its facts (`UPDATED`), the demo link |
+| `src/lib/site.ts` | The site's address (`SITE_URL`), its parent company (structured data only), the date of its facts (`UPDATED`), the demo link, the assistant's flow (`ASSISTANT`) |
+| `src/lib/Assistant.svelte`, `tools/widget.ts` | The AICO widget in the corner, and the step that brings it in from `clients/widget` |
 | `src/hooks.server.ts` | Fills `src/app.html`'s blanks at build time: the page's language, and the list of languages |
 | `tools/og/` | `og.py` draws the share images (`static/og/`) from the scenes and the words |
 

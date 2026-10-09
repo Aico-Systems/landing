@@ -9,6 +9,7 @@
 	import AboutCard from "$lib/cards/AboutCard.svelte";
 	import VerticalCard from "$lib/cards/VerticalCard.svelte";
 	import Wave from "$lib/Wave.svelte";
+	import Assistant from "$lib/Assistant.svelte";
 	import type { Stage } from "$lib/stage/stage";
 
 	/**
@@ -413,6 +414,8 @@
 </header>
 
 <div class="paper" aria-hidden="true"></div>
+
+<Assistant locale={i18n.locale} />
 
 
 
