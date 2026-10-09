@@ -8,7 +8,7 @@
 	 * tools/widget.ts) loads once the page is idle, so the stage comes first;
 	 * the voice core beside it loads only when someone starts talking.
 	 */
-	let { locale }: { locale: string } = $props();
+	let { locale, words }: { locale: string; words: { subtitle: string; placeholder: string } } = $props();
 
 	let ready = $state(false);
 
@@ -42,5 +42,15 @@
 		org={ASSISTANT.org}
 		api-url={ASSISTANT.api}
 		{locale}
+		title-text="Mandy"
+		subtitle={words.subtitle}
+		placeholder={words.placeholder}
 	></aico-flow>
 {/if}
+
+<style>
+	/* the page's own type in the assistant too (its shadow root inherits it) */
+	aico-flow {
+		font-family: var(--font-display);
+	}
+</style>

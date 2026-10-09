@@ -41,6 +41,9 @@ export interface Messages {
 		 *  opens on its own question). */
 		about: string;
 		close: string;
+		/** The assistant in the corner: the line under its name, and its
+		 *  composer's placeholder. */
+		assistant: { subtitle: string; placeholder: string };
 		/** Plays a card's exchange again. */
 		replay: string;
 		/** Under a worker's words in their language: what they mean ([language]

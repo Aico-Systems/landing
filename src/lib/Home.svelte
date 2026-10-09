@@ -415,7 +415,7 @@
 
 <div class="paper" aria-hidden="true"></div>
 
-<Assistant locale={i18n.locale} />
+<Assistant locale={i18n.locale} words={words.assistant} />
 
 
 

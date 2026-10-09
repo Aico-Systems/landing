@@ -23,6 +23,7 @@ export const de: Messages = {
 		industries: "Branchen",
 		askedIn: (language) => `Auf ${language} gefragt`,
 		about: "Was ist Mandy?",
+		assistant: { subtitle: "Schreiben oder sprechen", placeholder: "Nachricht schreiben…" },
 		replay: "Noch einmal abspielen",
 		close: "Schließen",
 		heardIn: (language) => `Auf ${language} gesagt`,
