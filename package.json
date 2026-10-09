@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "widget": "bun tools/widget.ts",
-    "dev": "bun tools/widget.ts && vite dev",
+    "dev": "vite dev",
     "build": "bun tools/widget.ts && NODE_ENV=production vite build && bun tools/compress.ts",
     "preview": "vite preview",
     "prepare": "svelte-kit sync || echo ''",

@@ -19,7 +19,7 @@
 				return;
 			}
 			const script = document.createElement("script");
-			script.src = "/aico/widget.js";
+			script.src = ASSISTANT.script;
 			script.async = true;
 			script.onload = () => (ready = true);
 			document.head.append(script);

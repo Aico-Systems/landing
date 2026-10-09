@@ -2,10 +2,11 @@
 # landing/justfile — Mandy's landing page (static SvelteKit, prerendered)
 # =============================================================================
 # Not in process-compose: the site runs on its own. Its one AICO piece is the
-# widget in the corner (src/lib/Assistant.svelte), built from clients/widget
-# by tools/widget.ts on dev and build, on the local stack in development and
-# the sandbox's API on the site (src/lib/site.ts ASSISTANT). Its Vite port (vite.config.js) stays clear of the host plane's
-# frontend (5173) and widget (5174).
+# widget in the corner (src/lib/Assistant.svelte): in development from the
+# host plane's widget dev server (5174) on the local stack, on the site the
+# bundle tools/widget.ts copies in at build, on the sandbox's API
+# (src/lib/site.ts ASSISTANT). Its Vite port (vite.config.js) stays clear of
+# the host plane's frontend (5173) and widget (5174).
 #
 # Deployed as files: a Caddy drop-in on the sandbox box (deploy/landing.caddy)
 # serves caddy-conf.d/landing/ at mandy.insight-proglove.com; `just deploy`

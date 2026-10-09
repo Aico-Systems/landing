@@ -20,11 +20,13 @@ Caddy. The build writes a `.br`, `.zst` and `.gz` beside every text file and
 scene (`tools/compress.ts`), which Caddy serves as they are.
 
 The assistant in the corner is the AICO widget (`src/lib/Assistant.svelte`,
-launcher mode, text and voice) on the DEMO organization's demo flow:
-`tools/widget.ts` builds `clients/widget` (its voice core needs Rust, see that
-README) and copies it into `static/aico/` (not committed) on every dev and
-build. Development talks to the local stack, the site to the sandbox's API
-(`ASSISTANT` in `src/lib/site.ts`). Its script loads once the page is idle.
+voice first, chat behind "Type instead") on the DEMO organization's demo flow.
+In development it comes from the widget's own dev server (the host plane's
+`:5174`, `just up`) and talks to the local stack, so a widget change shows at
+once. The build runs `tools/widget.ts`: it builds `clients/widget` (its voice
+core needs Rust, see that README) and copies it into `static/aico/` (not
+committed); the site talks to the sandbox's API (`ASSISTANT` in
+`src/lib/site.ts`). Its script loads once the page is idle.
 
 ## Layout
 

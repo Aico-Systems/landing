@@ -19,9 +19,12 @@ export const UPDATED = "2026-10-08";
 export const DEMO_URL = "";
 
 /** The assistant visitors can talk to, in the corner of every page: the AICO
- *  widget (static/aico/, tools/widget.ts) on the DEMO organization's demo
- *  flow, on the local stack in development and on the sandbox on the site. */
+ *  widget on the DEMO organization's demo flow. In development the widget's
+ *  own dev server (the host plane's, :5174) and the local stack, so a widget
+ *  change shows at once; on the site the bundle copied into static/aico/
+ *  (tools/widget.ts) and the sandbox. */
 export const ASSISTANT = {
+	script: import.meta.env.DEV ? "http://localhost:5174/widget.js" : "/aico/widget.js",
 	api: import.meta.env.DEV ? "http://localhost:8000" : "https://api.sandbox.aicoflow.com",
 	org: "DEMO",
 	flow: "demomesse",

@@ -2,7 +2,8 @@
 // core included, `just web`) and copies what an embed loads into
 // static/aico/: widget.js, the core's wasm, the 3D mascot (mascot3d.js and
 // its model) and the clips beside it.
-// Generated, not committed (.gitignore); the dev and build scripts run it.
+// Generated, not committed (.gitignore); the build runs it (development
+// loads the widget from its own dev server, src/lib/site.ts ASSISTANT).
 import { cpSync, rmSync } from "node:fs";
 import { execSync } from "node:child_process";
 import { resolve } from "node:path";
