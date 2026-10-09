@@ -93,7 +93,7 @@ export const de: Messages = {
 			systems: {
 				heading: "Wo arbeitet Mandy?",
 				text: "Erreichbar ist Mandy auf dem, was die Leute ohnehin dabeihaben, und gearbeitet wird in den Systemen, die Sie schon nutzen. Neue Geräte brauchen Sie nicht.",
-				devices: ["Handschuh-Scanner", "Handy, Handheld", "Smartwatch", "Telefonanruf", "Browser"],
+				devices: ["Handschuh-Scanner", "Handy, Handheld", "Smartwatch", "Telefonanruf", "Web"],
 				groups: [
 					{ name: "Ihre Dokumente", items: "Arbeitsanweisungen, Handbücher, Vorgaben, Tabellen, SharePoint" },
 					{ name: "Ihre Systeme", items: "SAP, WMS, ServiceNow, Jira, Zendesk" },

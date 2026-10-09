@@ -9,9 +9,18 @@
 	 */
 	let { devices, groups }: { devices: string[]; groups: { name: string; items: string }[] } = $props();
 
-	/** Device x positions across the top (five, evenly), the box centres below. */
-	const IN = [60, 180, 300, 420, 540].map((x, i) => `M${x} 0 V36 H${264 + i * 18} V82`);
-	const OUT = ["M272 134 V172 H100 V250", "M300 134 V250", "M328 134 V172 H500 V250"];
+	/** The chip's pins: five on top, one per device, three below, one per box. */
+	const PINS_IN = [264, 282, 300, 318, 336];
+	const PINS_OUT = [272, 300, 328];
+	/**
+	 * Device x positions across the top (five, evenly), each traced to its
+	 * pin. The traces nest: an inner one turns higher than the one outside
+	 * it, so no two share a run or cross; the middle one runs straight down.
+	 */
+	const DEVICES_X = [60, 180, 300, 420, 540];
+	const TURN_Y = [40, 24, 0, 24, 40];
+	const IN = DEVICES_X.map((x, i) => (x === PINS_IN[i] ? `M${x} 0 V82` : `M${x} 0 V${TURN_Y[i]} H${PINS_IN[i]} V82`));
+	const OUT = [`M${PINS_OUT[0]} 134 V172 H100 V250`, `M${PINS_OUT[1]} 134 V250`, `M${PINS_OUT[2]} 134 V172 H500 V250`];
 </script>
 
 <div class="board">
@@ -22,10 +31,8 @@
 		{#each [...IN, ...OUT] as d (d)}<path class="trace" {d} />{/each}
 		{#each IN as d, i (d)}<path class="signal" {d} style="--i: {i}" />{/each}
 		{#each OUT as d, i (d)}<path class="signal" {d} style="--i: {i + 2.5}" />{/each}
-		{#each [0, 1, 2, 3, 4, 5] as k (k)}
-			<rect class="pin" x={252 + k * 18} y="74" width="6" height="8" />
-			<rect class="pin" x={252 + k * 18} y="130" width="6" height="8" />
-		{/each}
+		{#each PINS_IN as x (x)}<rect class="pin" x={x - 3} y="74" width="6" height="8" />{/each}
+		{#each PINS_OUT as x (x)}<rect class="pin" x={x - 3} y="130" width="6" height="8" />{/each}
 		<rect class="chip" x="234" y="80" width="132" height="52" rx="8" />
 		<text x="300" y="112">{m().site.brand}</text>
 	</svg>

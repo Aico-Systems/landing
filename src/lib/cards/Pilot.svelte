@@ -34,20 +34,22 @@
 <style>
 	.plan {
 		--label: 6.5rem;
+		--pad: 1.1rem;
 		margin-top: 1rem;
-		padding: 1rem 1.1rem 1.1rem;
+		padding: 1rem var(--pad) 1.1rem;
 		border: 1px solid color-mix(in srgb, var(--ink) 13%, transparent);
 		border-radius: 0.9rem;
-		/* a faint column per week behind the bars */
+		/* a faint column per week behind the bars, the frame's full height,
+		   each starting where its week does in the grid (the layer is the
+		   weeks' width, so a week is 100% / weeks of it) */
 		background:
 			repeating-linear-gradient(
 					90deg,
 					color-mix(in srgb, var(--ink) 7%, transparent) 0 1px,
-					transparent 1px calc((100% - var(--label)) / var(--weeks))
+					transparent 1px calc(100% / var(--weeks))
 				)
-				var(--label) 0 / calc(100% - var(--label)) 100% no-repeat,
+				calc(var(--pad) + var(--label)) 0 / calc(100% - 2 * var(--pad) - var(--label)) 100% no-repeat,
 			linear-gradient(color-mix(in srgb, var(--ink) 4%, transparent), transparent 70%);
-		background-origin: content-box;
 	}
 	.ruler,
 	li {

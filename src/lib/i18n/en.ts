@@ -93,7 +93,7 @@ export const en: Messages = {
 			systems: {
 				heading: "Where does Mandy work?",
 				text: "People reach Mandy on whatever they already carry, and Mandy works in the systems you already run. No new devices to buy.",
-				devices: ["Glove scanner", "Phone or handheld", "Smartwatch", "Phone call", "Browser"],
+				devices: ["Glove scanner", "Phone or handheld", "Smartwatch", "Phone call", "Web"],
 				groups: [
 					{ name: "Your documents", items: "Work instructions, manuals, specs, spreadsheets, SharePoint" },
 					{ name: "Your systems", items: "SAP, WMS, ServiceNow, Jira, Zendesk" },
