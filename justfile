@@ -18,8 +18,11 @@ CONF_DIR := "/opt/aico/caddy-conf.d"
 BOX_DIR := CONF_DIR + "/landing"
 SITE := "https://mandy.insight-proglove.com"
 # The platform the built site talks to (the assistant's widget and API): the
-# sandbox box's domain, read from its values so the two never drift.
-PLATFORM := `grep -oP 'v.global.domain = "\K[^"]+' ../infrastructure/cdk8s/src/values/sandbox.ts`
+# host plane as published on dev.aicoflow.com (`just public` / `just tunnel`
+# at the root), where the demo runs today. The sandbox box's own widget
+# service (widget.sandbox.aicoflow.com) waits for its image; to use it:
+#   just PLATFORM=sandbox.aicoflow.com deploy
+PLATFORM := "dev.aicoflow.com"
 
 [private]
 default:

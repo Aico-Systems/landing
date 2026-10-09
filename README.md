@@ -23,8 +23,9 @@ The assistant in the corner is the AICO widget (`src/lib/Assistant.svelte`,
 floating over the page, voice first) on the DEMO organization's demo flow. The
 page ships none of it: every AICO plane serves the widget at `widget.<domain>`
 and its API at `api.<domain>`, so the site only names the platform —
-`PUBLIC_AICO_DOMAIN` at build (`just build` / `just deploy`: the sandbox's
-domain, read from `infrastructure/cdk8s/src/values/sandbox.ts`). Unset, as in
+`PUBLIC_AICO_DOMAIN` at build (`just build` / `just deploy`: `PLATFORM` in the
+justfile, today the host plane published on `dev.aicoflow.com`; `just
+PLATFORM=sandbox.aicoflow.com deploy` for the sandbox box). Unset, as in
 `just dev`, it is the host plane on this machine (`just up`: the widget's dev
 server on `:5174`, the API on `:8000`). Its script loads once the page is idle.
 
