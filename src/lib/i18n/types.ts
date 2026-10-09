@@ -115,7 +115,8 @@ export interface AboutWords {
 	/** One message on its way round: the worker's thread on a device, the
 	 *  team lead's in their app, Mandy between them. Each window's title
 	 *  cycles through the options: devices for the one, apps for the other. */
-	flow: { heading: string; glove: string[]; teams: string[]; bridge: string; caption: string };
+	/** `caption`: [language] is the worker's, named in the page's language. */
+	flow: { heading: string; glove: string[]; teams: string[]; bridge: string; caption: (language: string) => string };
 	/** The five verbs: what each covers, and something a worker says. */
 	verbs: { heading: string; items: Record<Verb, { text: string; says: string }> };
 	/** How people reach Mandy (the devices along the diagram's top) and what

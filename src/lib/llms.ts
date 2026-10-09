@@ -1,7 +1,7 @@
 import { VERTICALS } from "$lib/verticals";
 import { LOCALES, type Locale } from "$lib/i18n/locales";
 import { MESSAGES } from "$lib/i18n/messages";
-import { SPOKEN } from "$lib/i18n/spoken";
+import { FLOW_SPOKEN, SPOKEN } from "$lib/i18n/spoken";
 import type { Verb } from "$lib/i18n/types";
 import { UPDATED } from "$lib/site";
 import { APPS, PIECES, type AppGroup } from "$lib/integrations";
@@ -45,7 +45,10 @@ function full(locale: Locale): string {
 	const a = m.home.mandy;
 	const out = [`# ${a.question}`, "", `Source: ${absolute(pagePath(locale))}`, "", a.answer, ""];
 	out.push(`## ${a.why.heading}`, "", `${a.why.each}, ${a.why.perShift}. ${a.why.text}`, "");
-	out.push(`## ${a.flow.heading}`, "", a.flow.caption, "");
+	// every language the card turns through, as the page's language names them
+	const names = new Intl.DisplayNames([locale], { type: "language" });
+	const workers = FLOW_SPOKEN.workers.map((w) => names.of(w.ask.lang) ?? w.ask.lang);
+	out.push(`## ${a.flow.heading}`, "", a.flow.caption(new Intl.ListFormat(locale, { type: "disjunction" }).format(workers)), "");
 	out.push(`## ${a.verbs.heading}`, "");
 	for (const [verb, v] of Object.entries(a.verbs.items)) out.push(`- ${m.home.verbs[verb as Verb]}: ${v.text} ("${v.says}")`);
 	out.push("", `## ${a.systems.heading}`, "", a.systems.text, "", ...a.systems.groups.map((g) => `- ${g.name}: ${g.items}`), "");

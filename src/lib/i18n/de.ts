@@ -77,7 +77,8 @@ export const de: Messages = {
 				glove: ["Am Handschuh", "Am Smartphone", "An der Uhr"],
 				teams: ["In Teams", "In Slack", "In WhatsApp", "Per SMS"],
 				bridge: "Übersetzt, mit Scan, Ort und Foto",
-				caption: "Der Mitarbeiter spricht Ukrainisch, die Teamleitung liest Deutsch in der App, die sie schon nutzt, und niemand muss umdenken.",
+				caption: (language) =>
+					`Der Mitarbeiter spricht ${language}, die Teamleitung liest Deutsch in der App, die sie schon nutzt, und niemand muss umdenken.`,
 			},
 			verbs: {
 				heading: "Was kann Mandy?",
@@ -91,8 +92,8 @@ export const de: Messages = {
 			},
 			systems: {
 				heading: "Wo arbeitet Mandy?",
-				text: "Erreichbar ist Mandy auf dem, was die Leute ohnehin dabeihaben. Gearbeitet wird in dem, was Sie schon nutzen, und neu kaufen müssen Sie nichts.",
-				devices: ["ProGlove MAI Handschuh", "Android-Smartphone oder Scanner", "Smartwatch", "Telefonanruf", "Browser"],
+				text: "Erreichbar ist Mandy auf dem, was die Leute ohnehin dabeihaben, und gearbeitet wird in den Systemen, die Sie schon nutzen. Neue Geräte brauchen Sie nicht.",
+				devices: ["Handschuh-Scanner", "Handy, Handheld", "Smartwatch", "Telefonanruf", "Browser"],
 				groups: [
 					{ name: "Ihre Dokumente", items: "Arbeitsanweisungen, Handbücher, Vorgaben, Tabellen, SharePoint" },
 					{ name: "Ihre Systeme", items: "SAP, WMS, ServiceNow, Jira, Zendesk" },
@@ -133,11 +134,11 @@ export const de: Messages = {
 				heading: "Häufige Fragen",
 				items: [
 					{ q: "Funktioniert Mandy ohne Internet?", a: "Ja. Mandy läuft auf Ihren eigenen Servern oder komplett offline." },
-					{ q: "Ist Sprache immer die richtige Bedienung?", a: "Nein. Häufige Anfragen werden zu Ein-Tipp-Tasten auf dem Handschuh." },
+					{ q: "Ist Sprache immer die richtige Bedienung?", a: "Nein. Was jemand oft fragt, wird zur Ein-Tipp-Taste auf seinem Gerät, mit den Angaben vom letzten Mal schon ausgefüllt." },
 					{ q: "Was ist der Unterschied zu Pick-by-Voice?", a: "Pick-by-Voice folgt einem festen Ablauf. Mandy beantwortet offene Fragen und bucht in Ihren Systemen." },
 					{ q: "Was, wenn Mandy etwas nicht weiß?", a: "Sie sagt es und holt einen Menschen dazu, wenn das Standardvorgehen den Fall nicht abdeckt." },
-					{ q: "Ist das Mikrofon immer an?", a: "Nein. Mandy hört nur zu, solange die Taste gedrückt ist." },
-					{ q: "Was ist mit Handschuhen und lauten Hallen?", a: "Ein Druck auf den Handschuh-Scanner funktioniert mit Handschuhen, und häufige Anfragen werden zu Ein-Tipp-Tasten, damit eine laute Halle sie nicht aufhält." },
+					{ q: "Ist das Mikrofon immer an?", a: "Nein. Am Handschuh hört Mandy nur, solange die Taste gedrückt ist; am Smartphone und im Browser nur während eines Gesprächs, das die Person selbst startet, und es lässt sich stummschalten." },
+					{ q: "Was ist mit Handschuhen und lauten Hallen?", a: "Der Handschuh-Scanner funktioniert mit Handschuhen, eine Geräuschfilterung hält die Halle aus dem Mikrofon, und häufige Anfragen sind einen Tipp entfernt." },
 				],
 			},
 		},

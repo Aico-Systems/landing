@@ -1,20 +1,29 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import Wave from "$lib/Wave.svelte";
-	import { m } from "$lib/i18n/index.svelte";
+	import { languageName, m } from "$lib/i18n/index.svelte";
 	import type { FLOW_SPOKEN } from "$lib/i18n/spoken";
 
 	/**
 	 * One message on its way round, as the two chats it really is: the
-	 * worker's thread on their device (Ukrainian), the team lead's in their
-	 * app (German), Mandy between them. It plays once as the card opens: the
-	 * worker speaks, the message crosses and lands in Teams with scan,
-	 * place and photo, the lead taps a reply, and it crosses back.
+	 * worker's thread on their device, the team lead's in their app (German),
+	 * Mandy between them. The worker speaks, the message crosses and lands
+	 * with scan, place and photo, the lead taps a reply, and it crosses back
+	 * — then the round plays again with a worker speaking another language,
+	 * the same report each time: any of them works.
 	 */
 	let {
 		words,
 		spoken,
-	}: { words: { glove: string[]; teams: string[]; bridge: string; caption: string }; spoken: typeof FLOW_SPOKEN } = $props();
+	}: {
+		words: { glove: string[]; teams: string[]; bridge: string; caption: (language: string) => string };
+		spoken: typeof FLOW_SPOKEN;
+	} = $props();
+
+	/** One round: the four steps (the last lands at 4.5 s), then a pause to read it. */
+	const ROUND_MS = 7600;
+	let round = $state(0);
+	const worker = $derived(spoken.workers[round % spoken.workers.length]!);
 
 	// the windows' titles turn through the options (a device on the one
 	// side, an app on the other): the example is one of many
@@ -22,20 +31,26 @@
 	onMount(() => {
 		if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 		const t = setInterval(() => turn++, 2600);
-		return () => clearInterval(t);
+		const r = setInterval(() => round++, ROUND_MS);
+		return () => {
+			clearInterval(t);
+			clearInterval(r);
+		};
 	});
 </script>
 
 <figure class="chat">
+	<!-- a new worker remounts the round, so its steps play again -->
+	{#key round}
 	<div class="window glove">
 		<header>
 			<span class="dot"></span>
 			{#key turn}<span class="title">{words.glove[turn % words.glove.length]}</span>{/key}
-			<span class="lang">{spoken.ask.lang}</span>
+			<span class="lang">{worker.ask.lang}</span>
 		</header>
 		<div class="thread">
-			<p class="out s1" lang={spoken.ask.lang}><Wave live />{spoken.ask.text}</p>
-			<p class="in s4" lang={spoken.reply.lang}><Wave live />{spoken.reply.text}</p>
+			<p class="out s1" lang={worker.ask.lang} dir="auto"><Wave live />{worker.ask.text}</p>
+			<p class="in s4" lang={worker.reply.lang} dir="auto"><Wave live />{worker.reply.text}</p>
 		</div>
 	</div>
 
@@ -60,7 +75,8 @@
 			<p class="out s3" lang={spoken.tap.lang}>{spoken.tap.text}</p>
 		</div>
 	</div>
-	<figcaption>{words.caption}</figcaption>
+	{/key}
+	<figcaption>{words.caption(languageName(worker.ask.lang))}</figcaption>
 </figure>
 
 <style>

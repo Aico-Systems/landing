@@ -77,7 +77,8 @@ export const en: Messages = {
 				glove: ["On the glove", "On the phone", "On the watch"],
 				teams: ["In Teams", "In Slack", "In WhatsApp", "By SMS"],
 				bridge: "Translated, with scan, place and photo",
-				caption: "The worker speaks Ukrainian, the team lead reads German in the app they already use, and neither has to switch.",
+				caption: (language) =>
+					`The worker speaks ${language}, the team lead reads German in the app they already use, and neither has to switch.`,
 			},
 			verbs: {
 				heading: "What can Mandy do?",
@@ -91,8 +92,8 @@ export const en: Messages = {
 			},
 			systems: {
 				heading: "Where does Mandy work?",
-				text: "People reach Mandy on whatever they carry. Mandy works in what you already run, and there is nothing new to buy.",
-				devices: ["ProGlove MAI glove", "Android phone or scanner", "Smartwatch", "Phone call", "Browser"],
+				text: "People reach Mandy on whatever they already carry, and Mandy works in the systems you already run. No new devices to buy.",
+				devices: ["Glove scanner", "Phone or handheld", "Smartwatch", "Phone call", "Browser"],
 				groups: [
 					{ name: "Your documents", items: "Work instructions, manuals, specs, spreadsheets, SharePoint" },
 					{ name: "Your systems", items: "SAP, WMS, ServiceNow, Jira, Zendesk" },
@@ -133,11 +134,11 @@ export const en: Messages = {
 				heading: "Questions we often get",
 				items: [
 					{ q: "Does Mandy work without internet?", a: "Yes. It runs on your own servers or fully offline." },
-					{ q: "Is voice always the right interface?", a: "No. Requests that come up often become one-tap buttons on the glove." },
+					{ q: "Is voice always the right interface?", a: "No. What someone asks often becomes a one-tap shortcut on their device, with last time's details already filled in." },
 					{ q: "How is this different from pick-by-voice?", a: "Pick-by-voice follows a fixed script. Mandy answers open questions and books things in your systems." },
 					{ q: "What if Mandy doesn't know?", a: "It says so, and brings in a person when the standard procedure doesn't cover the case." },
-					{ q: "Is the microphone always on?", a: "No. Mandy listens only while the button is pressed." },
-					{ q: "What about gloves and loud halls?", a: "One press on the glove scanner works with gloves on, and requests that come up often become one-tap buttons, so a loud hall doesn't stop them." },
+					{ q: "Is the microphone always on?", a: "No. On the glove Mandy listens only while the button is held; on a phone or in the browser only during a conversation the person starts, and it can be muted." },
+					{ q: "What about gloves and loud halls?", a: "The glove scanner works with gloves on, noise filtering keeps the hall out of the microphone, and frequent requests are one tap away." },
 				],
 			},
 		},
@@ -424,7 +425,7 @@ export const en: Messages = {
 				gain: "Transfer bags on their flight, task cards on the record.",
 				card: {
 					question: "How does Mandy help in aviation?",
-					answer: "On the ramp, gloves stay on and phones stay away, yet calling a driver for a full container or reporting a damaged bag still means a second app or a trip to the office. Mandy takes both by voice, in the agent's own language. In the hangar it finds the AMM or IPC reference and records the handover; the certifying engineer still signs.",
+					answer: "On the ramp, gloves stay on and phones stay away, yet calling a driver for a full container or reporting a damaged bag still means a second app or a trip to the office. Mandy takes both by voice, in the ramp agent's own language. In the hangar it finds the AMM or IPC reference and records the handover; the certifying engineer still signs.",
 					story: {
 						meaning: "This container for the 14:20 to Madrid is full. I need a driver.",
 						answer: "Driver requested. Tug 7 is at your stand in 4 minutes.",
