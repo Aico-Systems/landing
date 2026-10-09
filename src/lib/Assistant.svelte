@@ -43,6 +43,7 @@
 		api-url={ASSISTANT.api}
 		{locale}
 		title-text="Mandy"
+		quick-replies="off"
 		subtitle={words.subtitle}
 		placeholder={words.placeholder}
 	></aico-flow>
