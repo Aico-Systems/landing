@@ -11,7 +11,6 @@ just build         # static site in build/
 just preview       # the built site, as deployed (http://localhost:4173)
 just check
 just deploy        # build, sync to the sandbox box, live at mandy.insight-proglove.com
-just core          # rebuild the glove's core (Rust → wasm) into src/lib/glove/core/
 ```
 
 `just deploy` copies `build/` into the box's Caddy drop-in folder
@@ -31,7 +30,6 @@ scene (`tools/compress.ts`), which Caddy serves as they are.
 | `src/lib/Home.svelte` | The page: the stage, the speech bubbles, the vertical's words, the cards; keeps the address in step with the scroll |
 | `src/lib/Card.svelte`, `Head.svelte` | A card of longer text (in the HTML even when closed); a page's title, description, canonical, hreflang, share card and JSON-LD |
 | `src/lib/cards/` | What the cards are made of: `AboutCard` and `VerticalCard`; `Replay` and `Chat` (the part of each card that plays: an exchange, and one message between the glove and Teams), `Bento` with `VerbVisual`, `Connect` (the wiring board), `Apps` (the integrations), `Pilot` (a week plan), `Shift` (one shift, its exceptions to scale), `Icon` |
-| `src/lib/glove/` | The web glove ("Try Mandy"): `TryGlove.svelte` draws a MAI glove with mai-kit's renderer, as the Studio's showcase does; `session.ts` joins the flow's room (the anonymous web channel, LiveKit's JS client) and gates the microphone by the glove's button; `core/` is the AICO client core compiled to wasm (`clients/crates/aico-web`, built by `just core`), which decides what the glove shows and what goes to the agent. Loaded only when opened. Shown where `TRY` in `site.ts` names a flow |
 | `src/lib/integrations.ts` | The apps the integrations section lists, and the size of the Activepieces catalog (with the date it was counted and how to recount) |
 | `src/lib/systems.ts` | Every system the cards name (name, domain, kind, its Activepieces piece) and which ones each vertical runs, from per-industry research |
 | `src/lib/logos/` | Their logos, `<id>.png` for light tiles and `<id>-dark.png` where a mark needs its own for dark tiles, made by `tools/logos/fetch.py` (from a curated URL, Simple Icons, the Activepieces piece logo or the vendor's site icon; white backgrounds removed, marks trimmed and squared, dark ink turned light for dark tiles) |

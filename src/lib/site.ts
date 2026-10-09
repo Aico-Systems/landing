@@ -17,17 +17,3 @@ export const UPDATED = "2026-10-08";
 
 /** Where "Book a demo" leads. The button stays hidden until it is set. */
 export const DEMO_URL = "";
-
-/** The flow a visitor talks to on the web glove, over the anonymous web
- *  channel: the backend, the organization, the flow's slug. */
-export interface TryFlow {
-	api: string;
-	org: string;
-	flow: string;
-}
-
-/** The web glove's flow. The local stack in development; on the site once
- *  its public demo flow is up (until then the glove stays hidden there). */
-export const TRY: TryFlow | null = import.meta.env.DEV
-	? { api: "http://localhost:8000", org: "TEST", flow: "konsultation-hauptflow" }
-	: null;

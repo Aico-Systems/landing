@@ -3,7 +3,7 @@
 	import { replaceState } from "$app/navigation";
 	import { VERTICALS, type Vertical, type VerticalId } from "$lib/verticals";
 	import { i18n, languageName, m, type Exchange } from "$lib/i18n/index.svelte";
-	import { DEMO_URL, TRY } from "$lib/site";
+	import { DEMO_URL } from "$lib/site";
 	import { pagePath } from "$lib/seo";
 	import Head from "$lib/Head.svelte";
 	import AboutCard from "$lib/cards/AboutCard.svelte";
@@ -36,13 +36,6 @@
 	let active = $state(startIndex);
 	/** Still on the home page's address: nobody has scrolled on yet. */
 	let home = $state(untrack(() => !start));
-	/** The web glove, once a visitor opened it: loaded then, not with the page. */
-	let TryGlove = $state<typeof import("$lib/glove/TryGlove.svelte").default | null>(null);
-	let trying = $state(false);
-	async function tryMandy() {
-		TryGlove ??= (await import("$lib/glove/TryGlove.svelte")).default;
-		trying = true;
-	}
 	/** The card that is open, if any. */
 	let card = $state<"details" | "mandy" | null>(null);
 	let exchange = $state<Exchange | null>(null);
@@ -407,7 +400,6 @@
 				/>
 			{/await}
 		{/if}
-		{#if TRY}<button class="try" onclick={tryMandy}>{words.try.open}</button>{/if}
 		<a
 			class="about"
 			href="#mandy"
@@ -421,8 +413,6 @@
 </header>
 
 <div class="paper" aria-hidden="true"></div>
-
-{#if TRY && TryGlove && trying}<TryGlove flow={TRY} onclose={() => (trying = false)} />{/if}
 
 
 
@@ -557,23 +547,6 @@
 	}
 	.about:hover {
 		color: var(--accent);
-	}
-	/* the way to the web glove: the one filled control in the header */
-	.try {
-		padding: 0.6rem 1.1rem;
-		border: 0;
-		border-radius: 999px;
-		background: var(--accent);
-		color: white;
-		font: inherit;
-		font-size: 0.95rem;
-		font-weight: 700;
-		font-stretch: 95%;
-		cursor: pointer;
-	}
-	.try:focus-visible {
-		outline: 2px solid var(--accent);
-		outline-offset: 3px;
 	}
 	.demo {
 		color: var(--paper);

@@ -8,9 +8,6 @@ const blueprint = fileURLToPath(new URL("../blueprint/src", import.meta.url));
 
 export default defineConfig({
   plugins: [sveltekit()],
-  // mai-kit (the glove's renderer) ships TS, Svelte and ?url assets as
-  // source: compiled here, as the Studio does, not pre-bundled.
-  optimizeDeps: { exclude: ["@proglove/mai-kit"] },
   resolve: {
     alias: { "@aico/blueprint": blueprint },
   },

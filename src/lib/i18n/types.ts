@@ -40,22 +40,6 @@ export interface Messages {
 		/** The link that opens the card about Mandy itself (a vertical's card
 		 *  opens on its own question). */
 		about: string;
-		/** The web glove: a visitor talks to Mandy on it, in the page. */
-		try: {
-			/** The header's way in. */
-			open: string;
-			/** Above the glove, by where the session is. */
-			idle: string;
-			connecting: string;
-			live: string;
-			ended: string;
-			failed: string;
-			/** The button under the glove: held while talking. */
-			hold: string;
-			start: string;
-			/** The glove's own name, for screen readers. */
-			glove: string;
-		};
 		close: string;
 		/** Plays a card's exchange again. */
 		replay: string;
