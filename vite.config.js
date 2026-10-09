@@ -8,6 +8,8 @@ const blueprint = fileURLToPath(new URL("../blueprint/src", import.meta.url));
 
 export default defineConfig({
   plugins: [sveltekit()],
+  // PUBLIC_AICO_DOMAIN: the platform the page talks to (src/lib/site.ts)
+  envPrefix: ["VITE_", "PUBLIC_"],
   resolve: {
     alias: { "@aico/blueprint": blueprint },
   },

@@ -18,14 +18,18 @@ export const UPDATED = "2026-10-08";
 /** Where "Book a demo" leads. The button stays hidden until it is set. */
 export const DEMO_URL = "";
 
+/** The AICO platform the page talks to, by its domain: the build sets
+ *  `PUBLIC_AICO_DOMAIN` (`just deploy`: the sandbox's); unset, the host
+ *  plane on this machine (`just up`). Every address follows from it, as
+ *  every plane serves the same hostnames (infrastructure/: `widget.`,
+ *  `api.`). */
+const PLATFORM: string = import.meta.env.PUBLIC_AICO_DOMAIN ?? "";
+
 /** The assistant visitors can talk to, in the corner of every page: the AICO
- *  widget on the DEMO organization's demo flow. In development the widget's
- *  own dev server (the host plane's, :5174) and the local stack, so a widget
- *  change shows at once; on the site the bundle copied into static/aico/
- *  (tools/widget.ts) and the sandbox. */
+ *  widget, served by the platform, on the DEMO organization's demo flow. */
 export const ASSISTANT = {
-	script: import.meta.env.DEV ? "http://localhost:5174/widget.js" : "/aico/widget.js",
-	api: import.meta.env.DEV ? "http://localhost:8000" : "https://api.sandbox.aicoflow.com",
+	script: PLATFORM ? `https://widget.${PLATFORM}/widget.js` : "http://localhost:5174/widget.js",
+	api: PLATFORM ? `https://api.${PLATFORM}` : "http://localhost:8000",
 	org: "DEMO",
 	flow: "demomesse",
 };

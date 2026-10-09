@@ -2,11 +2,11 @@
 # landing/justfile — Mandy's landing page (static SvelteKit, prerendered)
 # =============================================================================
 # Not in process-compose: the site runs on its own. Its one AICO piece is the
-# widget in the corner (src/lib/Assistant.svelte): in development from the
-# host plane's widget dev server (5174) on the local stack, on the site the
-# bundle tools/widget.ts copies in at build, on the sandbox's API
-# (src/lib/site.ts ASSISTANT). Its Vite port (vite.config.js) stays clear of
-# the host plane's frontend (5173) and widget (5174).
+# widget in the corner (src/lib/Assistant.svelte), served by the platform the
+# page talks to: the host plane in development (widget dev server :5174, API
+# :8000), PLATFORM's widget.<domain> and api.<domain> in a build
+# (src/lib/site.ts). Its Vite port (vite.config.js) stays clear of the host
+# plane's frontend (5173) and widget (5174).
 #
 # Deployed as files: a Caddy drop-in on the sandbox box (deploy/landing.caddy)
 # serves caddy-conf.d/landing/ at mandy.insight-proglove.com; `just deploy`
@@ -17,6 +17,9 @@ BOX := "aico-box"
 CONF_DIR := "/opt/aico/caddy-conf.d"
 BOX_DIR := CONF_DIR + "/landing"
 SITE := "https://mandy.insight-proglove.com"
+# The platform the built site talks to (the assistant's widget and API): the
+# sandbox box's domain, read from its values so the two never drift.
+PLATFORM := `grep -oP 'v.global.domain = "\K[^"]+' ../infrastructure/cdk8s/src/values/sandbox.ts`
 
 [private]
 default:
@@ -30,10 +33,11 @@ dev:
 check:
     bun run check
 
-# Prerender the static site into build/. Always a production build: the repo's
-# direnv sets NODE_ENV=development, which Vite would otherwise build with
+# Prerender the static site into build/, talking to PLATFORM. Always a
+# production build: the repo's direnv sets NODE_ENV=development, which Vite
+# would otherwise build with
 build:
-    bun install --silent && bun run build
+    bun install --silent && PUBLIC_AICO_DOMAIN={{PLATFORM}} bun run build
 
 # Serve the built site, as deployed (http://localhost:4173)
 preview: build
