@@ -13,7 +13,9 @@
   },
   "dependencies": {
     "@fontsource-variable/archivo": "^5.3.0",
+    "@proglove/mai-kit": "git+ssh://git@github.com/Gitkubikon/mai-kit.git#4dea50a954dc0721e546f8e2d189731c60b74f99",
     "animejs": "^4.2.2",
+    "livekit-client": "^2.22.3",
     "simple-icons": "^16.34.0",
     "three": "^0.186.0"
   },

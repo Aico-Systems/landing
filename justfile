@@ -19,6 +19,22 @@ SITE := "https://mandy.insight-proglove.com"
 default:
     @just --list --unsorted
 
+# The glove's core (clients/crates/aico-web) as wasm into src/lib/glove/core/.
+# MAI_KIT=<checkout> builds against a local mai-kit, as the Studio's recipe does.
+# Build the glove's core: Rust to wasm, committed with the site
+core MAI_KIT="":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    cd {{justfile_directory()}}/../clients
+    patch=()
+    if [[ -n "{{MAI_KIT}}" ]]; then
+        kit=$(realpath "{{MAI_KIT}}")
+        patch=(--config "patch.\"ssh://git@github.com/Gitkubikon/mai-kit.git\".mai-wapi.path=\"$kit/crates/mai-wapi\"")
+    fi
+    cargo build -p aico-web --target wasm32-unknown-unknown --release "${patch[@]}"
+    wasm-bindgen --target web --out-dir {{justfile_directory()}}/src/lib/glove/core target/wasm32-unknown-unknown/release/aico_web.wasm
+    ls -l {{justfile_directory()}}/src/lib/glove/core
+
 # Dev server with hot reload (http://localhost:5175)
 dev:
     bun install --silent && bun run dev
