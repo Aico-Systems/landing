@@ -54,6 +54,18 @@ export interface Messages {
 		orAssistant: string;
 		/** At the end of the card about Mandy. */
 		cta: string;
+		/** The two windows: the visitor's, and the team's inbox. */
+		you: string;
+		team: string;
+		topicsLabel: string;
+		/** What a visitor may write about; a chip fills an empty message with
+		 *  its starter. */
+		topics: { label: string; starter: string }[];
+		/** The inbox before anything is written. */
+		previewEmpty: string;
+		replyTo: (email: string) => string;
+		delivered: string;
+		another: string;
 	};
 	home: {
 		/** What the 3D stage shows, for screen readers. */
