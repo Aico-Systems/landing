@@ -16,7 +16,8 @@
 		open,
 		onclose,
 		onabout,
-	}: { vertical: VerticalId; open: boolean; onclose: () => void; onabout: () => void } = $props();
+		oncontact,
+	}: { vertical: VerticalId; open: boolean; onclose: () => void; onabout: () => void; oncontact: () => void } = $props();
 
 	const words = $derived(m().home);
 	const c = $derived(words.verticals[vertical].card);
@@ -38,14 +39,25 @@
 		<p class="note">{words.systems.note}</p>
 		<Systems ids={VERTICAL_SYSTEMS[vertical]} />
 	</section>
-	<a
-		class="about"
-		href="#mandy"
-		onclick={(e) => {
-			e.preventDefault();
-			onabout();
-		}}>{words.about}</a
-	>
+	<!-- where to go from here: try it, or read on -->
+	<div class="next">
+		<a
+			class="contact"
+			href="#contact"
+			onclick={(e) => {
+				e.preventDefault();
+				oncontact();
+			}}>{m().contact.cta}</a
+		>
+		<a
+			class="about"
+			href="#mandy"
+			onclick={(e) => {
+				e.preventDefault();
+				onabout();
+			}}>{words.about}</a
+		>
+	</div>
 	<p class="updated">{m().site.updated(longDate(i18n.locale, UPDATED))}</p>
 </Card>
 
@@ -66,9 +78,26 @@
 		font-size: 0.9rem;
 		color: var(--ink-soft);
 	}
+	.next {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 1rem 1.5rem;
+		margin-top: 2rem;
+	}
+	.contact {
+		padding: 0.75rem 1.4rem;
+		border-radius: 999px;
+		background: var(--accent);
+		color: white;
+		font-weight: 700;
+		text-decoration: none;
+	}
+	.contact:hover {
+		background: var(--ink);
+		color: var(--paper);
+	}
 	.about {
-		display: inline-block;
-		margin-top: 1.5rem;
 		font-weight: 600;
 		color: var(--accent);
 		text-underline-offset: 0.25em;

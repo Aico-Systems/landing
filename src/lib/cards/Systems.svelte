@@ -46,4 +46,19 @@
 		font-weight: 400;
 		color: var(--ink-soft);
 	}
+	/* a phone: two to a row, a little tighter, half the scrolling */
+	@container (max-width: 480px) {
+		.systems {
+			grid-template-columns: 1fr 1fr;
+			gap: 0.4rem;
+		}
+		li {
+			gap: 0.5rem;
+			padding: 0.45rem 0.5rem;
+		}
+		.name {
+			font-size: 0.82rem;
+			overflow-wrap: anywhere;
+		}
+	}
 </style>

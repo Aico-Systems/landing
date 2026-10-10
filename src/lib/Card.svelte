@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Snippet } from "svelte";
+	import { onMount, type Snippet } from "svelte";
 	import { m } from "$lib/i18n/index.svelte";
 
 	/**
@@ -31,10 +31,87 @@
 		if (!open) card.scrollTop = 0;
 		else seen = true;
 	});
+
+	/** How far the card is pulled away by a finger, 0 at rest. */
+	let pull = $state(0);
+
+	/**
+	 * Pull to close, on touch: the sheet from the bottom (a phone) is pulled
+	 * down from its top, the panel from the right is pulled right. The card
+	 * follows the finger; past a threshold, or flicked, it closes, otherwise
+	 * it springs back. Scrolling the card is never taken: a downward pull
+	 * only counts while the card is at its top.
+	 */
+	onMount(() => {
+		const sheet = matchMedia("(max-width: 899px), (orientation: portrait)");
+		let start: { x: number; y: number; t: number; top: boolean } | null = null;
+		let dragging: boolean | null = null;
+
+		const down = (e: TouchEvent) => {
+			if (!open || e.touches.length !== 1) return;
+			const t = e.touches[0]!;
+			start = { x: t.clientX, y: t.clientY, t: performance.now(), top: card.scrollTop <= 0 };
+			dragging = null;
+		};
+		const move = (e: TouchEvent) => {
+			if (!start || dragging === false) return;
+			const t = e.touches[0]!;
+			const dx = t.clientX - start.x;
+			const dy = t.clientY - start.y;
+			const along = sheet.matches ? dy : dx;
+			const across = sheet.matches ? dx : dy;
+			if (dragging === null) {
+				if (Math.abs(along) < 8 && Math.abs(across) < 8) return;
+				// the card's own axis, away from the screen, and (for the sheet) from its top
+				dragging = along > 0 && Math.abs(along) > Math.abs(across) && (!sheet.matches || start.top);
+				if (!dragging) return;
+			}
+			e.preventDefault();
+			pull = Math.max(0, along);
+		};
+		const up = () => {
+			if (dragging && start) {
+				const size = sheet.matches ? card.offsetHeight : card.offsetWidth;
+				const speed = pull / Math.max(1, performance.now() - start.t);
+				if (pull > Math.min(140, size * 0.22) || speed > 0.7) onclose();
+			}
+			pull = 0;
+			start = null;
+			dragging = null;
+		};
+		card.addEventListener("touchstart", down, { passive: true });
+		card.addEventListener("touchmove", move, { passive: false });
+		card.addEventListener("touchend", up);
+		card.addEventListener("touchcancel", up);
+		return () => {
+			card.removeEventListener("touchstart", down);
+			card.removeEventListener("touchmove", move);
+			card.removeEventListener("touchend", up);
+			card.removeEventListener("touchcancel", up);
+		};
+	});
 </script>
 
-<button class="veil" class:open tabindex="-1" aria-hidden="true" onclick={onclose}></button>
-<article {id} bind:this={card} class="card" class:open class:seen inert={!open} aria-labelledby="{id}-title">
+<button
+	class="veil"
+	class:open
+	tabindex="-1"
+	aria-hidden="true"
+	onclick={onclose}
+	style:opacity={pull ? Math.max(0, 1 - pull / 400) : null}
+></button>
+<article
+	{id}
+	bind:this={card}
+	class="card"
+	class:open
+	class:seen
+	class:pulled={pull > 0}
+	style:--pull="{pull}px"
+	inert={!open}
+	aria-labelledby="{id}-title"
+>
+	<span class="grab" aria-hidden="true"></span>
 	<button class="close" onclick={onclose} aria-label={m().home.close}>×</button>
 	<div class="card-text">
 		<h2 id="{id}-title">{title}</h2>
@@ -82,9 +159,16 @@
 		display: none;
 	}
 	.card.open {
-		transform: none;
+		transform: translateX(var(--pull, 0px));
 		visibility: visible;
 		transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+	}
+	/* following a finger: no easing behind it */
+	.card.open.pulled {
+		transition: none;
+	}
+	.grab {
+		display: none;
 	}
 	.close {
 		position: absolute;
@@ -175,6 +259,21 @@
 			border-radius: 1.25rem 1.25rem 0 0;
 			box-shadow: 0 -1px 0 color-mix(in srgb, var(--ink) 10%, transparent);
 			transform: translateY(102%);
+		}
+		.card.open {
+			transform: translateY(var(--pull, 0px));
+		}
+		/* the sheet's handle: it says the sheet can be pulled down */
+		.grab {
+			display: block;
+			position: absolute;
+			top: 0.6rem;
+			left: 50%;
+			width: 2.5rem;
+			height: 0.3rem;
+			translate: -50% 0;
+			border-radius: 999px;
+			background: color-mix(in srgb, var(--ink) 22%, transparent);
 		}
 	}
 	/* a phone: the column takes more of the width, the answer comes smaller */

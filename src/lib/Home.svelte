@@ -4,6 +4,8 @@
 	import { VERTICALS, type Vertical, type VerticalId } from "$lib/verticals";
 	import { i18n, languageName, m, type Exchange } from "$lib/i18n/index.svelte";
 	import { DEMO_URL } from "$lib/site";
+	import { LOCALES } from "$lib/i18n/locales";
+	import { MESSAGES } from "$lib/i18n/messages";
 	import { pagePath } from "$lib/seo";
 	import Head from "$lib/Head.svelte";
 	import AboutCard from "$lib/cards/AboutCard.svelte";
@@ -187,6 +189,9 @@
 		}
 	}
 
+	/** The least room between a speech bubble and the screen's edge. */
+	const EDGE_GAP = 12;
+
 	const head = { x: 0, y: 0 };
 	/** On screen, between the header and the words, with room for a bubble. */
 	function inView(mover: Stage["movers"][number]): boolean {
@@ -278,7 +283,11 @@
 			stage.onFrame(() => {
 				if (!speaker || !bubble) return;
 				stage!.project(speaker, at);
-				bubble.style.transform = `translate(${at.x}px, ${at.y}px)`;
+				// over the speaker's head, but never past the screen's edge: on a
+				// phone a worker near the side would push half the words off it
+				const half = ((bubble.firstElementChild as HTMLElement | null)?.offsetWidth ?? 0) / 2;
+				const x = half ? Math.min(innerWidth - EDGE_GAP - half, Math.max(EDGE_GAP + half, at.x)) : at.x;
+				bubble.style.transform = `translate(${x}px, ${at.y}px)`;
 			});
 			place();
 			stage.start();
@@ -406,6 +415,16 @@
 				/>
 			{/await}
 		{/if}
+		<!-- the other languages, each the same view in it -->
+		{#each LOCALES.filter((l) => l !== i18n.locale) as l (l)}
+			<a
+				class="switch"
+				href={(home ? pagePath(l) : pagePath(l, VERTICALS[active].id)) + (card ? `#${card}` : "")}
+				hreflang={l}
+				lang={l}
+				aria-label={MESSAGES[l].site.language}>{l.toUpperCase()}</a
+			>
+		{/each}
 		<a
 			class="about"
 			href="#mandy"
@@ -493,6 +512,7 @@
 			open={card === "details"}
 			onclose={() => open(null)}
 			onabout={() => open("mandy")}
+			oncontact={() => open("contact")}
 		/>{/snippet}
 
 	<ContactCard open={card === "contact"} onclose={() => open(null)} />
@@ -565,6 +585,15 @@
 	}
 	.about:hover {
 		color: var(--accent);
+	}
+	.switch {
+		font-size: 0.8rem;
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		color: var(--ink-soft);
+	}
+	.switch:hover {
+		color: var(--ink);
 	}
 	.demo {
 		color: var(--paper);
@@ -902,12 +931,16 @@
 			margin-top: 0.9rem;
 			/* a thumb's worth of target */
 			padding-block: 0.35rem;
+			/* it wraps before the assistant's mascot in the corner */
+			max-width: calc(100% - 5.5rem);
 		}
 		nav {
 			display: flex;
 			overflow-x: auto;
 			gap: 1.25rem;
-			right: 0;
+			/* ends where the assistant's mascot sits (80 px, 24 px from the
+			   corner), so no industry hides under it */
+			right: 6.5rem;
 			bottom: calc(0.5rem + env(safe-area-inset-bottom));
 			padding-right: 1.25rem;
 			scroll-padding-inline: 1.25rem;
@@ -982,7 +1015,7 @@
 		nav {
 			display: flex;
 			overflow-x: auto;
-			right: 0;
+			right: 6.5rem;
 			padding-right: 1.25rem;
 			bottom: 0.25rem;
 			gap: 0 1.1rem;
