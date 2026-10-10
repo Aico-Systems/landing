@@ -75,13 +75,52 @@
 		font-size: 0.85rem;
 		color: var(--ink-soft);
 	}
+	/* narrower: a group per row, its apps one line of small chips that
+	   scrolls sideways and fades at the edge — five lines, not thirty */
 	@container (max-width: 680px) {
 		.apps {
-			grid-template-columns: repeat(2, minmax(0, 1fr));
+			grid-template-columns: 1fr;
 		}
 		.group {
+			padding: 0.7rem 0 0.75rem;
 			border-left: 0;
 			border-top: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+		}
+		.group:first-child {
+			border-top: 0;
+		}
+		h4 {
+			margin: 0 0.8rem 0.45rem;
+		}
+		ul {
+			display: flex;
+			gap: 0.35rem;
+			padding: 0 0.8rem;
+			overflow-x: auto;
+			overscroll-behavior-x: contain;
+			scrollbar-width: none;
+			mask-image: linear-gradient(to right, transparent, black 0.8rem, black calc(100% - 2.5rem), transparent);
+		}
+		ul::-webkit-scrollbar {
+			display: none;
+		}
+		li {
+			flex: none;
+			gap: 0.35rem;
+			padding: 0.2rem 0.6rem 0.2rem 0.25rem;
+			border: 1px solid color-mix(in srgb, var(--ink) 11%, transparent);
+			border-radius: 999px;
+			font-size: 0.78rem;
+			white-space: nowrap;
+		}
+		li :global(.logo) {
+			width: 1.25rem;
+			height: 1.25rem;
+			padding: 0.12rem;
+			border-radius: 50%;
+		}
+		.more {
+			padding: 0.6rem 0.8rem;
 		}
 	}
 </style>

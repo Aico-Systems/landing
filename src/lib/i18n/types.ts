@@ -170,6 +170,8 @@ export interface AboutWords {
 	runs: { heading: string; options: { name: string; text: string }[] };
 	/** The pilot as phases over its weeks (0 to [weeks]). */
 	pilot: { heading: string; week: string; phases: { name: string; from: number; to: number; what: string }[] };
+	/** The card's close: how to start, above the contact button. */
+	start: { title: string; body: string };
 	faq: { heading: string; items: { q: string; a: string }[] };
 }
 

@@ -164,6 +164,10 @@ export const en: Messages = {
 					{ name: "Decide", from: 14, to: 14, what: "Time saved, measured" },
 				],
 			},
+			start: {
+				title: "Start with one team",
+				body: "One use case, five to twelve people. At the end you decide on the time saved, measured, not on a demo.",
+			},
 			faq: {
 				heading: "Questions we often get",
 				items: [

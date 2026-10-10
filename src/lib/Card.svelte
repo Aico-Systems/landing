@@ -49,6 +49,8 @@
 
 		const down = (e: TouchEvent) => {
 			if (!open || e.touches.length !== 1) return;
+			// a row that scrolls sideways keeps the side panel's sideways pull
+			if (!sheet.matches && (e.target as Element).closest("[data-scroll-x]")) return;
 			const t = e.touches[0]!;
 			start = { x: t.clientX, y: t.clientY, t: performance.now(), top: card.scrollTop <= 0 };
 			dragging = null;
@@ -146,7 +148,8 @@
 		overscroll-behavior: contain;
 		background: var(--paper);
 		box-shadow: -1px 0 0 color-mix(in srgb, var(--ink) 10%, transparent);
-		padding: clamp(2.5rem, 6vh, 4.5rem) clamp(1.5rem, 3.5vw, 3.25rem) 3rem;
+		/* the end clears the assistant in the corner, so the last line is never under it */
+		padding: clamp(2.5rem, 6vh, 4.5rem) clamp(1.5rem, 3.5vw, 3.25rem) 8rem;
 		transform: translateX(102%);
 		visibility: hidden;
 		transition:

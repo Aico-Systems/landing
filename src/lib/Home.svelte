@@ -284,10 +284,13 @@
 				if (!speaker || !bubble) return;
 				stage!.project(speaker, at);
 				// over the speaker's head, but never past the screen's edge: on a
-				// phone a worker near the side would push half the words off it
-				const half = ((bubble.firstElementChild as HTMLElement | null)?.offsetWidth ?? 0) / 2;
+				// phone a worker near the side would push half the words off it,
+				const talk = bubble.firstElementChild as HTMLElement | null;
+				const half = (talk?.offsetWidth ?? 0) / 2;
 				const x = half ? Math.min(innerWidth - EDGE_GAP - half, Math.max(EDGE_GAP + half, at.x)) : at.x;
-				bubble.style.transform = `translate(${x}px, ${at.y}px)`;
+				// and never up under the header: the answer stacks above the question
+				const y = talk ? Math.max(at.y, ceiling + EDGE_GAP + talk.offsetHeight) : at.y;
+				bubble.style.transform = `translate(${x}px, ${y}px)`;
 			});
 			place();
 			stage.start();

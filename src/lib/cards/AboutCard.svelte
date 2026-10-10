@@ -69,14 +69,6 @@
 	<section>
 		{@render heading("calendar", a.pilot.heading)}
 		<Pilot week={a.pilot.week} phases={a.pilot.phases} />
-		<a
-			class="cta"
-			href="#contact"
-			onclick={(e) => {
-				e.preventDefault();
-				oncontact();
-			}}>{m().contact.cta}</a
-		>
 	</section>
 
 	<section class="faq" id="faq">
@@ -91,14 +83,53 @@
 		</div>
 	</section>
 
+	<!-- the way to start, once everything above has been read -->
+	<aside class="next">
+		<div>
+			<h3>{a.start.title}</h3>
+			<p>{a.start.body}</p>
+		</div>
+		<a
+			class="cta"
+			href="#contact"
+			onclick={(e) => {
+				e.preventDefault();
+				oncontact();
+			}}>{m().contact.title}</a
+		>
+	</aside>
 	<p class="updated">{m().site.updated(longDate(i18n.locale, UPDATED))}</p>
 </Card>
 
 <style>
-	/* after the plan: the way to start it */
+	/* at the end: the way to start, a panel lit from its corner */
+	.next {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1.25rem 2rem;
+		margin-top: 2.5rem;
+		padding: 1.5rem 1.6rem;
+		border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+		border-radius: 1rem;
+		background:
+			radial-gradient(120% 140% at 100% 100%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%),
+			color-mix(in srgb, var(--ink) 3%, var(--paper));
+	}
+	.next div {
+		flex: 1 1 18rem;
+	}
+	.next h3 {
+		margin: 0 0 0.35rem;
+	}
+	.next p {
+		margin: 0;
+		color: var(--ink-soft);
+	}
 	.cta {
+		flex: none;
 		display: inline-block;
-		margin-top: 1.1rem;
 		padding: 0.75rem 1.4rem;
 		border-radius: 999px;
 		background: var(--accent);
@@ -192,6 +223,13 @@
 		.faq,
 		.runs {
 			grid-template-columns: 1fr;
+		}
+		.next {
+			padding: 1.25rem;
+		}
+		.cta {
+			flex: 1 1 100%;
+			text-align: center;
 		}
 	}
 </style>

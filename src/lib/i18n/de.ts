@@ -164,6 +164,10 @@ export const de: Messages = {
 					{ name: "Entscheiden", from: 14, to: 14, what: "Eingesparte Zeit, gemessen" },
 				],
 			},
+			start: {
+				title: "Mit einem Team starten",
+				body: "Ein Anwendungsfall, fünf bis zwölf Personen. Am Ende entscheiden Sie nach gemessener Zeitersparnis, nicht nach einer Demo.",
+			},
 			faq: {
 				heading: "Häufige Fragen",
 				items: [
