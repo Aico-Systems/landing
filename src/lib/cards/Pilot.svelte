@@ -118,15 +118,73 @@
 		overflow: hidden;
 		clip-path: inset(50%);
 	}
+	/* a phone: no ruler of fifteen weeks — each phase a row with its weeks
+	   and what happens, and a thin line placing it in the pilot */
 	@container (max-width: 570px) {
 		.plan {
-			--label: 5rem;
+			padding: 0.4rem 1rem;
+			background: linear-gradient(color-mix(in srgb, var(--ink) 4%, transparent), transparent 70%);
 		}
-		.what {
+		.ruler {
 			display: none;
 		}
-		.bar.main .what {
-			display: block;
+		ol {
+			gap: 0;
+		}
+		li {
+			grid-template-columns: 1fr auto;
+			grid-template-areas: "name when" "bar bar";
+			row-gap: 0.3rem;
+			padding: 0.7rem 0;
+		}
+		li + li {
+			border-top: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+		}
+		.name {
+			grid-area: name;
+		}
+		.sr {
+			grid-area: when;
+			position: static;
+			width: auto;
+			height: auto;
+			overflow: visible;
+			clip-path: none;
+			font-size: 0.75rem;
+			font-variant-numeric: tabular-nums;
+			color: var(--ink-soft);
+		}
+		.bar,
+		.bar.main {
+			grid-area: bar;
+			height: auto;
+			padding-bottom: 0.65rem;
+			border-radius: 0;
+			background: none;
+		}
+		/* where the phase sits in the pilot's weeks */
+		.bar::after {
+			content: "";
+			position: absolute;
+			bottom: 0;
+			left: calc(var(--from) / var(--weeks) * 100%);
+			width: calc((var(--to) - var(--from) + 1) / var(--weeks) * 100%);
+			height: 0.3rem;
+			border-radius: 0.15rem;
+			background: color-mix(in srgb, var(--ink) 25%, transparent);
+		}
+		.bar.main::after {
+			background: var(--accent);
+		}
+		.what,
+		.bar.main .what,
+		li:last-child .what {
+			position: static;
+			translate: none;
+			white-space: normal;
+			font-size: 0.85rem;
+			color: var(--ink-soft);
+			font-weight: 400;
 		}
 	}
 </style>

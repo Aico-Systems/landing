@@ -36,6 +36,8 @@
 		<rect class="chip" x="234" y="80" width="132" height="52" rx="8" />
 		<text x="300" y="112">{m().site.brand}</text>
 	</svg>
+	<!-- on a phone the board is a spine: one wire down through Mandy -->
+	<div class="spine" aria-hidden="true"><i></i><span>{m().site.brand}</span><i></i></div>
 	<ul>
 		{#each groups as g (g.name)}
 			<li>
@@ -138,13 +140,48 @@
 		line-height: 1.45;
 		color: var(--ink-soft);
 	}
+	.spine {
+		display: none;
+	}
+	/* a phone: the devices as a row of small plates that wraps, one wire
+	   down through Mandy, the three boxes stacked under it */
 	@container (max-width: 510px) {
 		svg {
 			display: none;
 		}
-		ul,
-		ul.devices {
+		ul {
 			grid-template-columns: 1fr;
+			gap: 0.6rem;
+		}
+		ul.devices {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: 0.4rem;
+		}
+		.devices li {
+			padding: 0.35rem 0.7rem;
+			border-radius: 999px;
+			font-size: 0.76rem;
+		}
+		.spine {
+			display: grid;
+			justify-items: center;
+			margin: 0.15rem 0;
+		}
+		.spine i {
+			width: 1px;
+			height: 1.1rem;
+			background: color-mix(in srgb, var(--ink) 22%, transparent);
+		}
+		.spine span {
+			padding: 0.35rem 1rem;
+			border: 1.2px solid color-mix(in srgb, var(--ink) 30%, transparent);
+			border-radius: 0.5rem;
+			background: color-mix(in srgb, var(--ink) 6%, var(--paper));
+			font-size: 0.9rem;
+			font-weight: 800;
+			font-stretch: 115%;
 		}
 	}
 	@media (prefers-reduced-motion: reduce) {

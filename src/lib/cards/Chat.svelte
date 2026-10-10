@@ -321,17 +321,66 @@
 		animation-iteration-count: 3;
 		animation-delay: 4.5s;
 	}
+	/* a phone: the windows stack, so the message runs down to Mandy and
+	   back up — two vertical lanes beside the chip — and a thread is as tall
+	   as its words (they keep their room while still hidden) */
 	@container (max-width: 570px) {
 		.chat {
 			grid-template-columns: 1fr;
-			gap: 0.75rem;
+			gap: 0.5rem;
+		}
+		.thread {
+			min-height: 0;
 		}
 		.bridge {
 			grid-auto-flow: column;
+			justify-content: center;
 			align-items: center;
+			gap: 0.9rem;
 		}
 		.lane {
-			width: 3rem;
+			width: 1px;
+			height: 1.75rem;
+		}
+		.lane::after {
+			top: auto;
+			left: -3px;
+			border: 3.5px solid transparent;
+		}
+		.there::after {
+			bottom: -1px;
+			right: auto;
+			border-top: 5px solid var(--ink-soft);
+			border-bottom: 0;
+		}
+		.back::after {
+			top: -1px;
+			left: -3px;
+			border-bottom: 5px solid var(--ink-soft);
+			border-top: 0;
+		}
+		.lane i {
+			top: auto;
+			left: -2px;
+		}
+		:global(.open) .there i {
+			animation-name: cross-down;
+		}
+		:global(.open) .back i {
+			animation-name: cross-down;
+		}
+	}
+	@keyframes cross-down {
+		0% {
+			top: 0;
+			opacity: 1;
+		}
+		90% {
+			opacity: 1;
+		}
+		100% {
+			top: calc(100% - 5px);
+			opacity: 0;
 		}
 	}
 	@media (prefers-reduced-motion: reduce) {
