@@ -29,6 +29,32 @@ export interface Messages {
 		/** Above the links into this language. */
 		enter: string;
 	};
+	/** The contact card: a form that mails the team. */
+	contact: {
+		/** In the header. */
+		link: string;
+		title: string;
+		intro: string;
+		name: string;
+		company: string;
+		email: string;
+		phone: string;
+		message: string;
+		/** After an optional field's label. */
+		optional: string;
+		/** In the empty message box. */
+		messageHint: string;
+		send: string;
+		sending: string;
+		sentTitle: string;
+		sent: string;
+		failed: string;
+		privacy: string;
+		/** Under the form: the assistant is the other way in. */
+		orAssistant: string;
+		/** At the end of the card about Mandy. */
+		cta: string;
+	};
 	home: {
 		/** What the 3D stage shows, for screen readers. */
 		stage: (vertical: string) => string;

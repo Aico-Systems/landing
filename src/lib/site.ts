@@ -18,6 +18,12 @@ export const UPDATED = "2026-10-08";
 /** Where "Book a demo" leads. The button stays hidden until it is set. */
 export const DEMO_URL = "";
 
+/** Where the contact form posts: the n8n workflow "Mandy Landing →
+ *  Kontaktformular per E-Mail", which mails the team with the visitor as
+ *  Reply-To. Public like any form endpoint: it accepts this site's origins
+ *  only, drops what fills the hidden field, and refuses an invalid address. */
+export const CONTACT_ENDPOINT = "https://pg2000.app.n8n.cloud/webhook/f83e46c7-4ddc-4062-bc68-4f2368613384";
+
 /** The AICO platform the page talks to, by its domain: the build sets
  *  `PUBLIC_AICO_DOMAIN` (`just deploy`: the sandbox's); unset, the host
  *  plane on this machine (`just up`). Every address follows from it, as

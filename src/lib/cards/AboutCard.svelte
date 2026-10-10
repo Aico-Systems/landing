@@ -15,7 +15,7 @@
 
 	/** The card about Mandy itself: what it is, one message on its way round
 	 *  (the part that plays), then the questions a buyer has. */
-	let { open, onclose }: { open: boolean; onclose: () => void } = $props();
+	let { open, onclose, oncontact }: { open: boolean; onclose: () => void; oncontact: () => void } = $props();
 
 	const a = $derived(m().home.mandy);
 	const RUNS: IconName[] = ["cloud", "server", "offline"];
@@ -69,6 +69,14 @@
 	<section>
 		{@render heading("calendar", a.pilot.heading)}
 		<Pilot week={a.pilot.week} phases={a.pilot.phases} />
+		<a
+			class="cta"
+			href="#contact"
+			onclick={(e) => {
+				e.preventDefault();
+				oncontact();
+			}}>{m().contact.cta}</a
+		>
 	</section>
 
 	<section class="faq" id="faq">
@@ -87,6 +95,21 @@
 </Card>
 
 <style>
+	/* after the plan: the way to start it */
+	.cta {
+		display: inline-block;
+		margin-top: 1.1rem;
+		padding: 0.75rem 1.4rem;
+		border-radius: 999px;
+		background: var(--accent);
+		color: white;
+		font-weight: 700;
+		text-decoration: none;
+	}
+	.cta:hover {
+		background: var(--ink);
+		color: var(--paper);
+	}
 	.heading {
 		display: flex;
 		align-items: flex-start;

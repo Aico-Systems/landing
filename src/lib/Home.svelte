@@ -7,6 +7,7 @@
 	import { pagePath } from "$lib/seo";
 	import Head from "$lib/Head.svelte";
 	import AboutCard from "$lib/cards/AboutCard.svelte";
+	import ContactCard from "$lib/cards/ContactCard.svelte";
 	import VerticalCard from "$lib/cards/VerticalCard.svelte";
 	import Wave from "$lib/Wave.svelte";
 	import Assistant from "$lib/Assistant.svelte";
@@ -19,8 +20,12 @@
 	 * [start] is the vertical the address names (/en/parcel/), or none for
 	 * the home page (/en/), which starts on the first. Scrolling on keeps
 	 * the address in step, so every view can be linked; #details opens the
-	 * vertical's card and #mandy the one about Mandy.
+	 * vertical's card, #mandy the one about Mandy and #contact the form.
 	 */
+	/** The cards a fragment opens: a vertical's, the one about Mandy, the form. */
+	const CARDS = ["details", "mandy", "contact"] as const;
+	type CardName = (typeof CARDS)[number];
+
 	let { start }: { start?: VerticalId } = $props();
 
 	let canvas: HTMLCanvasElement;
@@ -38,7 +43,7 @@
 	/** Still on the home page's address: nobody has scrolled on yet. */
 	let home = $state(untrack(() => !start));
 	/** The card that is open, if any. */
-	let card = $state<"details" | "mandy" | null>(null);
+	let card = $state<CardName | null>(null);
 	let exchange = $state<Exchange | null>(null);
 	let answered = $state(false);
 	/** Who is speaking right now, the worker or Mandy: their bubble's wave moves. */
@@ -220,7 +225,7 @@
 		replaceState(path + (card ? `#${card}` : ""), {});
 	}
 
-	function open(which: "details" | "mandy" | null) {
+	function open(which: CardName | null) {
 		card = which;
 		sync();
 	}
@@ -231,7 +236,7 @@
 		scrollTo({ top: startIndex * innerHeight, behavior: "instant" });
 		const fromHash = () => {
 			const h = location.hash.slice(1);
-			card = h === "details" || h === "mandy" ? h : null;
+			card = (CARDS as readonly string[]).includes(h) ? (h as CardName) : null;
 		};
 		fromHash();
 		addEventListener("hashchange", fromHash);
@@ -409,6 +414,14 @@
 				open("mandy");
 			}}>{words.about}</a
 		>
+		<a
+			class="demo"
+			href="#contact"
+			onclick={(e) => {
+				e.preventDefault();
+				open("contact");
+			}}>{m().contact.link}</a
+		>
 		{#if DEMO_URL}<a class="demo" href={DEMO_URL}>{site.demo}</a>{/if}
 	</div>
 </header>
@@ -474,13 +487,15 @@
 		{@render about()}
 	{/if}
 
-	{#snippet about()}<AboutCard open={card === "mandy"} onclose={() => open(null)} />{/snippet}
+	{#snippet about()}<AboutCard open={card === "mandy"} onclose={() => open(null)} oncontact={() => open("contact")} />{/snippet}
 	{#snippet details()}<VerticalCard
 			vertical={vertical.id}
 			open={card === "details"}
 			onclose={() => open(null)}
 			onabout={() => open("mandy")}
 		/>{/snippet}
+
+	<ContactCard open={card === "contact"} onclose={() => open(null)} />
 
 	<!-- one screen of scroll per vertical; the stage above shows the one in view -->
 	{#each VERTICALS as v, i (v.id)}
@@ -985,6 +1000,19 @@
 		}
 	}
 	/* bubbles sized to a phone: never wider than most of the screen */
+	/* a phone: the header's links closer together, the pill smaller */
+	@media (max-width: 599px) {
+		.actions {
+			gap: 0.9rem;
+		}
+		.about {
+			font-size: 0.88rem;
+		}
+		.demo {
+			padding: 0.5rem 0.95rem;
+			font-size: 0.88rem;
+		}
+	}
 	@media (max-width: 599px), (max-height: 559px) {
 		.bubble p {
 			max-width: min(16rem, 64vw);
