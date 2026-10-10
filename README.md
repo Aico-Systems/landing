@@ -20,14 +20,16 @@ Caddy. The build writes a `.br`, `.zst` and `.gz` beside every text file and
 scene (`tools/compress.ts`), which Caddy serves as they are.
 
 The assistant in the corner is the AICO widget (`src/lib/Assistant.svelte`,
-floating over the page, voice first) on the DEMO organization's demo flow. The
-page ships none of it: every AICO plane serves the widget at `widget.<domain>`
-and its API at `api.<domain>`, so the site only names the platform —
+floating over the page, voice first) on the DEMO organization's demo flow. A
+build ships its bundle: `tools/widget.ts` builds `clients/widget` and copies
+it into `static/aico/` (generated, not committed), so the site serves it from
+its own host, precompressed. It talks to the platform's `api.<domain>`:
 `PUBLIC_AICO_DOMAIN` at build (`just build` / `just deploy`: `PLATFORM` in the
 justfile, today the host plane published on `dev.aicoflow.com`; `just
 PLATFORM=sandbox.aicoflow.com deploy` for the sandbox box). Unset, as in
 `just dev`, it is the host plane on this machine (`just up`: the widget's dev
-server on `:5174`, the API on `:8000`). Its script loads once the page is idle.
+server on `:5174`, the API on `:8000`), so a widget change shows at once. Its
+script loads once the page is idle.
 
 ## Layout
 
@@ -45,7 +47,7 @@ server on `:5174`, the API on `:8000`). Its script loads once the page is idle.
 | `src/lib/logos/` | Their logos, `<id>.png` for light tiles and `<id>-dark.png` where a mark needs its own for dark tiles, made by `tools/logos/fetch.py` (from a curated URL, Simple Icons, the Activepieces piece logo or the vendor's site icon; white backgrounds removed, marks trimmed and squared, dark ink turned light for dark tiles) |
 | `src/lib/seo.ts`, `llms.ts` | Addresses, alternates and structured data; the Markdown for language models. All from the words in `src/lib/i18n` |
 | `src/lib/site.ts` | The site's address (`SITE_URL`), its parent company (structured data only), the date of its facts (`UPDATED`), the demo link, the platform and the assistant's flow (`ASSISTANT`) |
-| `src/lib/Assistant.svelte` | The AICO widget in the corner, loaded from the platform |
+| `src/lib/Assistant.svelte` | The AICO widget in the corner (`tools/widget.ts` copies its bundle in at build) |
 | `src/hooks.server.ts` | Fills `src/app.html`'s blanks at build time: the page's language, and the list of languages |
 | `tools/og/` | `og.py` draws the share images (`static/og/`) from the scenes and the words |
 

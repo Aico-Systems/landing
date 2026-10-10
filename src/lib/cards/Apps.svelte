@@ -4,7 +4,8 @@
 	import Logo from "./Logo.svelte";
 
 	/** The apps Mandy works with, by what they are for: a spec sheet of
-	 *  columns, the catalog's rest summed up under it. */
+	 *  columns, the catalog's rest summed up under it. Narrow, a group is a
+	 *  line: its name and its logos side by side, the apps named under them. */
 	let { groups, more }: { groups: Record<AppGroup, string>; more: string } = $props();
 
 	const ids = Object.keys(APPS) as AppGroup[];
@@ -14,6 +15,7 @@
 	{#each ids as id (id)}
 		<div class="group">
 			<h4>{groups[id]}</h4>
+			<span class="stack" aria-hidden="true">{#each APPS[id] as app (app)}<Logo id={app} />{/each}</span>
 			<ul>
 				{#each APPS[id] as app (app)}<li><Logo id={app} />{SYSTEMS[app].name}</li>{/each}
 			</ul>
@@ -75,14 +77,21 @@
 		font-size: 0.85rem;
 		color: var(--ink-soft);
 	}
-	/* narrower: a group per row, its apps one line of small chips that
-	   scrolls sideways and fades at the edge — five lines, not thirty */
+	.stack {
+		display: none;
+	}
+	/* narrower: a group per row — its name, its logos overlapping beside it,
+	   the apps as one line of text under them that wraps */
 	@container (max-width: 680px) {
 		.apps {
 			grid-template-columns: 1fr;
 		}
 		.group {
-			padding: 0.7rem 0 0.75rem;
+			display: grid;
+			grid-template-columns: 1fr auto;
+			align-items: center;
+			gap: 0.35rem 0.75rem;
+			padding: 0.75rem 0.85rem 0.8rem;
 			border-left: 0;
 			border-top: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
 		}
@@ -90,37 +99,41 @@
 			border-top: 0;
 		}
 		h4 {
-			margin: 0 0.8rem 0.45rem;
+			margin: 0;
+		}
+		.stack {
+			display: flex;
+		}
+		.stack :global(.logo) {
+			width: 1.5rem;
+			height: 1.5rem;
+			padding: 0.14rem;
+			border-radius: 50%;
+			box-shadow:
+				inset 0 0 0 1px var(--edge),
+				0 0 0 2px var(--paper);
+		}
+		.stack :global(.logo + .logo) {
+			margin-left: -0.35rem;
 		}
 		ul {
-			display: flex;
-			gap: 0.35rem;
-			padding: 0 0.8rem;
-			overflow-x: auto;
-			overscroll-behavior-x: contain;
-			scrollbar-width: none;
-			mask-image: linear-gradient(to right, transparent, black 0.8rem, black calc(100% - 2.5rem), transparent);
-		}
-		ul::-webkit-scrollbar {
-			display: none;
+			grid-column: 1 / -1;
+			display: block;
+			font-size: 0.85rem;
+			line-height: 1.45;
+			color: var(--ink-soft);
 		}
 		li {
-			flex: none;
-			gap: 0.35rem;
-			padding: 0.2rem 0.6rem 0.2rem 0.25rem;
-			border: 1px solid color-mix(in srgb, var(--ink) 11%, transparent);
-			border-radius: 999px;
-			font-size: 0.78rem;
-			white-space: nowrap;
+			display: inline;
 		}
 		li :global(.logo) {
-			width: 1.25rem;
-			height: 1.25rem;
-			padding: 0.12rem;
-			border-radius: 50%;
+			display: none;
+		}
+		li + li::before {
+			content: ", ";
 		}
 		.more {
-			padding: 0.6rem 0.8rem;
+			padding: 0.6rem 0.85rem;
 		}
 	}
 </style>

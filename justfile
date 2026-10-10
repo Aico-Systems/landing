@@ -2,9 +2,9 @@
 # landing/justfile — Mandy's landing page (static SvelteKit, prerendered)
 # =============================================================================
 # Not in process-compose: the site runs on its own. Its one AICO piece is the
-# widget in the corner (src/lib/Assistant.svelte), served by the platform the
-# page talks to: the host plane in development (widget dev server :5174, API
-# :8000), PLATFORM's widget.<domain> and api.<domain> in a build
+# widget in the corner (src/lib/Assistant.svelte): in development the host
+# plane's (widget dev server :5174, API :8000); in a build its bundle, copied
+# in by tools/widget.ts and served from the site, on PLATFORM's api.<domain>
 # (src/lib/site.ts). Its Vite port (vite.config.js) stays clear of the host
 # plane's frontend (5173) and widget (5174).
 #
@@ -17,10 +17,9 @@ BOX := "aico-box"
 CONF_DIR := "/opt/aico/caddy-conf.d"
 BOX_DIR := CONF_DIR + "/landing"
 SITE := "https://mandy.insight-proglove.com"
-# The platform the built site talks to (the assistant's widget and API): the
-# host plane as published on dev.aicoflow.com (`just public` / `just tunnel`
-# at the root), where the demo runs today. The sandbox box's own widget
-# service (widget.sandbox.aicoflow.com) waits for its image; to use it:
+# The platform the built site's assistant talks to (its API): the host plane
+# as published on dev.aicoflow.com (`just public` / `just tunnel` at the
+# root), where the demo runs today. For the sandbox box, once it serves:
 #   just PLATFORM=sandbox.aicoflow.com deploy
 PLATFORM := "dev.aicoflow.com"
 

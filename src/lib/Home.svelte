@@ -418,10 +418,12 @@
 				/>
 			{/await}
 		{/if}
-		<!-- the other languages, each the same view in it -->
+		<!-- the other languages, each the same view in it: the scroll stays,
+		     or the page, back at its top, would move on to the first vertical -->
 		{#each LOCALES.filter((l) => l !== i18n.locale) as l (l)}
 			<a
 				class="switch"
+				data-sveltekit-noscroll
 				href={(home ? pagePath(l) : pagePath(l, VERTICALS[active].id)) + (card ? `#${card}` : "")}
 				hreflang={l}
 				lang={l}

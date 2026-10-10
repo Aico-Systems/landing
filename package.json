@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "NODE_ENV=production vite build && bun tools/compress.ts",
+    "widget": "bun tools/widget.ts",
+    "build": "bun tools/widget.ts && NODE_ENV=production vite build && bun tools/compress.ts",
     "preview": "vite preview",
     "prepare": "svelte-kit sync || echo ''",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json"

@@ -25,16 +25,17 @@ export const DEMO_URL = "";
 export const CONTACT_ENDPOINT = "https://pg2000.app.n8n.cloud/webhook/f83e46c7-4ddc-4062-bc68-4f2368613384";
 
 /** The AICO platform the page talks to, by its domain: the build sets
- *  `PUBLIC_AICO_DOMAIN` (`just deploy`: the sandbox's); unset, the host
- *  plane on this machine (`just up`). Every address follows from it, as
- *  every plane serves the same hostnames (infrastructure/: `widget.`,
- *  `api.`). */
+ *  `PUBLIC_AICO_DOMAIN` (`just deploy`: the justfile's PLATFORM); unset, the
+ *  host plane on this machine (`just up`). Its API follows from it, as every
+ *  plane serves the same hostnames (infrastructure/: `api.`). */
 const PLATFORM: string = import.meta.env.PUBLIC_AICO_DOMAIN ?? "";
 
 /** The assistant visitors can talk to, in the corner of every page: the AICO
- *  widget, served by the platform, on the DEMO organization's demo flow. */
+ *  widget on the DEMO organization's demo flow, talking to the platform. Its
+ *  code is the site's own in a build (static/aico/, tools/widget.ts: one
+ *  bundle from this host), the widget's dev server in development. */
 export const ASSISTANT = {
-	script: PLATFORM ? `https://widget.${PLATFORM}/widget.js` : "http://localhost:5174/widget.js",
+	script: PLATFORM ? "/aico/widget.js" : "http://localhost:5174/widget.js",
 	api: PLATFORM ? `https://api.${PLATFORM}` : "http://localhost:8000",
 	org: "DEMO",
 	flow: "demomesse",

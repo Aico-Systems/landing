@@ -9,12 +9,12 @@ mandy.insight-proglove.com {
 	# Hashed by the build: a new deploy is a new name, so keep them a year.
 	@immutable path /_app/immutable/*
 	header @immutable Cache-Control "public, max-age=31536000, immutable"
-	# Same name every deploy (the scenes, the Draco decoder, share images):
-	# an hour, then asked again (cheap: the ETag answers 304).
-	@assets path /models/* /draco/* /og/* /favicon.svg
+	# Same name every deploy (the scenes, the Draco decoder, share images, the
+	# AICO widget): an hour, then asked again (cheap: the ETag answers 304).
+	@assets path /models/* /draco/* /og/* /aico/* /favicon.svg
 	header @assets Cache-Control "public, max-age=3600"
 	# The pages: always asked again, so a deploy shows at once.
-	@pages not path /_app/immutable/* /models/* /draco/* /og/* /favicon.svg
+	@pages not path /_app/immutable/* /models/* /draco/* /og/* /aico/* /favicon.svg
 	header @pages Cache-Control "no-cache"
 
 	# The build writes .br/.zst/.gz beside each file (tools/compress.ts), at

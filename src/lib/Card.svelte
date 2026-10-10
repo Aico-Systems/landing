@@ -49,8 +49,6 @@
 
 		const down = (e: TouchEvent) => {
 			if (!open || e.touches.length !== 1) return;
-			// a row that scrolls sideways keeps the side panel's sideways pull
-			if (!sheet.matches && (e.target as Element).closest("[data-scroll-x]")) return;
 			const t = e.touches[0]!;
 			start = { x: t.clientX, y: t.clientY, t: performance.now(), top: card.scrollTop <= 0 };
 			dragging = null;
