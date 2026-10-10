@@ -142,12 +142,15 @@
 		right: 0;
 		bottom: 0;
 		width: min(50rem, 62vw);
+		box-sizing: border-box;
 		overflow-y: auto;
 		overscroll-behavior: contain;
 		background: var(--paper);
 		box-shadow: -1px 0 0 color-mix(in srgb, var(--ink) 10%, transparent);
-		/* the end clears the assistant in the corner, so the last line is never under it */
-		padding: clamp(2.5rem, 6vh, 4.5rem) clamp(1.5rem, 3.5vw, 3.25rem) 8rem;
+		/* the end clears the assistant in the corner, so the last line is never
+		   under it, and the home bar below that; the height is the whole card's,
+		   padding included, so a sheet's top is always on screen */
+		padding: clamp(2.5rem, 6vh, 4.5rem) clamp(1.5rem, 3.5vw, 3.25rem) calc(8rem + env(safe-area-inset-bottom));
 		transform: translateX(102%);
 		visibility: hidden;
 		transition:

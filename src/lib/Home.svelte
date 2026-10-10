@@ -562,7 +562,8 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding: 1.5rem clamp(1.25rem, 4vw, 3rem);
+		padding: calc(1.5rem + env(safe-area-inset-top)) max(clamp(1.25rem, 4vw, 3rem), env(safe-area-inset-right))
+			1.5rem max(clamp(1.25rem, 4vw, 3rem), env(safe-area-inset-left));
 		pointer-events: none;
 	}
 	header > * {
@@ -959,7 +960,7 @@
 	/* a small phone: the words take less of the height, the scene the rest */
 	@media (orientation: portrait) and (max-height: 700px), (orientation: portrait) and (max-width: 360px) {
 		header {
-			padding-block: 1rem;
+			padding-block: calc(1rem + env(safe-area-inset-top)) 1rem;
 		}
 		.mark {
 			font-size: 1.3rem;
@@ -983,7 +984,7 @@
 	   little height */
 	@media (orientation: landscape) and (max-height: 559px) {
 		header {
-			padding-block: 0.75rem;
+			padding-block: calc(0.75rem + env(safe-area-inset-top)) 0.75rem;
 		}
 		.mark {
 			font-size: 1.2rem;
